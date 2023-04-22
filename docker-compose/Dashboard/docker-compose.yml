@@ -1,11 +1,11 @@
 version: "3"
-# name: dashboards-rp
+# name: dashboards
 services:
 
 
   homepage:
     image: ghcr.io/benphelps/homepage:latest
-    container_name: homepage-rp
+    container_name: homepage
     restart: always
     profiles: ["homepage", "full"]
     networks:
@@ -29,7 +29,7 @@ services:
 
   dashy:
     image: lissy93/dashy
-    container_name: Dashy-rp
+    container_name: Dashy
     restart: always
     profiles: ["dashy", "full"]
     networks:

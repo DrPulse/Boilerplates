@@ -23,7 +23,7 @@ services:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=Code-Server
-      - homepage.icon=codeserver.png
+      - homepage.icon=code.png
       - homepage.ping=https://code-server.$DOMAIN_NAME
       - homepage.href=https://code-server.$DOMAIN_NAME
       # TRAEFIK

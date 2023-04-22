@@ -17,7 +17,7 @@ services:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=Blaze
-      - homepage.icon=blaze.png
+      - homepage.icon=https://github.com/blenderskool/blaze/raw/next/client/src/assets/images/apple-touch-icon-152x152.png
       - homepage.description=P2P file sharing web app
       - homepage.ping=https://blaze.$DOMAIN_NAME
       - homepage.href=https://blaze.$DOMAIN_NAME
