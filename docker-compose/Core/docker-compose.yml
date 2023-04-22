@@ -1,0 +1,67 @@
+version: '3'
+# name: core
+services:
+
+
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest
+    container_name: dockerproxy
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - 2375:2375
+    environment:
+      CONTAINERS: 1 # Allow access to viewing containers
+      POST: 0 # Disallow any POST operations (effectively read-only)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    networks:
+      - proxy
+    ports:
+      #- 9000:9000 # Legacy HTTP port
+      - 9443:9443 
+      #- 8000:8000 # Portainer Edge Agents
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $MOUNT_POINT_DATA/portainer:/data
+    labels:
+      # HOMEPAGE
+      - homepage.group=Management
+      - homepage.name=portainer
+      - homepage.icon=portainer.png
+      - homepage.ping=https://portainer.$DOMAIN_NAME
+      - homepage.href=https://portainer.$DOMAIN_NAME
+      - homepage.description=Container deployement interface
+      - homepage.widget.type=portainer
+      - homepage.widget.url=https://portainer.$DOMAIN_NAME
+      - homepage.widget.env=X
+      - homepage.widget.key=$HOMEPAGE_PORTAINER_KEY
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.portainer.rule=Host(`portainer.$DOMAIN_NAME`)
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    environment:
+      WATCHTOWER_SCHEDULE: 0 0 4 * * *
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_NOTIFICATION_URL: discord://$WEBHOOK_TOKEN@$WEBHOOK_ID
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+networks:
+  proxy:
+    external: true

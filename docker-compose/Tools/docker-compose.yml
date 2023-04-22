@@ -1,0 +1,173 @@
+version: "3"
+services:
+  
+
+  blaze:
+    image: akashhamirwasia/blaze:latest
+    container_name: blaze
+    restart: always
+    networks:
+      - proxy
+    #ports:
+    #  - 8080:80
+    #  - 3030:3030
+    environment:
+      - PORT=80
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Blaze
+      - homepage.icon=blaze.png
+      - homepage.description=P2P file sharing web app
+      - homepage.ping=https://blaze.$DOMAIN_NAME
+      - homepage.href=https://blaze.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.blaze.rule=Host(`blaze.$DOMAIN_NAME`)
+      - traefik.http.services.blaze.loadbalancer.server.port=80
+  
+  focalboard:
+    image: mattermost/focalboard
+    container_name: focalboard
+    restart: unless-stopped
+    networks:
+      - proxy
+    #ports:
+    #  - 8084:8000
+    volumes:
+      - focalboard-data:/opt/focalboard/data
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=focalboard
+      - homepage.icon=focalboard.png
+      - homepage.ping=https://focalboard.$DOMAIN_NAME
+      - homepage.href=https://focalboard.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.focalboard.rule=Host(`focalboard.$DOMAIN_NAME`)
+      - traefik.http.services.focalboard.loadbalancer.server.port=8000
+  
+  it-tools:
+    container_name: it-tools
+    image: corentinth/it-tools
+    restart: always
+    #ports:
+    #  - 8080:80
+    networks:
+      - proxy
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=It-tools
+      - homepage.icon=mdi-tools
+      - homepage.description=Useful tools for developer and people working in IT
+      - homepage.ping=https://it-tools.$DOMAIN_NAME
+      - homepage.href=https://it-tools.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.it-tools.rule=Host(`it-tools.$DOMAIN_NAME`)
+      - traefik.http.services.it-tools.loadbalancer.server.port=80
+
+  homebox:
+    image: ghcr.io/hay-kot/homebox:latest
+    container_name: homebox
+    restart: always
+    networks:
+      - proxy
+    #ports:
+    #  - 3100:7745
+    environment:
+      HBOX_LOG_LEVEL: info
+      HBOX_LOG_FORMAT: text
+      HBOX_WEB_MAX_UPLOAD_SIZE: 10
+    volumes:
+      - $MOUNT_POINT_DATA/homebox:/data/
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Homebox
+      - homepage.icon=homebox.png
+      - homepage.ping=https://homebox.$DOMAIN_NAME
+      - homepage.href=https://homebox.$DOMAIN_NAME
+      - homepage.description=Inventory and organization tool for home users
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.homebox.rule=Host(`homebox.$DOMAIN_NAME`)
+      - traefik.http.services.homebox.loadbalancer.server.port=7745
+  
+  mealie:
+    container_name: mealie
+    image: hkotel/mealie:omni-nightly
+    restart: always
+    # ports:
+      # - 9925:80
+      # - 3005:3000
+      # - 9005:9000
+    networks:
+      - proxy
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      RECIPE_PUBLIC: 'true'
+      RECIPE_SHOW_NUTRITION: 'true'
+      RECIPE_SHOW_ASSETS: 'true'
+      RECIPE_LANDSCAPE_VIEW: 'true'
+      RECIPE_DISABLE_COMMENTS: 'false'
+      RECIPE_DISABLE_AMOUNT: 'false'
+      BASE_URL: https://mealie.$DOMAIN_NAME
+    volumes:
+      - $MOUNT_POINT_DATA/mealie:/app/data
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Mealie
+      - homepage.icon=mealie.png
+      - homepage.description=Recipe manager and meal planner
+      - homepage.ping=https://mealie.$DOMAIN_NAME
+      - homepage.href=https://mealie.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.mealie.rule=Host(`mealie.$DOMAIN_NAME`, `food.home`)
+      - traefik.http.services.mealie.loadbalancer.server.port=3000
+
+  pairdrop:
+    image: lscr.io/linuxserver/pairdrop:latest
+    container_name: pairdrop
+    restart: always
+    networks:
+      - proxy
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    #ports:
+    #  - 3000:3000
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=pairdrop
+      - homepage.icon=snapdrop.png
+      - homepage.description=LAN file/text sharing
+      - homepage.ping=https://pairdrop.$DOMAIN_NAME
+      - homepage.href=https://pairdrop.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.pairdrop.rule=Host(`pairdrop.$DOMAIN_NAME`, `share.home`)
+      - traefik.http.services.pairdrop.loadbalancer.server.port=3000
+
+
+volumes:
+  focalboard-data:
+
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,62 @@
+version: "3"
+# name: dashboards-rp
+services:
+
+
+  homepage:
+    image: ghcr.io/benphelps/homepage:latest
+    container_name: homepage-rp
+    restart: always
+    profiles: ["homepage", "full"]
+    networks:
+      - proxy
+    #ports:
+    #  - 3000:3000
+    dns:
+      - $DNS_ADDRESS
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+      - $MONT_POINT_CONFIG/homepage:/app/config
+    labels:
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.homepage.rule=Host(`homepage.$DOMAIN_NAME`)
+      - traefik.http.services.homepage.loadbalancer.server.port=3000
+
+
+  dashy:
+    image: lissy93/dashy
+    container_name: Dashy-rp
+    restart: always
+    profiles: ["dashy", "full"]
+    networks:
+      - proxy
+    #ports:
+    #  - 8080:80
+    dns:
+      - $DNS_ADDRESS
+    environment:
+      UID: $PUID
+      GID: $PGID
+    volumes:
+      - $MONT_POINT_CONFIG/dashy:/app/public
+    healthcheck:
+      test: ['CMD', 'node', '/app/services/healthcheck']
+      interval: 3m
+      timeout: 30s
+      retries: 3
+      start_period: 40s
+    labels:
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.dashy.rule=Host(`dashy.$DOMAIN_NAME`)
+      - traefik.http.services.dashy.loadbalancer.server.port=80
+
+
+networks:
+  proxy:
+    external: true

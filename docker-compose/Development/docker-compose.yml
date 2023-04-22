@@ -1,0 +1,38 @@
+version: "3"
+# name: development
+services:
+  
+  
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+    networks:
+      - proxy
+    #ports:
+    #  - 8443:8443
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - SUDO_PASSWORD=$SUDO_PASSWORD
+      - DEFAULT_WORKSPACE=/data/workspace
+    volumes:
+      - $MOUNT_POINT_DATA/code-server:/data
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Code-Server
+      - homepage.icon=codeserver.png
+      - homepage.ping=https://code-server.$DOMAIN_NAME
+      - homepage.href=https://code-server.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.code-server.rule=Host(`code-server.$DOMAIN_NAME`)
+      - traefik.http.services.code-server.loadbalancer.server.port=8443
+      
+      
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,75 @@
+version: "3"
+# name: network
+services:
+
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    restart: always
+    hostname: nas-tailscale
+    network_mode: "host"
+    privileged: true
+    environment:
+      TS_AUTH_KEY: $TS_AUTH_KEY
+      TS_ROUTES: $NETWORK_ADDRESS/24
+    volumes:
+      - $MOUNT_POINT_DATA/tailscale:/var/lib # State data will be stored in this directory
+      - /dev/net/tun:/dev/net/tun # Required for tailscale to work
+    cap_add: # Required for tailscale to work
+      - net_admin
+      - sys_module
+    labels:
+      # HOMEPAGE
+      - homepage.group=Networking
+      - homepage.name=Tailscale
+      - homepage.icon=tailscale.png
+      - homepage.description=Zero config mesh VPN
+      
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    hostname: nas-pihole
+    restart: always
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: $TZ
+      WEBPASSWORD: $PIHOLE_PASSWORD
+      FTLCONF_LOCAL_IPV4: $PIHOLE_ADDRESS
+      VIRTUAL_HOST: $SERVER_ADDRESS
+      PIHOLE_DNS_: "1.1.1.1;1.0.0.1;9.9.9.9;9.9.9.11;149.112.112.112;149.112.112.11"  # Cloud Flare, Quad9
+      PIHOLE_UID: 0
+      PIHOLE_GID: 100
+    networks:
+      interface-xxx:
+        ipv4_address: $PIHOLE_ADDRESS
+    volumes:
+      - $MOUNT_POINT_CONFIG/pihole:/etc/pihole
+      - $MOUNT_POINT_CONFIG/pihole/dnsmasq:/etc/dnsmasq.d
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    labels:
+      # HOMEPAGE
+      - homepage.group=Networking
+      - homepage.name=Pihole
+      - homepage.icon=pihole.png
+      - homepage.ping=http://$PIHOLE_ADDRESS
+      - homepage.href=http://$DASHBOARD_PIHOLE_ADDRESS
+      - homepage.description=Ad blocker, local DNS, DHCP server
+      - homepage.widget.type=pihole
+      - homepage.widget.url=http://$PIHOLE_ADDRESS
+      - homepage.widget.key=$PIHOLE_API_KEY
+      # WATCHTOWER
+      - com.centurylinklabs.watchtower.monitor-only
+
+
+networks:
+  interface-xxx:
+    external: true
+    

@@ -1,0 +1,187 @@
+version: '3'
+#name: monitoring-alerting-rp
+services:
+
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: always
+    networks:
+      - proxy
+    #ports:
+    #  - 9999:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Dozzle
+      - homepage.icon=dozzle.png
+      - homepage.ping=https://dozzle.$DOMAIN_NAME
+      - homepage.href=https://dozzle.$DOMAIN_NAME
+      - homepage.description=Log viewer
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.dozzle.rule=Host(`dozzle.$DOMAIN_NAME`)
+      - traefik.http.services.dozzle.loadbalancer.server.port=8080
+  
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    restart: always
+    hostname: netdata.home # set to fqdn of host
+    networks:
+      - proxy
+    #ports:
+    #  - 19999:19999
+    environment:
+      DOCKER_HOST: dockerproxy:2375
+      PGID: $GUID 
+    pid: host
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Netdata
+      - homepage.icon=netdata.png
+      - homepage.ping=https://netdata.$DOMAIN_NAME
+      - homepage.href=https://netdata.$DOMAIN_NAME
+      - homepage.description=Real time performance monitoring
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.netdata.rule=Host(`netdata.$DOMAIN_NAME`)
+      - traefik.http.services.netdata.loadbalancer.server.port=19999
+  
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    container_name: scrutiny
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      #- 8080:8080 # webapp
+      - 8086:8086 # indluxdb
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+      - $MOUNT_POINT_CONFIG/scrutiny:/config
+      - $MOUNT_POINT_CONFIG/scrutiny/influxdb:/opt/scrutiny/influxdb
+      - /run/udev:/run/udev:ro
+    devices:
+      - /dev/sda:/dev/sda
+      - /dev/sdb:/dev/sdb
+      - /dev/sdc:/dev/sdc
+      - /dev/sdd:/dev/sdd
+      - /dev/nvme0:/dev/nvme0
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Scrutiny
+      - homepage.icon=scrutiny.png
+      - homepage.ping=https://scrutiny.$DOMAIN_NAME
+      - homepage.href=https://scrutiny.$DOMAIN_NAME
+      - homepage.description=S.M.A.R.T drives monitoring
+      - homepage.widget.type=scrutiny
+      - homepage.widget.url=https://scrutiny.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.scrutiny.rule=Host(`scrutiny.$DOMAIN_NAME`)
+      - traefik.http.services.scrutiny.loadbalancer.server.port=8080
+  
+  speedtest:
+    container_name: speedtest
+    image: henrywhitaker3/speedtest-tracker
+    restart: unless-stopped
+    networks:
+      - proxy
+    #ports:
+    #  - 8765:80
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      GUID: $GUID
+      OOKLA_EULA_GDPR: "true"
+    volumes:
+      - $MOUNT_POINT_CONFIG/speedtest:/config
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Speedtest
+      - homepage.icon=speedtest-tracker.png
+      - homepage.ping=https://speedtest.$DOMAIN_NAME
+      - homepage.href=https://speedtest.$DOMAIN_NAME
+      - homepage.description=Internet speed measurement
+      - homepage.widget.type=speedtest
+      - homepage.widget.url=https://speedtest.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.speedtest.rule=Host(`speedtest.$DOMAIN_NAME`)
+      - traefik.http.services.speedtest.loadbalancer.server.port=80
+  
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: always
+    networks:
+      - proxy
+    #ports:
+    #  - 3001:3001
+    dns:
+      - $DNS_ADDRESS
+    volumes:
+      - $MOUNT_POINT_DATA/uptime-kuma:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Uptime Kuma
+      - homepage.icon=uptime-kuma.png
+      - homepage.ping=https://uptime-kuma.$DOMAIN_NAME
+      - homepage.href=https://uptime-kuma.$DOMAIN_NAME
+      - homepage.description=Uptime monitoring
+      - homepage.widget.type=uptimekuma
+      - homepage.widget.url=https://uptime-kuma.$DOMAIN_NAME
+      - homepage.widget.slug=$UPTIME-KUMA_PAGE
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.$DOMAIN_NAME`)
+      - traefik.http.services.uptime-kuma.loadbalancer.server.port=3001
+
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+
+networks:
+  proxy:
+    external: true

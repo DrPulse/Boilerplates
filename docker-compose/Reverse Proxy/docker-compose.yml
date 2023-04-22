@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $MONT_POINT_CONFIG/traefik/traefik.yml:/etc/traefik/traefik.yml
+      - $MONT_POINT_CONFIG/traefik/traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
+      - $MONT_POINT_CONFIG/reverse-proxy/certs:/etc/traefik/certs:ro
+    labels:
+      # HOMEPAGE
+      - homepage.group=Networking
+      - homepage.name=Traefik
+      - homepage.icon=traefik.png
+      - homepage.href=https://traefik.$DOMAIN_NAME
+      - homepage.ping=https://traefik.$DOMAIN_NAME
+      - homepage.description=Reverse proxy
+      - homepage.widget.type=traefik
+      - homepage.widget.url=https://traefik.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.traefik.rule=Host(`traefik.$DOMAIN_NAME`)
+      - traefik.http.routers.traefik.service=api@internal
+
+networks:
+  proxy:
+    external: true
