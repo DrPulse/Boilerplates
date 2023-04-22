@@ -169,7 +169,7 @@ services:
       - homepage.description=Uptime monitoring
       - homepage.widget.type=uptimekuma
       - homepage.widget.url=https://uptime-kuma.$DOMAIN_NAME
-      - homepage.widget.slug=$UPTIME-KUMA_PAGE
+      - homepage.widget.slug=$UPTIME_KUMA_PAGE
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
