@@ -16,9 +16,9 @@ services:
       - PGID=$PGID
       - TZ=$TZ
       - SUDO_PASSWORD=$SUDO_PASSWORD
-      - DEFAULT_WORKSPACE=/data/workspace
+      - DEFAULT_WORKSPACE=/config/workspace
     volumes:
-      - $MOUNT_POINT_DATA/code-server:/data
+      - $MOUNT_POINT_DATA/code-server:/config
     labels:
       # HOMEPAGE
       - homepage.group=Tools
