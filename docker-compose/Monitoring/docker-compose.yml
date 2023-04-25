@@ -113,7 +113,7 @@ services:
   speedtest:
     container_name: speedtest
     image: henrywhitaker3/speedtest-tracker
-    restart: unless-stopped
+    restart: always
     networks:
       - proxy
     #ports:
