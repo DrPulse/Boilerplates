@@ -1,0 +1,144 @@
+[tool.poetry]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.project_version }}"
+description = "{{ cookiecutter.project_description }}"
+authors = ["{{ cookiecutter.author }} <{{ cookiecutter.email }}>"]
+readme = "README.md"
+packages = [
+    {include = "{{ cookiecutter.project_slug }}"}
+]
+
+[tool.poetry.dependencies]
+python = "^{{ cookiecutter.python_major_version }}.{{ cookiecutter.python_minor_version }}"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3"
+safety = "^2.3"
+bandit = "^1.7"
+deptry = "^0.11"
+isort = "^5.10.1"
+poethepoet = "^0.20"
+mypy = "^1.3"
+flake8 = "^6.0"
+pylint = "^2.17.4"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3"
+coverage = "^7.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.cookiecutter.post_generate]
+script = "post_gen_project.py"
+
+[tool.isort]
+profile = "black"
+line_length = 119
+
+[tool.black]
+line-length = 119
+target-version = ['py{{ cookiecutter.python_major_version  }}{{ cookiecutter.python_minor_version  }}']
+
+[tool.poe.tasks]
+#Lancement de l'application
+[tool.poe.tasks."start"]
+cmd = "python {{ cookiecutter.project_slug }}/cli.py"
+help = "Start a local app instance"
+
+#Validation et Formattage
+[tool.poe.tasks."lint"]
+sequence = [
+    "lint:isort",
+    "lint:deptry",
+    "lint:flake8",
+    "lint:pylint",
+    "lint:mypy",
+]
+help = "Lint the pyhon codebase with tools"
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks."lint:black"]
+cmd = "black --check --diff --color {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase to detect styling issues with black"
+
+[tool.poe.tasks."lint:deptry"]
+cmd = "deptry {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase for dependencies issues with deptry"
+
+[tool.poe.tasks."lint:flake8"]
+cmd = "flake8 {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase to detect code smells or styling issues with flake8"
+
+[tool.poe.tasks."lint:isort"]
+cmd = "isort --color {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase for incorrect imports with isort"
+
+[tool.poe.tasks."lint:mypy"]
+cmd = "mypy {{ cookiecutter.project_slug }}/ --check-untyped-defs"
+help = "valide le typage de l'application"
+
+[tool.poe.tasks."lint:pylint"]
+cmd = "pylint --exit-zero {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase to detect errors or styling issues with pylint"
+
+#Sécurité
+[tool.poe.tasks."sec"]
+sequence = [
+    "sec:safety",
+    "sec:bandit",
+]
+help = "Check the pyhon codebase with tools to find vulnerabilities"
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks."sec:safety"]
+cmd = "safety check --full-report"
+help = "Check dependencies to find vulnerabilities using safety"
+
+[tool.poe.tasks."sec:bandit"]
+cmd = "bandit -r {{ cookiecutter.project_slug }}/"
+help = "Find common security issues using bandit"
+
+
+# Formatage
+[tool.poe.tasks."format:black"]
+cmd = "black --color {{ cookiecutter.project_slug }}/"
+help = "Format the python codebase with black"
+
+[tool.poe.tasks."format:isort"]
+cmd = "isort --color {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase for incorrect imports with isort"
+
+
+#TEST
+[tool.poe.tasks."test"]
+sequence = [
+    "test:unit",
+    "test:coverage",
+]
+help = "Lint the pyhon codebase with tools"
+ignore_fail = "return_non_zero"
+
+
+[tool.poe.tasks."test:unit"]
+cmd = "pytest -s tests/unit_tests"
+help = "Run unit tests"
+
+[tool.poe.tasks."test:coverage"]
+cmd = "coverage run --source 'src/' -m pytest"
+help = "Run unit tests with coverage"
+
+
+#DEPLOIEMENT
+[tool.poe.tasks."deploy"]
+sequence = [
+    "deploy:prepare",
+]
+help = "Lint the pyhon codebase with tools"
+ignore_fail = "return_non_zero"
+
+
+[tool.poe.tasks."deploy:prepare"]
+cmd = "poetry export --format requirements.txt --output requirements.txt"
+help = "Prepare the deployment unit"
