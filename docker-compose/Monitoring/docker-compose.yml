@@ -112,24 +112,18 @@ services:
   
   speedtest:
     container_name: speedtest
-    image: henrywhitaker3/speedtest-tracker
+    image: ghcr.io/alexjustesen/speedtest-tracker:latest
     restart: always
     networks:
       - proxy
     #ports:
-    #  - 8765:80
+    #  - 8080:80
+    #  - 8443:443
     environment:
-      TZ: $TZ
       PUID: $PUID
       GUID: $GUID
-      OOKLA_EULA_GDPR: "true"
     volumes:
       - $MOUNT_POINT_CONFIG/speedtest:/config
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "10"
-        max-size: "200k"
     labels:
       # HOMEPAGE
       - homepage.group=Monitoring & Alerting

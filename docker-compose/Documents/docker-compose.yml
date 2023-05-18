@@ -205,7 +205,7 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=Wiki.js
       - homepage.icon=wikijs.png
-      - homepage.ping=https://wikijs.$DOMAIN_NAME
+      - homepage.ping=https://wikijs.$DOMAIN_NAME/login
       - homepage.href=https://wikijs.$DOMAIN_NAME
       - homepage.description=Wiki
       # TRAEFIK

@@ -58,7 +58,7 @@ services:
       # HOMEPAGE
       - homepage.group=Networking
       - homepage.name=Pihole
-      - homepage.icon=pihole.png
+      - homepage.icon=pi-hole.png
       - homepage.ping=http://$PIHOLE_ADDRESS
       - homepage.href=http://$DASHBOARD_PIHOLE_ADDRESS
       - homepage.description=Ad blocker, local DNS, DHCP server
