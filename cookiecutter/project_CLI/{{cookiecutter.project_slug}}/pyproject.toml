@@ -12,19 +12,19 @@ packages = [
 python = "^{{ cookiecutter.python_major_version }}.{{ cookiecutter.python_minor_version }}"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3"
-safety = "^2.3"
-bandit = "^1.7"
-deptry = "^0.11"
-isort = "^5.10.1"
-poethepoet = "^0.20"
-mypy = "^1.3"
-flake8 = "^6.0"
-pylint = "^2.17.4"
+black = "*"
+safety = "*"
+bandit = "*"
+deptry = "*"
+isort = "*"
+poethepoet = "*"
+mypy = "*"
+flake8 = "*"
+pylint = "*"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.3"
-coverage = "^7.2"
+pytest = "*"
+coverage = "*"
 
 [build-system]
 requires = ["poetry-core"]
