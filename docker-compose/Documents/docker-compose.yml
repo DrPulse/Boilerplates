@@ -192,7 +192,7 @@ services:
       - 21027:21027/udp # protocol discovery
     environment:
       - PUID=$PUID
-      - PGID=PGID
+      - PGID=$PGID
       - TZ=$TZ
     volumes:
       - $MOUNT_POINT_CONFIG/syncthing/config:/config
