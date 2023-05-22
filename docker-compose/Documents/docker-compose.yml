@@ -186,7 +186,7 @@ services:
     networks:
       - proxy
     ports:
-      # - 8384:8384 # WEB UI
+      - 8384:8384 # WEB UI
       - 22000:22000/tcp # listening tcp
       - 22000:22000/udp # listening udp
       - 21027:21027/udp # protocol discovery
