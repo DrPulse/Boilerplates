@@ -178,7 +178,42 @@ services:
       - paperless
     volumes:
       - $MOUNT_POINT_DATA/paperless/cache:/data
-      
+  
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    restart: always
+    networks:
+      - proxy
+    ports:
+      # - 8384:8384 # WEB UI
+      - 22000:22000/tcp # listening tcp
+      - 22000:22000/udp # listening udp
+      - 21027:21027/udp # protocol discovery
+    environment:
+      - PUID=$PUID
+      - PGID=PGID
+      - TZ=$TZ
+    volumes:
+      - $MOUNT_POINT_CONFIG/syncthing/config:/config
+      - $MOUNT_POINT_DATA/syncthing:/data_root
+    labels:
+      # HOMEPAGE
+      - homepage.group=Documents & Files
+      - homepage.name=Syncthing
+      - homepage.icon=syncthing.png
+      - homepage.ping=https://syncthing.$DOMAIN_NAME/login
+      - homepage.href=https://syncthing.$DOMAIN_NAME
+      - homepage.description=Syncing file tool accross devices
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
+      - traefik.http.services.syncthing.loadbalancer.server.port=8384
+      # WATCHTOWER
+      - com.centurylinklabs.watchtower.monitor-only=true
+    
+
   wikijs:
     image: lscr.io/linuxserver/wikijs:latest
     container_name: wikijs
