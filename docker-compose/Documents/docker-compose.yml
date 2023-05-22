@@ -183,8 +183,6 @@ services:
     image: lscr.io/linuxserver/syncthing:latest
     container_name: syncthing
     restart: always
-    networks:
-      - proxy
     ports:
       - 8384:8384 # WEB UI
       - 22000:22000/tcp # listening tcp
@@ -206,7 +204,7 @@ services:
       - homepage.href=https://syncthing.$DOMAIN_NAME
       - homepage.description=Syncing file tool accross devices
       # TRAEFIK
-      - traefik.enable=true
+      - traefik.enable=false
       - traefik.docker.network=proxy
       - traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
       - traefik.http.services.syncthing.loadbalancer.server.port=8384
