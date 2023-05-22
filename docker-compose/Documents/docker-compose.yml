@@ -182,6 +182,7 @@ services:
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
     container_name: syncthing
+    hostname: syncthing
     restart: always
     ports:
       - 8384:8384 # WEB UI
