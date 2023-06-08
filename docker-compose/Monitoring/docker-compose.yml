@@ -83,7 +83,7 @@ services:
     environment:
       TZ: $TZ
       PUID: $PUID
-      PGID: $PGID
+      PGID: $GUID
     volumes:
       - $MOUNT_POINT_CONFIG/scrutiny:/config
       - $MOUNT_POINT_CONFIG/scrutiny/influxdb:/opt/scrutiny/influxdb
