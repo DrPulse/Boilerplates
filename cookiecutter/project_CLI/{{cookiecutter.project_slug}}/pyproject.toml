@@ -122,11 +122,11 @@ ignore_fail = "return_non_zero"
 
 
 [tool.poe.tasks."test:unit"]
-cmd = "pytest -s tests/unit_tests"
+cmd = "pytest -s tests/"
 help = "Run unit tests"
 
 [tool.poe.tasks."test:coverage"]
-cmd = "coverage run --source 'src/' -m pytest"
+cmd = "coverage run --source 'tests/' -m pytest"
 help = "Run unit tests with coverage"
 
 
