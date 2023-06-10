@@ -13,9 +13,9 @@ A command-line utility that creates projects from **cookiecutters** (project tem
   # You'll be prompted to enter values.
   # Then it'll create your Python package in the current working directory,
   # based on those values.
-  $ cookiecutter https://github.com/DrPulse/Boilerplates/cookiecutter/*template*
+  $ cookiecutter https://github.com/DrPulse/Boilerplates --directory cookiecutter/*template*
   # For the sake of brevity, repos on GitHub can just use the 'gh' prefix
-  $ cookiecutter gh:DrPulse/Boilerplates/cookiecutter/*template*
+  $ cookiecutter gh:DrPulse/Boilerplates --directory cookiecutter/*template*
   ```
 
 - Use it at the command line with a local template:
