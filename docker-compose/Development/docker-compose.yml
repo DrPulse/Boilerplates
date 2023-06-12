@@ -73,7 +73,7 @@ services:
       SEMAPHORE_ADMIN_PASSWORD: $SEMAPHORE_PASSWORD
       SEMAPHORE_ADMIN_NAME: $SEMAPHORE_USER
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
-      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ADMIN: $SEMAPHORE_USER
       SEMAPHORE_ACCESS_KEY_ENCRYPTION: $SEMAPHORE_KEY_ENCRYPTION
       ANSIBLE_HOST_KEY_CHECKING: false  # (optional) change to true if you want to enable host key checking
     volumes:
