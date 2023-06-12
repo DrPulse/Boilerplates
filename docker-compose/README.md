@@ -31,6 +31,7 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Homepage
 - [Development](Development)
   - Code-server
+  - Semaphore
 - [Documents](Documents)
   - Drawio
   - Excalidraw

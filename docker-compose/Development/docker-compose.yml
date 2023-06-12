@@ -31,8 +31,67 @@ services:
       - traefik.docker.network=proxy
       - traefik.http.routers.code-server.rule=Host(`code-server.$DOMAIN_NAME`)
       - traefik.http.services.code-server.loadbalancer.server.port=8443
-      
-      
+
+
+
+  semaphore-db:
+    image: mysql:8.0
+    container_name: semaphore-db
+    hostname: mysql-db-semaphore
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    volumes:
+      - $MOUNT_POINT_DATA/semaphore/db:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+  
+  semaphore-server:
+    image: semaphoreui/semaphore:latest
+    container_name: semaphore
+    restart: unless-stopped
+    networks:
+      - proxy
+    #ports:
+    #  - 3000:3000
+    user: "${PUID}:${PGID}"
+    depends_on:
+      - semaphore-db
+    environment:
+      SEMAPHORE_DB_USER: $DB_USER
+      SEMAPHORE_DB_PASS: $DB_PASSWORD
+      SEMAPHORE_DB_HOST: mysql-db-semaphore
+      SEMAPHORE_DB_PORT: 3306 
+      SEMAPHORE_DB_DIALECT: mysql
+      SEMAPHORE_DB: $DB_NAME
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: $SEMAPHORE_PASSWORD=
+      SEMAPHORE_ADMIN_NAME: $SEMAPHORE_USER
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: $SEMAPHORE_KEY_ENCRYPTION
+      ANSIBLE_HOST_KEY_CHECKING: false  # (optional) change to true if you want to enable host key checking
+    volumes:
+      - $MOUNT_POINT_DATA/semaphore/inventory:/inventory:ro
+      - $MOUNT_POINT_DATA/semaphore/authorized-keys:/authorized-keys:ro
+      - $MOUNT_POINT_DATA/semaphore/config:/etc/semaphore:rw
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Semaphore
+      - homepage.icon=ansible.png
+      - homepage.ping=https://semaphore.$DOMAIN_NAME
+      - homepage.href=https://semaphore.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.semaphore.rule=Host(`semaphore.$DOMAIN_NAME`)
+      - traefik.http.services.semaphore.loadbalancer.server.port=3000
+
+
 networks:
   proxy:
     external: true
