@@ -4,7 +4,7 @@ services:
 
 
   dozzle:
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:v4.10.10
     container_name: dozzle
     restart: always
     networks:
@@ -83,7 +83,7 @@ services:
     environment:
       TZ: $TZ
       PUID: $PUID
-      PGID: $PGID
+      PGID: $GUID
     volumes:
       - $MOUNT_POINT_CONFIG/scrutiny:/config
       - $MOUNT_POINT_CONFIG/scrutiny/influxdb:/opt/scrutiny/influxdb
@@ -141,7 +141,7 @@ services:
       - traefik.http.services.speedtest.loadbalancer.server.port=80
   
   uptime-kuma:
-    image: louislam/uptime-kuma:latest
+    image: louislam/uptime-kuma:1.21.2
     container_name: uptime-kuma
     restart: always
     networks:
