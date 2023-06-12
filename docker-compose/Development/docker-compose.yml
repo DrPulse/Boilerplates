@@ -47,8 +47,8 @@ services:
       - $MOUNT_POINT_DATA/semaphore/db:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-      MYSQL_DATABASE: $DB_NAME
-      MYSQL_USER: $DB_USER
+      MYSQL_DATABASE: sephamore
+      MYSQL_USER: sephamore
       MYSQL_PASSWORD: $DB_PASSWORD
   
   semaphore-server:
@@ -63,17 +63,17 @@ services:
     depends_on:
       - semaphore-db
     environment:
-      SEMAPHORE_DB_USER: $DB_USER
+      SEMAPHORE_DB_USER: sephamore
       SEMAPHORE_DB_PASS: $DB_PASSWORD
       SEMAPHORE_DB_HOST: mysql
       SEMAPHORE_DB_PORT: 3306 
       SEMAPHORE_DB_DIALECT: mysql
-      SEMAPHORE_DB: $DB_NAME
+      SEMAPHORE_DB: sephamore
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
       SEMAPHORE_ADMIN_PASSWORD: $SEMAPHORE_PASSWORD
-      SEMAPHORE_ADMIN_NAME: $SEMAPHORE_USER
+      SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
-      SEMAPHORE_ADMIN: $SEMAPHORE_USER
+      SEMAPHORE_ADMIN: admin
       SEMAPHORE_ACCESS_KEY_ENCRYPTION: $SEMAPHORE_KEY_ENCRYPTION
       ANSIBLE_HOST_KEY_CHECKING: false  # (optional) change to true if you want to enable host key checking
     volumes:
