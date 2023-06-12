@@ -39,6 +39,8 @@ services:
     container_name: semaphore-db
     hostname: mysql-db-semaphore
     restart: unless-stopped
+    networks:
+      - proxy
     ports:
       - 3306:3306
     volumes:
