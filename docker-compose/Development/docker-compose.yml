@@ -47,8 +47,8 @@ services:
       - $MOUNT_POINT_DATA/semaphore/db:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-      MYSQL_DATABASE: sephamore
-      MYSQL_USER: sephamore
+      MYSQL_DATABASE: semaphore
+      MYSQL_USER: semaphore
       MYSQL_PASSWORD: $DB_PASSWORD
   
   semaphore-server:
@@ -63,12 +63,12 @@ services:
     depends_on:
       - semaphore-db
     environment:
-      SEMAPHORE_DB_USER: sephamore
+      SEMAPHORE_DB_USER: semaphore
       SEMAPHORE_DB_PASS: $DB_PASSWORD
       SEMAPHORE_DB_HOST: mysql
       SEMAPHORE_DB_PORT: 3306 
       SEMAPHORE_DB_DIALECT: mysql
-      SEMAPHORE_DB: sephamore
+      SEMAPHORE_DB: semaphore
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
       SEMAPHORE_ADMIN_PASSWORD: $SEMAPHORE_PASSWORD
       SEMAPHORE_ADMIN_NAME: admin
