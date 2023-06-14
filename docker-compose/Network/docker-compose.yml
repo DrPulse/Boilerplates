@@ -15,6 +15,7 @@ services:
     volumes:
       - $MOUNT_POINT_DATA/tailscale:/var/lib # State data will be stored in this directory
       - /dev/net/tun:/dev/net/tun # Required for tailscale to work
+      - /var/lib:/var/lib
     cap_add: # Required for tailscale to work
       - net_admin
       - sys_module
@@ -26,7 +27,7 @@ services:
       - homepage.description=Zero config mesh VPN
       
   pihole:
-    image: pihole/pihole:latest
+    image: pihole/pihole:2023.05.2
     container_name: pihole
     hostname: nas-pihole
     restart: always
@@ -60,7 +61,7 @@ services:
       - homepage.name=Pihole
       - homepage.icon=pi-hole.png
       - homepage.ping=http://$PIHOLE_ADDRESS
-      - homepage.href=http://$DASHBOARD_PIHOLE_ADDRESS
+      - homepage.href=http://$DASHBOARD_PIHOLE_ADDRESS/admin
       - homepage.description=Ad blocker, local DNS, DHCP server
       - homepage.widget.type=pihole
       - homepage.widget.url=http://$PIHOLE_ADDRESS

@@ -52,7 +52,7 @@ services:
   nextcloud-db:
     image: mariadb:10.5
     container_name: nextcloud-db
-    restart: always
+    restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     networks:
       - nextcloud
@@ -67,7 +67,7 @@ services:
   nextcloud:
     image: nextcloud
     container_name: nextcloud
-    restart: always
+    restart: unless-stopped
     depends_on:
       - nextcloud-db
     networks:
@@ -103,7 +103,7 @@ services:
   onlyoffice:
     container_name: onlyoffice
     image: onlyoffice/documentserver
-    restart: always
+    restart: unless-stopped
     network_mode: "bridge"
     #ports:
     #  - 8780:80

@@ -304,7 +304,7 @@ services:
   ombi:
     image: lscr.io/linuxserver/ombi:latest
     container_name: ombi
-    restart: always
+    restart: unless-stopped
     networks:
       - proxy
     #ports:
@@ -368,7 +368,7 @@ services:
   requestrr:
     image: lscr.io/linuxserver/requestrr:latest
     container_name: requestrr
-    restart: always
+    restart: unless-stopped
     networks:
       - proxy
     #ports:
@@ -398,7 +398,7 @@ services:
   wizarr:
     image: ghcr.io/wizarrrr/wizarr:latest
     container_name: wizarr
-    restart: always
+    restart: unless-stopped
     #ports:
     #- 5690:5690
     networks:
@@ -430,7 +430,7 @@ services:
   flemmarr:
     image: pierremesure/flemmarr:latest
     container_name: flemmarr
-    restart: always
+    restart: unless-stopped
     networks:
       - proxy
     volumes:

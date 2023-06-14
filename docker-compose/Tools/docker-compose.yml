@@ -5,7 +5,7 @@ services:
   blaze:
     image: akashhamirwasia/blaze:latest
     container_name: blaze
-    restart: always
+    restart: unless-stopped
     networks:
       - proxy
     #ports:
@@ -103,7 +103,7 @@ services:
   mealie:
     container_name: mealie
     image: hkotel/mealie:omni-nightly
-    restart: always
+    restart: unless-stopped
     # ports:
       # - 9925:80
       # - 3005:3000
