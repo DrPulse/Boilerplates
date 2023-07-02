@@ -2,7 +2,7 @@
 name = "{{ cookiecutter.project_slug }}"
 version = "{{ cookiecutter.project_version }}"
 description = "{{ cookiecutter.project_description }}"
-authors = ["{{ cookiecutter.author }} <{{ cookiecutter.email }}>"]
+authors = ["{{ cookiecutter.author }} <{{ cookiecutter.email|lower }}>"]
 readme = "README.md"
 packages = [
     {include = "{{ cookiecutter.project_slug }}"}
