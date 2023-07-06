@@ -4,7 +4,7 @@ services:
   
 
   drawio:
-    image: jgraph/drawio:21.5.0
+    image: jgraph/drawio:21.6.1
     container_name: draw
     restart: unless-stopped
     networks:
@@ -50,7 +50,7 @@ services:
       
       
   nextcloud-db:
-    image: mariadb:10.5
+    image: mariadb:10.11
     container_name: nextcloud-db
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
@@ -215,7 +215,7 @@ services:
     
 
   wikijs:
-    image: lscr.io/linuxserver/wikijs:2.5.298
+    image: lscr.io/linuxserver/wikijs:2.5.299
     container_name: wikijs
     restart: always  
     networks:
