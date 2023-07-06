@@ -3,7 +3,7 @@ services:
 
 
   focalboard:
-    image: mattermost/focalboard:7.8.7
+    image: mattermost/focalboard:7.11.0
     container_name: focalboard
     restart: unless-stopped
     networks:
@@ -48,7 +48,7 @@ services:
       - traefik.http.services.it-tools.loadbalancer.server.port=80
 
   homebox:
-    image: ghcr.io/hay-kot/homebox:v0.9.1
+    image: ghcr.io/hay-kot/homebox:v0.9.2
     container_name: homebox
     restart: always
     networks:
@@ -113,7 +113,7 @@ services:
       - traefik.http.services.mealie.loadbalancer.server.port=3000
 
   pairdrop:
-    image: lscr.io/linuxserver/pairdrop:1.7.4
+    image: lscr.io/linuxserver/pairdrop:1.7.6
     container_name: pairdrop
     restart: always
     networks:
