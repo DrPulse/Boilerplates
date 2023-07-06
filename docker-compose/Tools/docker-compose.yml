@@ -48,7 +48,7 @@ services:
       - traefik.http.services.it-tools.loadbalancer.server.port=80
 
   homebox:
-    image: ghcr.io/hay-kot/homebox:v0.9.1
+    image: ghcr.io/hay-kot/homebox:v0.9.2
     container_name: homebox
     restart: always
     networks:
