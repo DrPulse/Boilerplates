@@ -215,7 +215,7 @@ services:
     
 
   wikijs:
-    image: lscr.io/linuxserver/wikijs:2.5.298
+    image: lscr.io/linuxserver/wikijs:2.5.299
     container_name: wikijs
     restart: always  
     networks:
