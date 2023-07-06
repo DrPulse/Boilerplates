@@ -30,8 +30,8 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/version/$SERVER_NAME/config:/data
-      - $MOUNT_POINT_GAMES/Minecraft/version/$SERVER_NAME/mods:/data/mods
+      - $MOUNT_POINT_GAMES/Minecraft/$MAJOR_VERSION/$SERVER_NAME/config:/data
+      - $MOUNT_POINT_GAMES/Minecraft/$MAJOR_VERSION/$SERVER_NAME/mods:/data/mods
     labels:
       # HOMEPAGE
       - homepage.group=Tools
