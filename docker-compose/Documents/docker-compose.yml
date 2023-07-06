@@ -4,7 +4,7 @@ services:
   
 
   drawio:
-    image: jgraph/drawio
+    image: jgraph/drawio:21.5.0
     container_name: draw
     restart: unless-stopped
     networks:
@@ -27,7 +27,7 @@ services:
       - traefik.http.services.drawio.loadbalancer.server.port=8080     
       
   excalidraw:
-    image: excalidraw/excalidraw:latest
+    image: excalidraw/excalidraw@sha256:9397972763096195dc31eee1724852c5f49bf9e1313197746fa8fc7851527e6e
     container_name: excalidraw
     restart: unless-stopped
     networks:
@@ -65,7 +65,7 @@ services:
       - $MOUNT_POINT_DATA/nextcloud/db:/var/lib/mysql
 
   nextcloud:
-    image: nextcloud
+    image: nextcloud:27.0.0
     container_name: nextcloud
     restart: unless-stopped
     depends_on:
@@ -102,7 +102,7 @@ services:
 
   onlyoffice:
     container_name: onlyoffice
-    image: onlyoffice/documentserver
+    image: onlyoffice/documentserver:7.4.0
     restart: unless-stopped
     network_mode: "bridge"
     #ports:
@@ -134,7 +134,8 @@ services:
       - traefik.http.services.onlyoffice.loadbalancer.server.port=80
   
   paperless-server:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    image: ghcr.io/paperless-ngx/paperless-ngx:Paperless-ngx v1.16.4
+
     restart: always
     container_name: paperless-server
     depends_on:
@@ -214,7 +215,7 @@ services:
     
 
   wikijs:
-    image: lscr.io/linuxserver/wikijs:latest
+    image: lscr.io/linuxserver/wikijs:2.5.298
     container_name: wikijs
     restart: always  
     networks:

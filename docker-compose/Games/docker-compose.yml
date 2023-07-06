@@ -5,14 +5,14 @@ services:
 
   mc:
     container_name: minecraft-server-$SERVER_NAME
-    image: itzg/minecraft-server
-    restart: unless-stopped
+    image: itzg/minecraft-server:2023.3.0
+    restart: always
     ports:
       - 25565:25565
     environment:
       EULA: "TRUE"
       TYPE: "FABRIC"
-      #SEED: $SEED
+      SEED: $SEED
       DIFFICULTY: $DIFFICULTY
       SERVER_NAME: "Self Hosted Server"
       MOTD: "Server running on container"
@@ -32,3 +32,12 @@ services:
     volumes:
       - $MOUNT_POINT_GAMES/Minecraft/version/$SERVER_NAME/config:/data
       - $MOUNT_POINT_GAMES/Minecraft/version/$SERVER_NAME/mods:/data/mods
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=MC Vanilla ++
+      - homepage.icon=minecraft.png
+      - homepage.description=Minecraft vanilla with QOL mods
+      - homepage.widget.type=minecraft
+      - homepage.widget.url=udp://$MC_IP:$MC_PORT
+      
