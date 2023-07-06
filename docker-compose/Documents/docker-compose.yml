@@ -181,7 +181,7 @@ services:
       - $MOUNT_POINT_DATA/paperless/cache:/data
   
   syncthing:
-    image: lscr.io/linuxserver/syncthing:v1.23.4-ls101
+    image: lscr.io/linuxserver/syncthing:latest
     container_name: syncthing
     hostname: syncthing
     restart: always
