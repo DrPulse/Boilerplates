@@ -85,7 +85,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: lscr.io/linuxserver/deluge:2.1.1
+    image: lscr.io/linuxserver/deluge:18.04.1
     restart: always
     networks:
       - proxy
