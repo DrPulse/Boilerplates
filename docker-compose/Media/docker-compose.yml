@@ -5,7 +5,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin:10.8.10
+    image: lscr.io/linuxserver/jellyfin@sha256:cc71c462935a5e297f6a69b1278216c802ecf08d6970abfff26f9ec7e8da6b90
     container_name: jellyfin
     restart: always
     profiles: ["jellyfin", "full"]
@@ -85,7 +85,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: lscr.io/linuxserver/deluge:2.1.1
+    image: lscr.io/linuxserver/deluge@sha256:197f2a50952c8ec07352d6daff86643a3237cf46b644a8f6428f1e8748952690
     restart: always
     networks:
       - proxy
@@ -334,7 +334,7 @@ services:
       - traefik.http.services.ombi.loadbalancer.server.port=3579
 
   overseerr:
-    image: lscr.io/linuxserver/overseerr:1.33.0
+    image: lscr.io/linuxserver/overseerr@sha256:a1eee60c92f79448490864285bbfa357f923e64d682a2a82d37dfc2ad550133a
     container_name: overseerr
     restart: always
     profiles: ["plex", "full"]
