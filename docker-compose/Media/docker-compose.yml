@@ -5,7 +5,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin:10.8.9
+    image: lscr.io/linuxserver/jellyfin:10.8.10
     container_name: jellyfin
     restart: always
     profiles: ["jellyfin", "full"]
