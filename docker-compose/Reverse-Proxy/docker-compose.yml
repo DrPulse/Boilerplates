@@ -12,7 +12,7 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - $MOUNT_POINT_CONFIG/traefik/traefik.yml:ro:/etc/traefik/traefik.yml:ro
+      - $MOUNT_POINT_CONFIG/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
       - $MOUNT_POINT_CONFIG/traefik/traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
       - $MOUNT_POINT_CONFIG/reverse-proxy/certs:/etc/traefik/certs:ro
     labels:
