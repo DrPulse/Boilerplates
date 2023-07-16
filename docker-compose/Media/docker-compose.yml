@@ -100,6 +100,8 @@ services:
     volumes:
       - $MOUNT_POINT_CONFIG/deluge:/config
       - $MOUNT_POINT_COMMON/multimedia/torrents:/data/torrents
+      - $MOUNT_POINT_ISO/ISOs:/data/torrents/iso
+      
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
