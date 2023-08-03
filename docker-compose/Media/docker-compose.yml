@@ -5,7 +5,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin@sha256:cc71c462935a5e297f6a69b1278216c802ecf08d6970abfff26f9ec7e8da6b90
+    image: lscr.io/linuxserver/jellyfin@sha256:8f7d362b320005df70b5ec100a12637eb9b7986dadb6664a4ee3a1ec67b0900b
     container_name: jellyfin
     restart: always
     profiles: ["jellyfin", "full"]
@@ -85,7 +85,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: lscr.io/linuxserver/deluge@sha256:197f2a50952c8ec07352d6daff86643a3237cf46b644a8f6428f1e8748952690
+    image: lscr.io/linuxserver/deluge@sha256:d96ed36ff116557ecd940444b8ad8f6a58d160a9ec21c3c6f7630cc964c60c2e
     restart: always
     networks:
       - proxy
@@ -100,6 +100,8 @@ services:
     volumes:
       - $MOUNT_POINT_CONFIG/deluge:/config
       - $MOUNT_POINT_COMMON/multimedia/torrents:/data/torrents
+      - $MOUNT_POINT_ISO/ISOs:/data/torrents/iso
+      
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
@@ -119,7 +121,7 @@ services:
 
 # Media Managers
   bazarr:
-    image: lscr.io/linuxserver/bazarr:1.2.2
+    image: lscr.io/linuxserver/bazarr:1.2.3
     container_name: bazarr
     restart: always
     networks:
@@ -148,7 +150,7 @@ services:
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.2.1
+    image: ghcr.io/flaresolverr/flaresolverr:v3.2.2
     container_name: flaresolverr
     restart: always
     networks:
@@ -170,7 +172,7 @@ services:
       - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr@sha256:621156a785d9c097b3a741c42f732982acab2db2f7457853960b50a4a43c1bc5
+    image: lscr.io/linuxserver/prowlarr@sha256:56f727558d0dcde30e044f928daa012cf11c7309040d84eb0aece8dd7a422136
     container_name: prowlarr
     restart: always
     networks:
@@ -334,7 +336,7 @@ services:
       - traefik.http.services.ombi.loadbalancer.server.port=3579
 
   overseerr:
-    image: lscr.io/linuxserver/overseerr@sha256:a1eee60c92f79448490864285bbfa357f923e64d682a2a82d37dfc2ad550133a
+    image: lscr.io/linuxserver/overseerr@sha256:524eecc06df102148f504a2e84dbbbaad2e9bfe0ffdc98d840ba9965def235fb
     container_name: overseerr
     restart: always
     profiles: ["plex", "full"]
