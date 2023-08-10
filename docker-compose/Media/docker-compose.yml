@@ -58,7 +58,7 @@ services:
       PGID: $PGID
       VERSION: $VERSION
       PLEX_CLAIM: $PLEX_CLAIM
-      ADVERTISE_IP: https://${SERVER_ADDRESS}:32400
+      ADVERTISE_IP: http://${SERVER_ADDRESS}:32400
     volumes:
       - $MOUNT_POINT_CONFIG/plex:/config
       - $MOUNT_POINT_COMMON/multimedia/media/tv:/tv
@@ -304,7 +304,7 @@ services:
       - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
 
   ombi:
-    image: lscr.io/linuxserver/ombi:latest
+    image: lscr.io/linuxserver/ombi:4.39.1
     container_name: ombi
     restart: unless-stopped
     networks:
