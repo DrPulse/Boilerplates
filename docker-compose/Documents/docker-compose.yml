@@ -27,7 +27,7 @@ services:
       - traefik.http.services.drawio.loadbalancer.server.port=8080     
       
   excalidraw:
-    image: excalidraw/excalidraw@sha256:9397972763096195dc31eee1724852c5f49bf9e1313197746fa8fc7851527e6e
+    image: excalidraw/excalidraw@sha256:648edf36c55793fdeed475e09a86fb6c16a68783dc442d37d5070adfc0362a8f
     container_name: excalidraw
     restart: unless-stopped
     networks:
