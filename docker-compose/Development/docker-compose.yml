@@ -35,7 +35,7 @@ services:
 
 
   semaphore-db:
-    image: mysql:8.0
+    image: mysql:8.1
     container_name: semaphore-db
     hostname: mysql
     restart: unless-stopped
