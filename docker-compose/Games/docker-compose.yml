@@ -5,7 +5,7 @@ services:
 
   mc:
     container_name: minecraft-server-$SERVER_NAME
-    image: itzg/minecraft-server:2023.8.1
+    image: itzg/minecraft-server:2023.8.2
     restart: always
     ports:
       - 25565:25565
