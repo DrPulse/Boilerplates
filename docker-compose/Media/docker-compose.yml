@@ -85,7 +85,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: lscr.io/linuxserver/deluge@sha256:d4804422bb28178e17634eb1de6fedf72a3e3e4a41c299a5df648f74dad593d3
+    image: lscr.io/linuxserver/deluge@sha256:a43744ef845e2165d77e45df25bcca75e098b930d593f44350909ebb13e9f020
     restart: always
     networks:
       - proxy
