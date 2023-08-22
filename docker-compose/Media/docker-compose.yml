@@ -22,7 +22,7 @@ services:
       PGID: $PGID
     volumes:
       - $MOUNT_POINT_CONFIG/jellyfin:/config
-      - $MOUNT_POINT_COMMON/multimedia:/data/media
+      - $MOUNT_POINT_COMMON/multimedia/media:/data/media
     labels:
       # HOMEPAGE
       - homepage.group=Media
