@@ -3,7 +3,7 @@ version: "3"
 services:
 
   tailscale:
-    image: tailscale/tailscale:v1.46
+    image: tailscale/tailscale:v1.48
     container_name: tailscale
     restart: always
     hostname: nas-tailscale
