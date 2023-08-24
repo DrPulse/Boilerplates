@@ -304,7 +304,7 @@ services:
       - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
 
   ombi:
-    image: lscr.io/linuxserver/ombi:4.39.1
+    image: lscr.io/linuxserver/ombi:4.43.5
     container_name: ombi
     restart: unless-stopped
     networks:
