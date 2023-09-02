@@ -112,7 +112,7 @@ services:
   
   speedtest:
     container_name: speedtest
-    image: ghcr.io/alexjustesen/speedtest-tracker:v0.11.17
+    image: ghcr.io/alexjustesen/speedtest-tracker:v0.11.20
     restart: always
     networks:
       - proxy
