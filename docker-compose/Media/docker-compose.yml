@@ -5,7 +5,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin@sha256:8c96581a36152e75ba0a417521cfe7a3ed9b7dbb02cb8b3d7437a5ef75184acb
+    image: lscr.io/linuxserver/jellyfin@sha256:cb0792aaf20e2bd12246bb7dc224335d72791b3bb1a7eb736481b3ce0c309c0c
     container_name: jellyfin
     restart: always
     profiles: ["jellyfin", "full"]
