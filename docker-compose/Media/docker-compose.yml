@@ -274,7 +274,7 @@ services:
 
 # Media requesters
   jellyseerr:
-    image: fallenbagel/jellyseerr:1.6.0
+    image: fallenbagel/jellyseerr:1.7.0
     container_name: jellyseerr
     restart: always
     profiles: ["jellyfin", "full"]
