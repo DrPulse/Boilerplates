@@ -85,8 +85,8 @@ services:
       PUID: $PUID
       PGID: $GUID
     volumes:
-      - $MOUNT_POINT_CONFIG/scrutiny:/config
-      - $MOUNT_POINT_CONFIG/scrutiny/influxdb:/opt/scrutiny/influxdb
+      - $MOUNT_POINT_DATA/scrutiny:/config
+      - $MOUNT_POINT_DATA/scrutiny/influxdb:/opt/scrutiny/influxdb
       - /run/udev:/run/udev:ro
     devices:
       - /dev/sda:/dev/sda
@@ -123,7 +123,7 @@ services:
       PUID: $PUID
       GUID: $GUID
     volumes:
-      - $MOUNT_POINT_CONFIG/speedtest:/config
+      - $MOUNT_POINT_DATA/speedtest:/config
     labels:
       # HOMEPAGE
       - homepage.group=Monitoring & Alerting
