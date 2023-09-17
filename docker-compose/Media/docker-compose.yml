@@ -21,7 +21,7 @@ services:
       PUID: $PUID
       PGID: $PGID
     volumes:
-      - $MOUNT_POINT_CONFIG/jellyfin:/config
+      - $MOUNT_POINT_DATA/jellyfin:/config
       - $MOUNT_POINT_COMMON/multimedia/media:/data/media
     labels:
       # HOMEPAGE
@@ -60,7 +60,7 @@ services:
       PLEX_CLAIM: $PLEX_CLAIM
       ADVERTISE_IP: http://${SERVER_ADDRESS}:32400
     volumes:
-      - $MOUNT_POINT_CONFIG/plex:/config
+      - $MOUNT_POINT_DATA/plex:/config
       - $MOUNT_POINT_COMMON/multimedia/media/tv:/tv
       - $MOUNT_POINT_COMMON/multimedia/media/films:/movies
       - $MOUNT_POINT_COMMON/multimedia/media/animes:/animes
@@ -98,7 +98,7 @@ services:
       PGID: $PGID
       TZ: $TZ
     volumes:
-      - $MOUNT_POINT_CONFIG/deluge:/config
+      - $MOUNT_POINT_DATA/deluge:/config
       - $MOUNT_POINT_COMMON/multimedia/torrents:/data/torrents
       - $MOUNT_POINT_ISO/ISOs:/data/torrents/iso
       
@@ -133,7 +133,7 @@ services:
       PGID: $PGID
       TZ: $TZ
     volumes:
-      - $MOUNT_POINT_CONFIG/bazarr:/config
+      - $MOUNT_POINT_DATA/bazarr:/config
       - $MOUNT_POINT_COMMON/multimedia/media:/data/media
     labels:
       # HOMEPAGE
@@ -186,7 +186,7 @@ services:
       PUID: $PUID
       PGID: $PGID
     volumes:
-      - $MOUNT_POINT_CONFIG/prowlarr:/config
+      - $MOUNT_POINT_DATA/prowlarr:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
@@ -217,7 +217,7 @@ services:
       PUID: $PUID
       PGID: $PGID
     volumes:
-      - $MOUNT_POINT_CONFIG/radarr:/config
+      - $MOUNT_POINT_DATA/radarr:/config
       - $MOUNT_POINT_COMMON/multimedia:/data
     labels:
       # HOMEPAGE
@@ -252,7 +252,7 @@ services:
       PGID: $PGID
       UMASK: 022
     volumes:
-      - $MOUNT_POINT_CONFIG/sonarr:/config
+      - $MOUNT_POINT_DATA/sonarr:/config
       - $MOUNT_POINT_COMMON/multimedia:/data
     labels:
       # HOMEPAGE
@@ -285,7 +285,7 @@ services:
     environment:
       TZ: $TZ
     volumes:
-      - $MOUNT_POINT_CONFIG/jellyseerr:/app/config
+      - $MOUNT_POINT_DATA/jellyseerr:/app/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
@@ -317,7 +317,7 @@ services:
       PGID: $PGID
       #- BASE_URL=/ombi #optional
     volumes:
-      - $MOUNT_POINT_CONFIG/ombi:/config
+      - $MOUNT_POINT_DATA/ombi:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
@@ -349,7 +349,7 @@ services:
       PGID: $PGID
       TZ: $TZ
     volumes:
-      - $MOUNT_POINT_CONFIG/overseerr:/config
+      - $MOUNT_POINT_DATA/overseerr:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
@@ -380,7 +380,7 @@ services:
       PUID: $PUID
       PGID: $PGID
     volumes:
-      - $MOUNT_POINT_CONFIG/requestrr:/config
+      - $MOUNT_POINT_DATA/requestrr:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
@@ -412,7 +412,7 @@ services:
       - DISABLE_BUILTIN_AUTH=false #Set to true ONLY if you are using another auth provider (Authelia, Authentik, etc)
       - TZ=$TZ
     volumes:
-      - $MOUNT_POINT_CONFIG/wizarr/config:/data/database
+      - $MOUNT_POINT_DATA/wizarr/config:/data/database
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
@@ -436,7 +436,7 @@ services:
     networks:
       - proxy
     volumes:
-      - $MOUNT_POINT_CONFIG/flemmarr:/config
+      - $MOUNT_POINT_DATA/flemmarr:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
