@@ -83,7 +83,7 @@ services:
     volumes:
       - $MOUNT_POINT_DATA/nextcloud/nextcloud:/var/www/html
       - $MOUNT_POINT_DATA/nextcloud/apps:/var/www/html/custom_apps
-      - $MOUNT_POINT_CONFIG/nextcloud/config:/var/www/html/config
+      - $MOUNT_POINT_DATA/nextcloud/config:/var/www/html/config
       - $MOUNT_POINT_DATA/nextcloud/data:/var/www/html/data
       - $MOUNT_POINT_DATA/nextcloud/theme:/var/www/html/themes
     labels:
@@ -194,8 +194,8 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - $MOUNT_POINT_CONFIG/syncthing/config:/config
-      - $MOUNT_POINT_CONFIG/syncthing/config/data:/data
+      - $MOUNT_POINT_DATA/syncthing/config:/config
+      - $MOUNT_POINT_DATA/syncthing/config/data:/data
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
@@ -232,7 +232,7 @@ services:
       #DB_USER: #optional
       #DB_PASS: #optional
     volumes:
-      - $MOUNT_POINT_CONFIG/wikijs:/config
+      - $MOUNT_POINT_DATA/wikijs/config:/config
       - $MOUNT_POINT_DATA/wikijs:/data     
     labels:
       # HOMEPAGE
