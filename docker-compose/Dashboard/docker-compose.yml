@@ -18,7 +18,7 @@ services:
       PUID: $PUID
       PGID: $PGID
     volumes:
-      - $MONT_POINT_CONFIG/homepage:/app/config
+      - $MONT_POINT_DATA/homepage:/app/config
     labels:
       # TRAEFIK
       - traefik.enable=true
@@ -42,7 +42,7 @@ services:
       UID: $PUID
       GID: $PGID
     volumes:
-      - $MONT_POINT_CONFIG/dashy:/app/public
+      - $MONT_POINT_DATA/dashy:/app/public
     healthcheck:
       test: ['CMD', 'node', '/app/services/healthcheck']
       interval: 3m
