@@ -3,8 +3,8 @@ version: "3"
 services:
 
 
-  mc:
-    container_name: minecraft-server-$SERVER_NAME
+  mc-01:
+    container_name: mc-server-$MC_SERV_01
     image: itzg/minecraft-server:2023.9.1
     restart: always
     ports:
@@ -12,8 +12,8 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "FABRIC"
-      SEED: $SEED
-      DIFFICULTY: $DIFFICULTY
+      SEED: $SEED_MC_SERV_01
+      DIFFICULTY: $DIFFICULTY_MC_SERV_01
       SERVER_NAME: "Self Hosted Server"
       MOTD: "Server running on container"
       INIT_MEMORY: "1G"
@@ -21,17 +21,16 @@ services:
       ANNOUNCE_PLAYER_ACHIEVEMENTS: true
       GENERATE_STRUCTURES: true
       ALLOW_NETHER: true
-      VERSION: $MC_VERSION
-      FABRIC_LAUNCHER_VERSION: $FABRIC_LAUNCHER_VERSION
-      FABRIC_LOADER_VERSION: $FABRIC_LOADER_VERSION
+      VERSION: $VERSION_MC_SERV_01
+      FABRIC_LAUNCHER_VERSION: $FABRIC_LAUNCHER_VERSION_MC_SERV_01
+      FABRIC_LOADER_VERSION: $FABRIC_LOADER_VERSION_MC_SERV_01
       ICON: "https://b.thumbs.redditmedia.com/Flac-ySmslzY0SE583PNA42rFbcYxLt7hqgCeUrC11s.png"
       UID: $PUID
       GID: $GID
     tty: true
     stdin_open: true
     volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MAJOR_VERSION/$SERVER_NAME/config:/data
-      - $MOUNT_POINT_GAMES/Minecraft/$MAJOR_VERSION/$SERVER_NAME/mods:/data/mods
+      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_01/config:/data
     labels:
       # HOMEPAGE
       - homepage.group=Tools
@@ -39,5 +38,38 @@ services:
       - homepage.icon=minecraft.png
       - homepage.description=Minecraft vanilla with QOL mods
       - homepage.widget.type=minecraft
-      - homepage.widget.url=udp://$MC_IP:$MC_PORT
-      
+      - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_01
+
+
+  mc-02:
+    container_name: mc-server-$MC_SERV_02
+    image: itzg/minecraft-server:2023.9.1
+    restart: always
+    ports:
+      - 25566:25565
+    environment:
+      EULA: "TRUE"
+      TYPE: "FTBA"
+      FTB_MODPACK_ID: $FTB_MODPACK_ID_MC_SERV_02
+      SERVER_NAME: "Self Hosted Modded Server"
+      MOTD: "Server running on container"
+      INIT_MEMORY: "2G"
+      MAX_MEMORY: "8G"
+      ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+      GENERATE_STRUCTURES: true
+      ALLOW_NETHER: true
+      ICON: "https://b.thumbs.redditmedia.com/Flac-ySmslzY0SE583PNA42rFbcYxLt7hqgCeUrC11s.png"
+      UID: $PUID
+      GID: $GID
+    tty: true
+    stdin_open: true
+    volumes:
+      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_02/config:/data
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Modded FTB Unstable
+      - homepage.icon=minecraft.png
+      - homepage.description=Modpack FTB Unstable 1.20 Fabric
+      - homepage.widget.type=minecraft
+      - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_02
