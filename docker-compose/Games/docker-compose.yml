@@ -44,7 +44,7 @@ services:
   mc-02:
     container_name: mc-server-$MC_SERV_02
     image: itzg/minecraft-server:2023.10.1
-    restart: never
+    restart: no
     ports:
       - 25566:25565
     environment:
