@@ -103,6 +103,6 @@ services:
       - homepage.group=Tools
       - homepage.name=Modded FTB University
       - homepage.icon=minecraft.png
-      - homepage.description=Modpack FTB University 1.19 Froge
+      - homepage.description=Modpack FTB University 1.19 Forge
       - homepage.widget.type=minecraft
       - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_03
