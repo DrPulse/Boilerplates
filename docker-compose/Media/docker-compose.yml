@@ -121,7 +121,7 @@ services:
 
 # Media Managers
   bazarr:
-    image: lscr.io/linuxserver/bazarr:1.2.4
+    image: lscr.io/linuxserver/bazarr:1.3.0
     container_name: bazarr
     restart: always
     networks:
