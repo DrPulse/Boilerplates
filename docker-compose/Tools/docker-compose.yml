@@ -3,7 +3,7 @@ services:
 
 
   focalboard:
-    image: mattermost/focalboard:7.11.3
+    image: mattermost/focalboard:7.11.4
     container_name: focalboard
     restart: unless-stopped
     networks:
