@@ -8,7 +8,7 @@ services:
     image: itzg/minecraft-server:2023.10.1
     restart: always
     ports:
-      - 25565:25565
+      - $PORT_MC_SERV_01:25565
     environment:
       EULA: "TRUE"
       TYPE: "FABRIC"
@@ -45,9 +45,8 @@ services:
     container_name: mc-server-$MC_SERV_02
     image: itzg/minecraft-server:2023.10.1
     restart: no
-    # Uncomment to use
-    #ports:
-    #  - 25566:25565
+    ports:
+      - $PORT_MC_SERV_02:25565
     environment:
       EULA: "TRUE"
       TYPE: "FTBA"
@@ -80,7 +79,7 @@ services:
     image: itzg/minecraft-server:2023.10.1
     restart: always
     ports:
-      - 25566:25565
+      - $MC_SERV_03:25565
     environment:
       EULA: "TRUE"
       TYPE: "FTBA"
