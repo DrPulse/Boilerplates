@@ -30,7 +30,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_01/config:/data
+      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_01:/data
     labels:
       # HOMEPAGE
       - homepage.group=Tools
@@ -64,7 +64,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_02/config:/data
+      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_02:/data
     labels:
       # HOMEPAGE
       - homepage.group=Tools
@@ -91,13 +91,13 @@ services:
       ANNOUNCE_PLAYER_ACHIEVEMENTS: true
       GENERATE_STRUCTURES: true
       ALLOW_NETHER: true
-      ICON: "hhttps://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F101%2FUniversity%20512x512.png&w=256&q=75"
+      ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F101%2FUniversity%20512x512.png&w=256&q=75"
       UID: $PUID
       GID: $GUID
     tty: true
     stdin_open: true
     volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_03/config:/data
+      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_03:/data
     labels:
       # HOMEPAGE
       - homepage.group=Tools
