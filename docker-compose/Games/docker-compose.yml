@@ -26,7 +26,7 @@ services:
       FABRIC_LOADER_VERSION: $FABRIC_LOADER_VERSION_MC_SERV_01
       ICON: "https://b.thumbs.redditmedia.com/Flac-ySmslzY0SE583PNA42rFbcYxLt7hqgCeUrC11s.png"
       UID: $PUID
-      GID: $GID
+      GID: $GUID
     tty: true
     stdin_open: true
     volumes:
@@ -60,7 +60,7 @@ services:
       ALLOW_NETHER: true
       ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F105%2Funstablefabric512x512.png&w=256&q=75"
       UID: $PUID
-      GID: $GID
+      GID: $GUID
     tty: true
     stdin_open: true
     volumes:
@@ -93,7 +93,7 @@ services:
       ALLOW_NETHER: true
       ICON: "hhttps://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F101%2FUniversity%20512x512.png&w=256&q=75"
       UID: $PUID
-      GID: $GID
+      GID: $GUID
     tty: true
     stdin_open: true
     volumes:
