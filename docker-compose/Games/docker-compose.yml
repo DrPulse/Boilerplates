@@ -91,6 +91,7 @@ services:
       ANNOUNCE_PLAYER_ACHIEVEMENTS: true
       GENERATE_STRUCTURES: true
       ALLOW_NETHER: true
+      SIMULATION_DISTANCE: 6
       ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F101%2FUniversity%20512x512.png&w=256&q=75"
       UID: $PUID
       GID: $GUID
