@@ -84,6 +84,7 @@ services:
       EULA: "TRUE"
       TYPE: "FTBA"
       FTB_MODPACK_ID: $FTB_MODPACK_ID_MC_SERV_03
+      FTB_MODPACK_VERSION_ID: $FTB_MODPACK_VERSION_ID_MC_SERV_03
       SERVER_NAME: "Self Hosted FTB University Server"
       MOTD: "Server running on container"
       INIT_MEMORY: "2G"
