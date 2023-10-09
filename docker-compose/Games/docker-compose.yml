@@ -100,7 +100,6 @@ services:
     stdin_open: true
     volumes:
       - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_03:/data
-    command: ["--safeMode"]
     labels:
       # HOMEPAGE
       - homepage.group=Tools
