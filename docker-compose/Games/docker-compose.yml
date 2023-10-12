@@ -87,8 +87,7 @@ services:
       FTB_MODPACK_VERSION_ID: $FTB_MODPACK_VERSION_ID_MC_SERV_03
       SERVER_NAME: "Self Hosted FTB University Server"
       MOTD: "Server running on container"
-      INIT_MEMORY: "4G"
-      MAX_MEMORY: "14G"
+      MEMORY: "16G"
       ANNOUNCE_PLAYER_ACHIEVEMENTS: true
       GENERATE_STRUCTURES: true
       ALLOW_NETHER: true
