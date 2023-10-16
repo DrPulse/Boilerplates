@@ -398,7 +398,7 @@ services:
 
 # Media server invitation
   wizarr:
-    image: ghcr.io/wizarrrr/wizarr:3.0.1
+    image: ghcr.io/wizarrrr/wizarr:3.4.1
     container_name: wizarr
     restart: unless-stopped
     #ports:
