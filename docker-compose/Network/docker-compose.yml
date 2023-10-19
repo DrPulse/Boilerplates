@@ -27,7 +27,7 @@ services:
       - homepage.description=Zero config mesh VPN
       
   pihole:
-    image: pihole/pihole:2023.05.2
+    image: pihole/pihole:2023.10.0
     container_name: pihole
     hostname: nas-pihole
     restart: always
