@@ -136,5 +136,5 @@ help = "Prepare necessary files for application deployment"
 ignore_fail = "return_non_zero"
 
 [tool.poe.tasks."deploy:prepare"]
-cmd = "poetry export --without=dev --without-hashes --without-urls | awk '{print $1} FS=';' > {{ cookiecutter.project_slug }}/requirements.txt"
+shell = "poetry export --without=dev --without-hashes --without-urls | awk '{print $1}' FS=';' > {{ cookiecutter.project_slug }}/requirements.txt"
 help = "Prepare the deployment unit"
