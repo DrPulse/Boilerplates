@@ -12,15 +12,11 @@ packages = [
 python = "^{{ cookiecutter.python_major_version }}.{{ cookiecutter.python_minor_version }}"
 
 [tool.poetry.group.dev.dependencies]
-black = "*"
+ruff = "*"
 safety = "*"
-bandit = "*"
 deptry = "*"
-isort = "*"
 poethepoet = "*"
 mypy = "*"
-flake8 = "*"
-pylint = "*"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
@@ -33,61 +29,67 @@ build-backend = "poetry.core.masonry.api"
 [tool.cookiecutter.post_generate]
 script = "post_gen_project.py"
 
-[tool.isort]
-profile = "black"
-line_length = 119
-
-[tool.black]
-line-length = 119
-target-version = ['py{{ cookiecutter.python_major_version  }}{{ cookiecutter.python_minor_version  }}']
-
 [tool.poe.tasks]
-#Lancement de l'application
 [tool.poe.tasks."start"]
 cmd = "python {{ cookiecutter.project_slug }}/cli.py"
 help = "Start a local app instance"
 
-#Validation et Formattage
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+extend-select = [
+    "E",   # pydocstyles
+    "F",   # Pyflakes
+    "I",   # isort
+    "PL",  # Pylint
+    "S",   # flake8-bandit
+    "LOG", # flake8-logging
+    "RUF", # ruff rules
+]
+preview = true
+
+[tool.ruff.format]
+preview = false
+
+
+# Linting
 [tool.poe.tasks."lint"]
 sequence = [
-    "lint:isort",
+
     "lint:deptry",
-    "lint:flake8",
-    "lint:pylint",
     "lint:mypy",
+    "lint:ruff-lint",
+    "lint:ruff-format",
+    "lint:ruff-fix",
 ]
 help = "Lint the pyhon codebase with tools"
 ignore_fail = "return_non_zero"
-
-[tool.poe.tasks."lint:black"]
-cmd = "black --check --diff --color {{ cookiecutter.project_slug }}/"
-help = "Lint the python codebase to detect styling issues with black"
 
 [tool.poe.tasks."lint:deptry"]
 cmd = "deptry {{ cookiecutter.project_slug }}/"
 help = "Lint the python codebase for dependencies issues with deptry"
 
-[tool.poe.tasks."lint:flake8"]
-cmd = "flake8 {{ cookiecutter.project_slug }}/"
-help = "Lint the python codebase to detect code smells or styling issues with flake8"
-
-[tool.poe.tasks."lint:isort"]
-cmd = "isort --color {{ cookiecutter.project_slug }}/"
-help = "Lint the python codebase for incorrect imports with isort"
-
 [tool.poe.tasks."lint:mypy"]
 cmd = "mypy {{ cookiecutter.project_slug }}/ --check-untyped-defs"
-help = "valide le typage de l'application"
+help = "Check that code is type annoted"
 
-[tool.poe.tasks."lint:pylint"]
-cmd = "pylint --exit-zero {{ cookiecutter.project_slug }}/"
-help = "Lint the python codebase to detect errors or styling issues with pylint"
+[tool.poe.tasks."lint:ruff-lint"]
+cmd = "ruff check --preview {{ cookiecutter.project_slug }}/ "
+help = "Lint the python codebase with ruff linters"
 
-#Sécurité
+[tool.poe.tasks."lint:ruff-format"]
+cmd = "ruff format --diff --preview {{ cookiecutter.project_slug }}/"
+help = "Lint the python codebase with ruff linters"
+
+[tool.poe.tasks."lint:ruff-fix"]
+cmd = "ruff check --diff {{ cookiecutter.project_slug }}/"
+help = "Show potentials fixes"
+
+# Security
 [tool.poe.tasks."sec"]
 sequence = [
     "sec:safety",
-    "sec:bandit",
 ]
 help = "Check the pyhon codebase with tools to find vulnerabilities"
 ignore_fail = "return_non_zero"
@@ -96,28 +98,23 @@ ignore_fail = "return_non_zero"
 cmd = "safety check --full-report"
 help = "Check dependencies to find vulnerabilities using safety"
 
-[tool.poe.tasks."sec:bandit"]
-cmd = "bandit -r {{ cookiecutter.project_slug }}/"
-help = "Find common security issues using bandit"
 
+# Formatting
+[tool.poe.tasks."format:ruff"]
+cmd = "ruff format {{ cookiecutter.project_slug }}/"
+help = "Format the python codebase according to ruff rules"
 
-# Formatage
-[tool.poe.tasks."format:black"]
-cmd = "black --color {{ cookiecutter.project_slug }}/"
-help = "Format the python codebase with black"
+[tool.poe.tasks."format:ruff-fix"]
+cmd = "ruff check --fix {{ cookiecutter.project_slug }}/"
+help = "Fix identified issues accord to ruff rules"
 
-[tool.poe.tasks."format:isort"]
-cmd = "isort --color {{ cookiecutter.project_slug }}/"
-help = "Lint the python codebase for incorrect imports with isort"
-
-
-#TEST
+# Tests
 [tool.poe.tasks."test"]
 sequence = [
     "test:unit",
     "test:coverage",
 ]
-help = "Lint the pyhon codebase with tools"
+help = "Test unit tests and code coverage"
 ignore_fail = "return_non_zero"
 
 
@@ -130,15 +127,14 @@ cmd = "coverage run --source 'tests/' -m pytest"
 help = "Run unit tests with coverage"
 
 
-#DEPLOIEMENT
+# Deployement
 [tool.poe.tasks."deploy"]
 sequence = [
     "deploy:prepare",
 ]
-help = "Lint the pyhon codebase with tools"
+help = "Prepare necessary files for application deployment"
 ignore_fail = "return_non_zero"
 
-
 [tool.poe.tasks."deploy:prepare"]
-cmd = "poetry export --format requirements.txt --output requirements.txt"
+cmd = "poetry export --without=dev --without-hashes --without-urls | awk '{print $1} FS=';' > {{ cookiecutter.project_slug }}/requirements.txt"
 help = "Prepare the deployment unit"
