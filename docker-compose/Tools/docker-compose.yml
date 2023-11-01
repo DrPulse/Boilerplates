@@ -27,7 +27,7 @@ services:
   
   it-tools:
     container_name: it-tools
-    image: corentinth/it-tools@sha256:6dbf284eb30f397fdfe92849a7105a0d7ebaa1a2b68aa6fe174c1d094422f7fe
+    image: corentinth/it-tools@sha256:20de4f32ccb123940251b796c56029d0a22ab554cca54a99bcf31985e9aaf499
     restart: always
     #ports:
     #  - 8080:80
