@@ -369,35 +369,36 @@ services:
 
 
 # Media server invitation
-  wizarr:
-    image: ghcr.io/wizarrrr/wizarr:3.4.8
-    container_name: wizarr
-    restart: unless-stopped
-    #ports:
-    #- 5690:5690
-    networks:
-      - proxy
-    dns: 
-      - $DNS_ADDRESS
-    environment:
-      - APP_URL=https://wizarr.$DOMAIN_NAME
-      - DISABLE_BUILTIN_AUTH=false #Set to true ONLY if you are using another auth provider (Authelia, Authentik, etc)
-      - TZ=$TZ
-    volumes:
-      - $MOUNT_POINT_DATA/wizarr/config:/data/database
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Requesters
-      - homepage.name=wizarr
-      - homepage.icon=wizarr.png
-      - homepage.ping=https://wizarr.$DOMAIN_NAME
-      - homepage.href=https://wizarr.$DOMAIN_NAME
-      - homepage.description=Plex invitations
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.wizarr.rule=Host(`wizarr.$DOMAIN_NAME`)
-      - traefik.http.services.wizarr.loadbalancer.server.port=5690
+  # Wizarr image download broken for now
+  # wizarr:
+  #   image: ghcr.io/wizarrrr/wizarr:3.4.8
+  #   container_name: wizarr
+  #   restart: unless-stopped
+  #   #ports:
+  #   #- 5690:5690
+  #   networks:
+  #     - proxy
+  #   dns: 
+  #     - $DNS_ADDRESS
+  #   environment:
+  #     - APP_URL=https://wizarr.$DOMAIN_NAME
+  #     - DISABLE_BUILTIN_AUTH=false #Set to true ONLY if you are using another auth provider (Authelia, Authentik, etc)
+  #     - TZ=$TZ
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/wizarr/config:/data/database
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Media Requesters
+  #     - homepage.name=wizarr
+  #     - homepage.icon=wizarr.png
+  #     - homepage.ping=https://wizarr.$DOMAIN_NAME
+  #     - homepage.href=https://wizarr.$DOMAIN_NAME
+  #     - homepage.description=Plex invitations
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.wizarr.rule=Host(`wizarr.$DOMAIN_NAME`)
+  #     - traefik.http.services.wizarr.loadbalancer.server.port=5690
 
 
 # arr* configurator
