@@ -5,7 +5,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin@sha256:2aa0a109df2bf14dd934f1acc29a9e969172bb3104941e31e24a5b2a8631d3ce
+    image: linuxserver/jellyfin@sha256:2aa0a109df2bf14dd934f1acc29a9e969172bb3104941e31e24a5b2a8631d3ce
     container_name: jellyfin
     restart: always
     profiles: ["jellyfin", "full"]
@@ -41,7 +41,7 @@ services:
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
 
   plex:
-    image: lscr.io/linuxserver/plex:1.32.7
+    image: linuxserver/plex:1.32.7
     container_name: plex
     restart: always
     profiles: ["plex", "full"]
@@ -85,7 +85,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: lscr.io/linuxserver/deluge@sha256:2bac08b7e3f3634f90ee7ddc4d1770a5c6e44f81dd2b794bb4d99f9bf50ea149
+    image: linuxserver/deluge@sha256:2bac08b7e3f3634f90ee7ddc4d1770a5c6e44f81dd2b794bb4d99f9bf50ea149
     restart: always
     networks:
       - proxy
@@ -121,7 +121,7 @@ services:
 
 # Media Managers
   bazarr:
-    image: lscr.io/linuxserver/bazarr:1.3.1
+    image: linuxserver/bazarr:1.3.1
     container_name: bazarr
     restart: always
     networks:
@@ -172,7 +172,7 @@ services:
       - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr@sha256:85239f4b2e696b8094554b29d248458b1fb517a48d63f3e79a2356ada7721d7b
+    image: linuxserver/prowlarr@sha256:85239f4b2e696b8094554b29d248458b1fb517a48d63f3e79a2356ada7721d7b
     container_name: prowlarr
     restart: always
     networks:
@@ -206,7 +206,7 @@ services:
 
   radarr:
     container_name: radarr
-    image: lscr.io/linuxserver/radarr:4.7.5
+    image: linuxserver/radarr:4.7.5
     restart: always
     networks:
       - proxy
@@ -238,7 +238,7 @@ services:
 
 
   sonarr:
-    image: lscr.io/linuxserver/sonarr:3.0.10
+    image: linuxserver/sonarr:3.0.10
     container_name: sonarr
     restart: always
     hostname: sonarr
@@ -304,7 +304,7 @@ services:
       - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
 
   ombi:
-    image: lscr.io/linuxserver/ombi:4.43.5
+    image: linuxserver/ombi:4.43.5
     container_name: ombi
     restart: unless-stopped
     networks:
@@ -336,7 +336,7 @@ services:
       - traefik.http.services.ombi.loadbalancer.server.port=3579
 
   overseerr:
-    image: lscr.io/linuxserver/overseerr@sha256:4aaee70f051eaa8e789379a6549664492100e0a0a0cf6a0148b2036c4669d53a
+    image: linuxserver/overseerr@sha256:4aaee70f051eaa8e789379a6549664492100e0a0a0cf6a0148b2036c4669d53a
     container_name: overseerr
     restart: always
     profiles: ["plex", "full"]
@@ -368,7 +368,7 @@ services:
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
 
   requestrr:
-    image: lscr.io/linuxserver/requestrr:2.1.2
+    image: linuxserver/requestrr:2.1.2
     container_name: requestrr
     restart: unless-stopped
     networks:
