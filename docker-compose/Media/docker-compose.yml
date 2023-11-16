@@ -367,34 +367,6 @@ services:
       - traefik.http.routers.overseerr.rule=Host(`overseerr.$DOMAIN_NAME`, `overseerr.home`)
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
 
-  requestrr:
-    image: linuxserver/requestrr:2.1.2
-    container_name: requestrr
-    restart: unless-stopped
-    networks:
-      - proxy
-    #ports:
-    #  - 4545:4545
-    environment:
-      TZ: $TZ
-      PUID: $PUID
-      PGID: $PGID
-    volumes:
-      - $MOUNT_POINT_DATA/requestrr:/config
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Requesters
-      - homepage.name=requestrr
-      - homepage.icon=requestrr.png
-      - homepage.ping=https://requestrr.$DOMAIN_NAME
-      - homepage.href=https://requestrr.$DOMAIN_NAME
-      - homepage.description=Media requester Discord Bot Radarr/Sonarr/Overseerr/Ombi
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.requestrr.rule=Host(`requestrr.$DOMAIN_NAME`)
-      - traefik.http.services.requestrr.loadbalancer.server.port=4545
-
 
 # Media server invitation
   wizarr:
