@@ -122,6 +122,7 @@ services:
     environment:
       PUID: $PUID
       GUID: $GUID
+      APP_KEY: $SPEEDTEST_APP_KEY
     volumes:
       - $MOUNT_POINT_DATA/speedtest:/config
     labels:
