@@ -150,7 +150,7 @@ services:
       - traefik.http.services.bazarr.loadbalancer.server.port=6767
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.3.11
+    image: ghcr.io/flaresolverr/flaresolverr:v3.3.12
     container_name: flaresolverr
     restart: always
     networks:
