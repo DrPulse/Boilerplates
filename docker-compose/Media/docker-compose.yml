@@ -238,7 +238,7 @@ services:
 
 
   sonarr:
-    image: linuxserver/sonarr:3.0.10
+    image: linuxserver/sonarr:4.0.0
     container_name: sonarr
     restart: always
     hostname: sonarr
