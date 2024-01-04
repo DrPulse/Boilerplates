@@ -74,6 +74,7 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - It-tools
   - Mealie
   - Pairdrop
+  - Stirling pdf
 
 ## Coming Soon
 
