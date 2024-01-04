@@ -4,7 +4,7 @@ services:
 
 
   dozzle:
-    image: amir20/dozzle:v5.0.9
+    image: amir20/dozzle:v5.8.1
     container_name: dozzle
     restart: always
     networks:
@@ -28,7 +28,7 @@ services:
       - traefik.http.services.dozzle.loadbalancer.server.port=8080
   
   netdata:
-    image: netdata/netdata:v1.43
+    image: netdata/netdata:v1.44
     container_name: netdata
     restart: always
     hostname: netdata.home # set to fqdn of host
@@ -112,7 +112,7 @@ services:
   
   speedtest:
     container_name: speedtest
-    image: ghcr.io/alexjustesen/speedtest-tracker:v0.13.1
+    image: ghcr.io/alexjustesen/speedtest-tracker:v0.14.2
     restart: always
     networks:
       - proxy
@@ -122,6 +122,7 @@ services:
     environment:
       PUID: $PUID
       GUID: $GUID
+      APP_KEY: $SPEEDTEST_APP_KEY
     volumes:
       - $MOUNT_POINT_DATA/speedtest:/config
     labels:
@@ -141,7 +142,7 @@ services:
       - traefik.http.services.speedtest.loadbalancer.server.port=80
   
   uptime-kuma:
-    image: louislam/uptime-kuma:1.23.3
+    image: louislam/uptime-kuma:1.23.11
     container_name: uptime-kuma
     restart: always
     networks:

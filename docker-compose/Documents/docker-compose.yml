@@ -4,7 +4,7 @@ services:
   
 
   drawio:
-    image: jgraph/drawio:22.0.6
+    image: jgraph/drawio:22.1.16
     container_name: draw
     restart: unless-stopped
     networks:
@@ -102,7 +102,7 @@ services:
 
   onlyoffice:
     container_name: onlyoffice
-    image: onlyoffice/documentserver:7.4.1
+    image: onlyoffice/documentserver:7.5.1
     restart: unless-stopped
     network_mode: "bridge"
     #ports:
@@ -134,7 +134,7 @@ services:
       - traefik.http.services.onlyoffice.loadbalancer.server.port=80
   
   paperless-server:
-    image: ghcr.io/paperless-ngx/paperless-ngx:1.17.4
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.2.1
     container_name: paperless-server
     restart: always
     depends_on:
@@ -180,15 +180,16 @@ services:
       - $MOUNT_POINT_DATA/paperless/cache:/data
   
   syncthing:
-    image: lscr.io/linuxserver/syncthing:latest
+    image: syncthing/syncthing
     container_name: syncthing
     hostname: syncthing
     restart: always
-    ports:
-      - 8384:8384 # WEB UI
-      - 22000:22000/tcp # listening tcp
-      - 22000:22000/udp # listening udp
-      - 21027:21027/udp # protocol discovery
+    network_mode: host
+    # ports:
+      # - 8384:8384 # WEB UI
+      # - 22000:22000/tcp # listening tcp
+      # - 22000:22000/udp # listening udp
+      # - 21027:21027/udp # protocol discovery
     environment:
       - PUID=$PUID
       - PGID=$PGID
@@ -205,14 +206,12 @@ services:
       - homepage.href=https://syncthing.$DOMAIN_NAME
       - homepage.description=Syncing file tool accross devices
       # TRAEFIK
-      - traefik.enable=false
-      - traefik.docker.network=proxy
-      - traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
-      - traefik.http.services.syncthing.loadbalancer.server.port=8384
-      # WATCHTOWER
-      - com.centurylinklabs.watchtower.monitor-only=true
-    
+      #- traefik.enable=false
+      #- traefik.docker.network=proxy
+      #- traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
+      #- traefik.http.services.syncthing.loadbalancer.server.port=8384
 
+    
   wikijs:
     image: lscr.io/linuxserver/wikijs:2.5.300
     container_name: wikijs

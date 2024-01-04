@@ -27,7 +27,7 @@ services:
   
   it-tools:
     container_name: it-tools
-    image: corentinth/it-tools@sha256:6dbf284eb30f397fdfe92849a7105a0d7ebaa1a2b68aa6fe174c1d094422f7fe
+    image: corentinth/it-tools@sha256:cb54f27c6f13bad7837132798ea3e2183fe02de2a00ed536525287fc21cd6aa4
     restart: always
     #ports:
     #  - 8080:80
@@ -48,7 +48,7 @@ services:
       - traefik.http.services.it-tools.loadbalancer.server.port=80
 
   homebox:
-    image: ghcr.io/hay-kot/homebox:v0.10.1
+    image: ghcr.io/hay-kot/homebox:v0.10.2
     container_name: homebox
     restart: always
     networks:
@@ -113,7 +113,7 @@ services:
       - traefik.http.services.mealie.loadbalancer.server.port=3000
 
   pairdrop:
-    image: lscr.io/linuxserver/pairdrop:1.9.3
+    image: lscr.io/linuxserver/pairdrop:1.10.2
     container_name: pairdrop
     restart: always
     networks:
