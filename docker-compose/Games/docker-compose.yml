@@ -5,7 +5,7 @@ services:
 
   mc-01:
     container_name: mc-server-$MC_SERV_01
-    image: itzg/minecraft-server:2023.12.1
+    image: itzg/minecraft-server:2024.1.0
     restart: always
     ports:
       - $PORT_MC_SERV_01:25565
@@ -43,7 +43,7 @@ services:
 
   mc-02:
     container_name: mc-server-$MC_SERV_02
-    image: itzg/minecraft-server:2023.12.1
+    image: itzg/minecraft-server:2024.1.0
     restart: no
     ports:
       - $PORT_MC_SERV_02:25565
@@ -76,7 +76,7 @@ services:
 
   mc-03:
     container_name: mc-server-$MC_SERV_03
-    image: itzg/minecraft-server:2023.12.1
+    image: itzg/minecraft-server:2024.1.0
     restart: always
     ports:
       - $PORT_MC_SERV_03:25565
