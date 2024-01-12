@@ -165,6 +165,33 @@ services:
       - traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.$DOMAIN_NAME`)
       - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 
+  wallos:
+    image: bellamy/wallos:latest
+    container_name: wallos
+    restart: unless-stopped
+    networks:
+      - proxy
+    # ports:
+    #   - 8282:80/tcp
+    environment:
+      TZ: $TZ
+    volumes:
+      - $MOUNT_POINT_DATA/wallos/db:/var/www/html/db
+      - $MOUNT_POINT_DATA/wallos/logos:/var/www/html/images/uploads/logos
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=wallos
+      - homepage.icon=wallos.png
+      - homepage.description=Subscriptions tracker 
+      - homepage.ping=https://wallos.$DOMAIN_NAME
+      - homepage.href=https://wallos.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.wallos.rule=Host(`wallos.$DOMAIN_NAME`)
+      - traefik.http.services.wallos.loadbalancer.server.port=80
+
 
 volumes:
   focalboard-data:
