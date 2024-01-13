@@ -142,8 +142,8 @@ services:
     networks:
       - proxy
       - paperless
-    #ports:
-    #  - 8010:8000
+    ports:
+      - 8010:8000
     environment:
       PAPERLESS_REDIS: "redis://paperless-cache:6379"
       USERMAP_UID: 1001
