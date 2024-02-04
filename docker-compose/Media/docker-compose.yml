@@ -403,7 +403,7 @@ services:
 
 # arr* configurator
   flemmarr:
-    image: pierremesure/flemmarr@sha256:fbd0eb6673499859ec6e1d9a8241510106d3d81c3d2bfca930c0b17040d09cb8
+    image: pierremesure/flemmarr@sha256:55ab943c6b6ba9406f25ed626aa0fc441a7a6a0a00087b6d64ee40b85b582bf9
     container_name: flemmarr
     restart: unless-stopped
     networks:
