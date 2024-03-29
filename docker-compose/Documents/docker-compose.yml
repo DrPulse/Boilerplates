@@ -196,7 +196,7 @@ services:
       - TZ=$TZ
     volumes:
       - $MOUNT_POINT_DATA/syncthing/config:/config
-      - $MOUNT_POINT_DATA/syncthing/data:/var/syncthing
+      - $MOUNT_POINT_DATA/syncthing/config/data:/data
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
