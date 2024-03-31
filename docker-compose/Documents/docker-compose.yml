@@ -184,7 +184,8 @@ services:
     container_name: syncthing
     hostname: syncthing
     restart: always
-    network_mode: host
+    networks:
+      - proxy
     # ports:
       # - 8384:8384 # WEB UI
       # - 22000:22000/tcp # listening tcp
@@ -195,8 +196,7 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - $MOUNT_POINT_DATA/syncthing/config:/config
-      - $MOUNT_POINT_DATA/syncthing/config/data:/data
+      - $MOUNT_POINT_DATA/syncthing/data:/var/syncthing
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
@@ -206,10 +206,10 @@ services:
       - homepage.href=https://syncthing.$DOMAIN_NAME
       - homepage.description=Syncing file tool accross devices
       # TRAEFIK
-      #- traefik.enable=false
-      #- traefik.docker.network=proxy
-      #- traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
-      #- traefik.http.services.syncthing.loadbalancer.server.port=8384
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
+      - traefik.http.services.syncthing.loadbalancer.server.port=8384
 
     
   wikijs:
