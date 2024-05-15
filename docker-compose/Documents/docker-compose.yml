@@ -65,7 +65,7 @@ services:
       - $MOUNT_POINT_DATA/nextcloud/db:/var/lib/mysql
 
   nextcloud:
-    image: nextcloud:28.0.3
+    image: nextcloud:29.0.0
     container_name: nextcloud
     restart: unless-stopped
     depends_on:
