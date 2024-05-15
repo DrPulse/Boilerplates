@@ -134,7 +134,7 @@ services:
       - traefik.http.services.onlyoffice.loadbalancer.server.port=80
   
   paperless-server:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.7.2
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.8.5
     container_name: paperless-server
     restart: always
     depends_on:
