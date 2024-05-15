@@ -41,69 +41,69 @@ services:
       - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_01
 
 
-  mc-02:
-    container_name: mc-server-$MC_SERV_02
-    image: itzg/minecraft-server:2024.5.0
-    restart: no
-    ports:
-      - $PORT_MC_SERV_02:25565
-    environment:
-      EULA: "TRUE"
-      TYPE: "FTBA"
-      FTB_MODPACK_ID: $FTB_MODPACK_ID_MC_SERV_02
-      SERVER_NAME: "Self Hosted FTB Unstable Server"
-      MOTD: "Server running on container"
-      INIT_MEMORY: "2G"
-      MAX_MEMORY: "8G"
-      ANNOUNCE_PLAYER_ACHIEVEMENTS: true
-      GENERATE_STRUCTURES: true
-      ALLOW_NETHER: true
-      ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F105%2Funstablefabric512x512.png&w=256&q=75"
-      UID: $PUID
-      GID: $GUID
-    tty: true
-    stdin_open: true
-    volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_02:/data
-    labels:
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=Modded FTB Unstable
-      - homepage.icon=minecraft.png
-      - homepage.description=Modpack FTB Unstable 1.20 Fabric
-      - homepage.widget.type=minecraft
-      - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_02
+  # mc-02:
+  #   container_name: mc-server-$MC_SERV_02
+  #   image: itzg/minecraft-server:2024.5.0
+  #   restart: no
+  #   ports:
+  #     - $PORT_MC_SERV_02:25565
+  #   environment:
+  #     EULA: "TRUE"
+  #     TYPE: "FTBA"
+  #     FTB_MODPACK_ID: $FTB_MODPACK_ID_MC_SERV_02
+  #     SERVER_NAME: "Self Hosted FTB Unstable Server"
+  #     MOTD: "Server running on container"
+  #     INIT_MEMORY: "2G"
+  #     MAX_MEMORY: "8G"
+  #     ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+  #     GENERATE_STRUCTURES: true
+  #     ALLOW_NETHER: true
+  #     ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F105%2Funstablefabric512x512.png&w=256&q=75"
+  #     UID: $PUID
+  #     GID: $GUID
+  #   tty: true
+  #   stdin_open: true
+  #   volumes:
+  #     - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_02:/data
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Tools
+  #     - homepage.name=Modded FTB Unstable
+  #     - homepage.icon=minecraft.png
+  #     - homepage.description=Modpack FTB Unstable 1.20 Fabric
+  #     - homepage.widget.type=minecraft
+  #     - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_02
 
-  mc-03:
-    container_name: mc-server-$MC_SERV_03
-    image: itzg/minecraft-server:2024.5.0
-    restart: always
-    ports:
-      - $PORT_MC_SERV_03:25565
-    environment:
-      EULA: "TRUE"
-      TYPE: "FTBA"
-      FTB_MODPACK_ID: $FTB_MODPACK_ID_MC_SERV_03
-      FTB_MODPACK_VERSION_ID: $FTB_MODPACK_VERSION_ID_MC_SERV_03
-      SERVER_NAME: "Self Hosted FTB University Server"
-      MOTD: "Server running on container"
-      MEMORY: "16G"
-      ANNOUNCE_PLAYER_ACHIEVEMENTS: true
-      GENERATE_STRUCTURES: true
-      ALLOW_NETHER: true
-      SIMULATION_DISTANCE: $SIMULATION_DISTANCE_MC_SERV_03
-      ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F101%2FUniversity%20512x512.png&w=256&q=75"
-      UID: $PUID
-      GID: $GUID
-    tty: true
-    stdin_open: true
-    volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_03:/data
-    labels:
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=Modded FTB University
-      - homepage.icon=minecraft.png
-      - homepage.description=Modpack FTB University 1.19 Forge
-      - homepage.widget.type=minecraft
-      - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_03
+  # mc-03:
+  #   container_name: mc-server-$MC_SERV_03
+  #   image: itzg/minecraft-server:2024.5.0
+  #   restart: always
+  #   ports:
+  #     - $PORT_MC_SERV_03:25565
+  #   environment:
+  #     EULA: "TRUE"
+  #     TYPE: "FTBA"
+  #     FTB_MODPACK_ID: $FTB_MODPACK_ID_MC_SERV_03
+  #     FTB_MODPACK_VERSION_ID: $FTB_MODPACK_VERSION_ID_MC_SERV_03
+  #     SERVER_NAME: "Self Hosted FTB University Server"
+  #     MOTD: "Server running on container"
+  #     MEMORY: "16G"
+  #     ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+  #     GENERATE_STRUCTURES: true
+  #     ALLOW_NETHER: true
+  #     SIMULATION_DISTANCE: $SIMULATION_DISTANCE_MC_SERV_03
+  #     ICON: "https://www.feed-the-beast.com/_next/image?url=https%3A%2F%2Fapps.modpacks.ch%2Fmodpacks%2Fart%2F101%2FUniversity%20512x512.png&w=256&q=75"
+  #     UID: $PUID
+  #     GID: $GUID
+  #   tty: true
+  #   stdin_open: true
+  #   volumes:
+  #     - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_03:/data
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Tools
+  #     - homepage.name=Modded FTB University
+  #     - homepage.icon=minecraft.png
+  #     - homepage.description=Modpack FTB University 1.19 Forge
+  #     - homepage.widget.type=minecraft
+  #     - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_03

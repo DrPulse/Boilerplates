@@ -3,102 +3,102 @@ version: "3"
 services:
   
 
-  drawio:
-    image: jgraph/drawio:24.4.0
-    container_name: draw
-    restart: unless-stopped
-    networks:
-      - proxy
-    #ports:
-    #  - '8087:8080'
-    #  - '8447:8443'
-    labels:
-      # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=Draw.io
-      - homepage.icon=draw.png
-      - homepage.ping=https://drawio.$DOMAIN_NAME
-      - homepage.href=https://drawio.$DOMAIN_NAME
-      - homepage.description=Draw tool
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.drawio.rule=Host(`drawio.$DOMAIN_NAME`)
-      - traefik.http.services.drawio.loadbalancer.server.port=8080     
+  # drawio:
+  #   image: jgraph/drawio:24.4.0
+  #   container_name: draw
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy
+  #   #ports:
+  #   #  - '8087:8080'
+  #   #  - '8447:8443'
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Documents & Files
+  #     - homepage.name=Draw.io
+  #     - homepage.icon=draw.png
+  #     - homepage.ping=https://drawio.$DOMAIN_NAME
+  #     - homepage.href=https://drawio.$DOMAIN_NAME
+  #     - homepage.description=Draw tool
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.drawio.rule=Host(`drawio.$DOMAIN_NAME`)
+  #     - traefik.http.services.drawio.loadbalancer.server.port=8080     
       
-  excalidraw:
-    image: excalidraw/excalidraw@sha256:5cfbf2770e6d7530193be8cca5bdb4b8e4ba6eb000fc64b4b50d079221c51eda
-    container_name: excalidraw
-    restart: unless-stopped
-    networks:
-      - proxy
-    #ports:
-    #  - '5000:80'
-    labels:
-      # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=excalidraw
-      - homepage.icon=https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~2de41b4b-c986-4d60-a0c5-3e346c98de34/V1~14363c25c4230c54e02ae7416216600b0aee35b05c257a00152830492f4d581b~c5a9036392714767b9a63e7f2d796a53?quarantineState=evaluating
-      - homepage.ping=https://excalidraw.$DOMAIN_NAME
-      - homepage.href=https://excalidraw.$DOMAIN_NAME
-      - homepage.description=Browser local whiteboard
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.excalidraw.rule=Host(`excalidraw.$DOMAIN_NAME`, `draw.home`)
-      - traefik.http.services.excalidraw.loadbalancer.server.port=80
+  # excalidraw:
+  #   image: excalidraw/excalidraw@sha256:5cfbf2770e6d7530193be8cca5bdb4b8e4ba6eb000fc64b4b50d079221c51eda
+  #   container_name: excalidraw
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy
+  #   #ports:
+  #   #  - '5000:80'
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Documents & Files
+  #     - homepage.name=excalidraw
+  #     - homepage.icon=https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~2de41b4b-c986-4d60-a0c5-3e346c98de34/V1~14363c25c4230c54e02ae7416216600b0aee35b05c257a00152830492f4d581b~c5a9036392714767b9a63e7f2d796a53?quarantineState=evaluating
+  #     - homepage.ping=https://excalidraw.$DOMAIN_NAME
+  #     - homepage.href=https://excalidraw.$DOMAIN_NAME
+  #     - homepage.description=Browser local whiteboard
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.excalidraw.rule=Host(`excalidraw.$DOMAIN_NAME`, `draw.home`)
+  #     - traefik.http.services.excalidraw.loadbalancer.server.port=80
       
       
-  nextcloud-db:
-    image: mariadb:10.11
-    container_name: nextcloud-db
-    restart: unless-stopped
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
-    networks:
-      - nextcloud
-    environment:
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      MYSQL_PASSWORD: $MYSQL_PASSWORD
-      MYSQL_DATABASE: $MYSQL_DATABASE
-      MYSQL_USER: $MYSQL_USER
-    volumes:
-      - $MOUNT_POINT_DATA/nextcloud/db:/var/lib/mysql
+  # nextcloud-db:
+  #   image: mariadb:10.11
+  #   container_name: nextcloud-db
+  #   restart: unless-stopped
+  #   command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+  #   networks:
+  #     - nextcloud
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  #     MYSQL_PASSWORD: $MYSQL_PASSWORD
+  #     MYSQL_DATABASE: $MYSQL_DATABASE
+  #     MYSQL_USER: $MYSQL_USER
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/nextcloud/db:/var/lib/mysql
 
-  nextcloud:
-    image: nextcloud:29.0.0
-    container_name: nextcloud
-    restart: unless-stopped
-    depends_on:
-      - nextcloud-db
-    networks:
-      - nextcloud
-      - proxy
-    # ports:
-    #   - 8080:80
-    environment:
-      MYSQL_PASSWORD: $MYSQL_PASSWORD
-      MYSQL_DATABASE: $MYSQL_DATABASE
-      MYSQL_USER: $MYSQL_USER
-      MYSQL_HOST: nextcloud-db
-    volumes:
-      - $MOUNT_POINT_DATA/nextcloud/nextcloud:/var/www/html
-      - $MOUNT_POINT_DATA/nextcloud/apps:/var/www/html/custom_apps
-      - $MOUNT_POINT_DATA/nextcloud/config:/var/www/html/config
-      - $MOUNT_POINT_DATA/nextcloud/data:/var/www/html/data
-      - $MOUNT_POINT_DATA/nextcloud/theme:/var/www/html/themes
-    labels:
-      # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=Nextcloud
-      - homepage.icon=nextcloud.png
-      - homepage.ping=https://nextcloud.$DOMAIN_NAME/login
-      - homepage.href=https://nextcloud.$DOMAIN_NAME
-      - homepage.description=Private Cloud
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.nextcloud.rule=Host(`nextcloud.$DOMAIN_NAME`)
-      - traefik.http.services.nextcloud.loadbalancer.server.port=80
+  # nextcloud:
+  #   image: nextcloud:29.0.0
+  #   container_name: nextcloud
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - nextcloud-db
+  #   networks:
+  #     - nextcloud
+  #     - proxy
+  #   # ports:
+  #   #   - 8080:80
+  #   environment:
+  #     MYSQL_PASSWORD: $MYSQL_PASSWORD
+  #     MYSQL_DATABASE: $MYSQL_DATABASE
+  #     MYSQL_USER: $MYSQL_USER
+  #     MYSQL_HOST: nextcloud-db
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/nextcloud/nextcloud:/var/www/html
+  #     - $MOUNT_POINT_DATA/nextcloud/apps:/var/www/html/custom_apps
+  #     - $MOUNT_POINT_DATA/nextcloud/config:/var/www/html/config
+  #     - $MOUNT_POINT_DATA/nextcloud/data:/var/www/html/data
+  #     - $MOUNT_POINT_DATA/nextcloud/theme:/var/www/html/themes
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Documents & Files
+  #     - homepage.name=Nextcloud
+  #     - homepage.icon=nextcloud.png
+  #     - homepage.ping=https://nextcloud.$DOMAIN_NAME/login
+  #     - homepage.href=https://nextcloud.$DOMAIN_NAME
+  #     - homepage.description=Private Cloud
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.nextcloud.rule=Host(`nextcloud.$DOMAIN_NAME`)
+  #     - traefik.http.services.nextcloud.loadbalancer.server.port=80
 
   onlyoffice:
     container_name: onlyoffice

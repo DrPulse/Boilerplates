@@ -2,28 +2,28 @@ version: "3"
 services:
 
 
-  focalboard:
-    image: mattermost/focalboard:7.11.4
-    container_name: focalboard
-    restart: unless-stopped
-    networks:
-      - proxy
-    #ports:
-    #  - 8084:8000
-    volumes:
-      - focalboard-data:/opt/focalboard/data
-    labels:
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=focalboard
-      - homepage.icon=focalboard.png
-      - homepage.ping=https://focalboard.$DOMAIN_NAME
-      - homepage.href=https://focalboard.$DOMAIN_NAME
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.focalboard.rule=Host(`focalboard.$DOMAIN_NAME`)
-      - traefik.http.services.focalboard.loadbalancer.server.port=8000
+  # focalboard:
+  #   image: mattermost/focalboard:7.11.4
+  #   container_name: focalboard
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy
+  #   #ports:
+  #   #  - 8084:8000
+  #   volumes:
+  #     - focalboard-data:/opt/focalboard/data
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Tools
+  #     - homepage.name=focalboard
+  #     - homepage.icon=focalboard.png
+  #     - homepage.ping=https://focalboard.$DOMAIN_NAME
+  #     - homepage.href=https://focalboard.$DOMAIN_NAME
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.focalboard.rule=Host(`focalboard.$DOMAIN_NAME`)
+  #     - traefik.http.services.focalboard.loadbalancer.server.port=8000
   
   it-tools:
     container_name: it-tools
@@ -75,42 +75,42 @@ services:
       - traefik.http.routers.homebox.rule=Host(`homebox.$DOMAIN_NAME`)
       - traefik.http.services.homebox.loadbalancer.server.port=7745
   
-  mealie:
-    container_name: mealie
-    image: hkotel/mealie:omni-nightly
-    restart: unless-stopped
-    # ports:
-      # - 9925:80
-      # - 3005:3000
-      # - 9005:9000
-    networks:
-      - proxy
-    environment:
-      PUID: $PUID
-      PGID: $PGID
-      TZ: $TZ
-      RECIPE_PUBLIC: 'true'
-      RECIPE_SHOW_NUTRITION: 'true'
-      RECIPE_SHOW_ASSETS: 'true'
-      RECIPE_LANDSCAPE_VIEW: 'true'
-      RECIPE_DISABLE_COMMENTS: 'false'
-      RECIPE_DISABLE_AMOUNT: 'false'
-      BASE_URL: https://mealie.$DOMAIN_NAME
-    volumes:
-      - $MOUNT_POINT_DATA/mealie:/app/data
-    labels:
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=Mealie
-      - homepage.icon=mealie.png
-      - homepage.description=Recipe manager and meal planner
-      - homepage.ping=https://mealie.$DOMAIN_NAME
-      - homepage.href=https://mealie.$DOMAIN_NAME
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.mealie.rule=Host(`mealie.$DOMAIN_NAME`, `food.home`)
-      - traefik.http.services.mealie.loadbalancer.server.port=3000
+  # mealie:
+  #   container_name: mealie
+  #   image: hkotel/mealie:omni-nightly
+  #   restart: unless-stopped
+  #   # ports:
+  #     # - 9925:80
+  #     # - 3005:3000
+  #     # - 9005:9000
+  #   networks:
+  #     - proxy
+  #   environment:
+  #     PUID: $PUID
+  #     PGID: $PGID
+  #     TZ: $TZ
+  #     RECIPE_PUBLIC: 'true'
+  #     RECIPE_SHOW_NUTRITION: 'true'
+  #     RECIPE_SHOW_ASSETS: 'true'
+  #     RECIPE_LANDSCAPE_VIEW: 'true'
+  #     RECIPE_DISABLE_COMMENTS: 'false'
+  #     RECIPE_DISABLE_AMOUNT: 'false'
+  #     BASE_URL: https://mealie.$DOMAIN_NAME
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/mealie:/app/data
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Tools
+  #     - homepage.name=Mealie
+  #     - homepage.icon=mealie.png
+  #     - homepage.description=Recipe manager and meal planner
+  #     - homepage.ping=https://mealie.$DOMAIN_NAME
+  #     - homepage.href=https://mealie.$DOMAIN_NAME
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.mealie.rule=Host(`mealie.$DOMAIN_NAME`, `food.home`)
+  #     - traefik.http.services.mealie.loadbalancer.server.port=3000
 
   pairdrop:
     image: lscr.io/linuxserver/pairdrop:1.10.8

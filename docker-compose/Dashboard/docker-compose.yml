@@ -27,34 +27,34 @@ services:
       - traefik.http.services.homepage.loadbalancer.server.port=3000
 
 
-  dashy:
-    image: lissy93/dashy:3.1.0
-    container_name: Dashy
-    restart: always
-    profiles: ["dashy", "full"]
-    networks:
-      - proxy
-    #ports:
-    #  - 8080:80
-    dns:
-      - $DNS_ADDRESS
-    environment:
-      UID: $PUID
-      GID: $PGID
-    volumes:
-      - $MONT_POINT_DATA/dashy:/app/public
-    healthcheck:
-      test: ['CMD', 'node', '/app/services/healthcheck']
-      interval: 3m
-      timeout: 30s
-      retries: 3
-      start_period: 40s
-    labels:
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.dashy.rule=Host(`dashy.$DOMAIN_NAME`)
-      - traefik.http.services.dashy.loadbalancer.server.port=80
+  # dashy:
+  #   image: lissy93/dashy:3.1.0
+  #   container_name: Dashy
+  #   restart: always
+  #   profiles: ["dashy", "full"]
+  #   networks:
+  #     - proxy
+  #   #ports:
+  #   #  - 8080:80
+  #   dns:
+  #     - $DNS_ADDRESS
+  #   environment:
+  #     UID: $PUID
+  #     GID: $PGID
+  #   volumes:
+  #     - $MONT_POINT_DATA/dashy:/app/public
+  #   healthcheck:
+  #     test: ['CMD', 'node', '/app/services/healthcheck']
+  #     interval: 3m
+  #     timeout: 30s
+  #     retries: 3
+  #     start_period: 40s
+  #   labels:
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.dashy.rule=Host(`dashy.$DOMAIN_NAME`)
+  #     - traefik.http.services.dashy.loadbalancer.server.port=80
 
 
 networks:
