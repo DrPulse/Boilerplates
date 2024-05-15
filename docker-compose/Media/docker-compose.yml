@@ -37,7 +37,7 @@ services:
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.jellyfin.rule=Host(`jellyfin.$DOMAIN_NAME`, `jellyfin.home`)
+      - traefik.http.routers.jellyfin.rule=Host(`jellyfin.$DOMAIN_NAME`)
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
 
   plex:
@@ -78,7 +78,7 @@ services:
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.plex.rule=Host(`plex.$DOMAIN_NAME`, `plex.home`)
+      - traefik.http.routers.plex.rule=Host(`plex.$DOMAIN_NAME`)
       - traefik.http.services.plex.loadbalancer.server.port=32400
 
 
@@ -364,7 +364,7 @@ services:
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.overseerr.rule=Host(`overseerr.$DOMAIN_NAME`, `overseerr.home`)
+      - traefik.http.routers.overseerr.rule=Host(`overseerr.$DOMAIN_NAME`)
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
 
 
@@ -402,20 +402,20 @@ services:
 
 
 # arr* configurator
-  flemmarr:
-    image: pierremesure/flemmarr@sha256:55ab943c6b6ba9406f25ed626aa0fc441a7a6a0a00087b6d64ee40b85b582bf9
-    container_name: flemmarr
-    restart: unless-stopped
-    networks:
-      - proxy
-    volumes:
-      - $MOUNT_POINT_DATA/flemmarr:/config
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=flemmarr
-      - homepage.icon=https://github.com/Flemmarr/Flemmarr/raw/master/logo.svg
-      - homepage.description=arr configurator
+  # flemmarr:
+  #   image: pierremesure/flemmarr@sha256:55ab943c6b6ba9406f25ed626aa0fc441a7a6a0a00087b6d64ee40b85b582bf9
+  #   container_name: flemmarr
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/flemmarr:/config
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Media Management
+  #     - homepage.name=flemmarr
+  #     - homepage.icon=https://github.com/Flemmarr/Flemmarr/raw/master/logo.svg
+  #     - homepage.description=arr configurator
 
 
 networks:
