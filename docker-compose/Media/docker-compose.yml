@@ -336,7 +336,7 @@ services:
       - traefik.http.services.ombi.loadbalancer.server.port=3579
 
   overseerr:
-    image: linuxserver/overseerr@sha256:1642cffc2573e37d1972aa27e5e2bae9d91d320a326f232d58b8bfbba65832e7
+    image: linuxserver/overseerr@sha256:9757f99c898c5932aba97dee4d36117767600a588616b7c8b18c06caf63475cc
     container_name: overseerr
     restart: always
     profiles: ["plex", "full"]
