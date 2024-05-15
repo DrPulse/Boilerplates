@@ -28,7 +28,7 @@ services:
 
 
   dashy:
-    image: lissy93/dashy:3.0.0
+    image: lissy93/dashy:3.1.0
     container_name: Dashy
     restart: always
     profiles: ["dashy", "full"]
