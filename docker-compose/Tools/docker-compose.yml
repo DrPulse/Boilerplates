@@ -135,7 +135,7 @@ services:
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.pairdrop.rule=Host(`pairdrop.$DOMAIN_NAME`, `share.home`)
+      - traefik.http.routers.pairdrop.rule=Host(`pairdrop.$DOMAIN_NAME`)
       - traefik.http.services.pairdrop.loadbalancer.server.port=3000
 
   stirling-pdf:
