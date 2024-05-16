@@ -5,7 +5,7 @@ services:
 
   mc-01:
     container_name: mc-server-$MC_SERV_01
-    image: itzg/minecraft-server:2024.4.1
+    image: itzg/minecraft-server:2024.3.0
     restart: always
     ports:
       - $PORT_MC_SERV_01:25565
