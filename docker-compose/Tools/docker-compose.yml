@@ -75,6 +75,31 @@ services:
       - traefik.http.routers.homebox.rule=Host(`homebox.$DOMAIN_NAME`)
       - traefik.http.services.homebox.loadbalancer.server.port=7745
   
+  lubelogger:
+      image: ghcr.io/hargata/lubelogger:1.2.4
+      build: .
+      restart: unless-stopped
+      volumes:
+        - $MOUNT_POINT_DATA/lubelogger/app:/App
+        - $MOUNT_POINT_DATA/lubelogger/keys:/root/.aspnet/DataProtection-Keys
+      #ports:
+      #  - 8080:8080
+      networks:
+        - proxy
+      labels:
+        # HOMEPAGE
+        - homepage.group=Tools
+        - homepage.name=LubeLogger
+        - homepage.icon=lubelogger.png
+        - homepage.ping=lubelogger.$DOMAIN_NAME
+        - homepage.href=https://lubelogger.$DOMAIN_NAME
+        - homepage.description=Car stuff tracker
+        # TRAEFIK
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.routers.lubelogger.rule=Host(`lubelogger.$DOMAIN_NAME`)
+        - traefik.http.services.lubelogger.loadbalancer.server.port=8080
+
   # mealie:
   #   container_name: mealie
   #   image: hkotel/mealie:omni-nightly
