@@ -139,7 +139,7 @@ services:
       - traefik.http.services.pairdrop.loadbalancer.server.port=3000
 
   stirling-pdf:
-    image: frooodle/s-pdf:latest
+    image: frooodle/s-pdf:v0.23.1
     container_name: stirling-pdf
     # ports:
     #   - '8080:8080'
@@ -166,7 +166,7 @@ services:
       - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 
   wallos:
-    image: bellamy/wallos:latest
+    image: bellamy/wallos:v1.29.1
     container_name: wallos
     restart: unless-stopped
     networks:
