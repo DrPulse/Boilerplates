@@ -77,7 +77,7 @@ services:
   
   lubelogger:
       image: ghcr.io/hargata/lubelogger:1.2.4
-      build: .
+      #build: .
       restart: unless-stopped
       volumes:
         - $MOUNT_POINT_DATA/lubelogger/app:/App
@@ -196,8 +196,6 @@ services:
     restart: unless-stopped
     networks:
       - proxy
-    # ports:
-    #   - 8282:80/tcp
     environment:
       TZ: $TZ
     volumes:
