@@ -164,7 +164,7 @@ services:
       - traefik.http.services.pairdrop.loadbalancer.server.port=3000
 
   stirling-pdf:
-    image: frooodle/s-pdf:0.25.0
+    image: frooodle/s-pdf:0.25.1
     container_name: stirling-pdf
     # ports:
     #   - '8080:8080'
