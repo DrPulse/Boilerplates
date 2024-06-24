@@ -85,7 +85,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: linuxserver/deluge@sha256:b1ffd6ad596950d295677466bb066fc7ecece317ce30f808a40793a8727428fc
+    image: linuxserver/deluge:2.0.5
     restart: always
     networks:
       - proxy
@@ -172,7 +172,7 @@ services:
       - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
 
   prowlarr:
-    image: linuxserver/prowlarr@sha256:0369a5db8d5cfc9892963c6619ff3b03b8edcaff2dcd4e7f881e6af334e550fc
+    image: linuxserver/prowlarr:1.18.0
     container_name: prowlarr
     restart: always
     networks:
