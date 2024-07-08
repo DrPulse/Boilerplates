@@ -4,7 +4,7 @@ services:
 
 
   dozzle:
-    image: amir20/dozzle:v7.0.7
+    image: amir20/dozzle:v8.0.1
     container_name: dozzle
     restart: always
     networks:
