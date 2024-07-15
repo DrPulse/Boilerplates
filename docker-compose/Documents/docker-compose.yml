@@ -102,7 +102,7 @@ services:
 
   onlyoffice:
     container_name: onlyoffice
-    image: onlyoffice/documentserver:8.1.0
+    image: onlyoffice/documentserver:8.1.1
     restart: unless-stopped
     network_mode: "bridge"
     #ports:
