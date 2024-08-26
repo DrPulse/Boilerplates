@@ -30,6 +30,8 @@ services:
       - traefik.docker.network=proxy
       - traefik.http.routers.traefik.rule=Host(`traefik.$DOMAIN_NAME`)
       - traefik.http.routers.traefik.service=api@internal
+    extra_hosts: 
+        - host.docker.internal:172.17.0.1
 
 networks:
   proxy:
