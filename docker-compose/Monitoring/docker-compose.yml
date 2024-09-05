@@ -49,6 +49,8 @@ services:
       - proxy
     #ports:
     #  - 9999:8080
+    environment:
+      - DOZZLE_REMOTE_AGENT=$DOZZLE_REMOTE_AGENT
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
@@ -76,7 +78,7 @@ services:
   #   #  - 19999:19999
   #   environment:
   #     DOCKER_HOST: dockerproxy:2375
-  #     PGID: $GUID 
+  #     PGID: $GUID
   #   pid: host
   #   cap_add:
   #     - SYS_PTRACE
