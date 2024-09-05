@@ -47,30 +47,6 @@ services:
       - traefik.http.routers.it-tools.rule=Host(`it-tools.$DOMAIN_NAME`)
       - traefik.http.services.it-tools.loadbalancer.server.port=80
 
-  homeassistant:
-    image: homeassistant/home-assistant:2024.8
-    container_name: homeassistant
-    restart: unless-stopped
-    networks:
-      - proxy
-    #expose:
-    #  - 8123
-    #ports:
-    #  - 8123:8123
-    volumes:
-      - $MOUNT_POINT_CONFIG/homeassistant:/config
-      - /etc/localtime:/etc/localtime:ro
-    labels:
-      - homepage.group=Tools
-      - homepage.name=homeassistant
-      - homepage.icon=home-assistant.png
-      - homepage.ping=https://homeassistant.$DOMAIN_NAME
-      - homepage.href=https://homeassistant.$DOMAIN_NAME
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.homeassistant.rule=Host(`homeassistant.$DOMAIN_NAME`)
-      - traefik.http.services.homeassistant.loadbalancer.server.port=8123
-
   homebox:
     image: ghcr.io/hay-kot/homebox:v0.10.3
     container_name: homebox
