@@ -2,6 +2,44 @@ version: '3'
 #name: monitoring-alerting-rp
 services:
 
+  beszel:
+    image: henrygd/beszel:0.1.0
+    container_name: beszel
+    restart: unless-stopped
+    networks:
+      - proxy
+    # ports:
+    #  - '8090:8090'
+    volumes:
+      - $MOUNT_POINT_DATA/beszel_data:/beszel_data
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Beszel
+      - homepage.icon=beszel.png
+      - homepage.ping=https://beszel.$DOMAIN_NAME
+      - homepage.href=https://beszel.$DOMAIN_NAME
+      - homepage.description=Lightweight monitoring service
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.beszel.rule=Host(`beszel.$DOMAIN_NAME`)
+      - traefik.http.services.beszel.loadbalancer.server.port=8090
+
+  beszel-agent:
+    image: henrygd/beszel-agent:0.2
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      PORT: 45876
+      KEY: $BESZEL_SSH_KEY
+      FILESYSTEM: $BESZEL_FILESYSTEM # set to the correct filesystem for disk I/O stats
+      EXTRA_FILESYSTEMS: $BESZEL_EXTRA_FILESYSTEM
 
   dozzle:
     image: amir20/dozzle:v8.4.1
