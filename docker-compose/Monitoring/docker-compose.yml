@@ -65,46 +65,46 @@ services:
       - traefik.http.routers.dozzle.rule=Host(`dozzle.$DOMAIN_NAME`)
       - traefik.http.services.dozzle.loadbalancer.server.port=8080
   
-  netdata:
-    image: netdata/netdata:v1.47
-    container_name: netdata
-    restart: always
-    hostname: netdata.home # set to fqdn of host
-    networks:
-      - proxy
-    #ports:
-    #  - 19999:19999
-    environment:
-      DOCKER_HOST: dockerproxy:2375
-      PGID: $GUID 
-    pid: host
-    cap_add:
-      - SYS_PTRACE
-      - SYS_ADMIN
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      - netdataconfig:/etc/netdata
-      - netdatalib:/var/lib/netdata
-      - netdatacache:/var/cache/netdata
-      - /etc/passwd:/host/etc/passwd:ro
-      - /etc/group:/host/etc/group:ro
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /etc/os-release:/host/etc/os-release:ro
-    labels:
-      # HOMEPAGE
-      - homepage.group=Monitoring & Alerting
-      - homepage.name=Netdata
-      - homepage.icon=netdata.png
-      - homepage.ping=https://netdata.$DOMAIN_NAME
-      - homepage.href=https://netdata.$DOMAIN_NAME
-      - homepage.description=Real time performance monitoring
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.netdata.rule=Host(`netdata.$DOMAIN_NAME`)
-      - traefik.http.services.netdata.loadbalancer.server.port=19999
+  # netdata:
+  #   image: netdata/netdata:v1.47
+  #   container_name: netdata
+  #   restart: always
+  #   hostname: netdata.home # set to fqdn of host
+  #   networks:
+  #     - proxy
+  #   #ports:
+  #   #  - 19999:19999
+  #   environment:
+  #     DOCKER_HOST: dockerproxy:2375
+  #     PGID: $GUID 
+  #   pid: host
+  #   cap_add:
+  #     - SYS_PTRACE
+  #     - SYS_ADMIN
+  #   security_opt:
+  #     - apparmor:unconfined
+  #   volumes:
+  #     - netdataconfig:/etc/netdata
+  #     - netdatalib:/var/lib/netdata
+  #     - netdatacache:/var/cache/netdata
+  #     - /etc/passwd:/host/etc/passwd:ro
+  #     - /etc/group:/host/etc/group:ro
+  #     - /proc:/host/proc:ro
+  #     - /sys:/host/sys:ro
+  #     - /etc/os-release:/host/etc/os-release:ro
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Monitoring & Alerting
+  #     - homepage.name=Netdata
+  #     - homepage.icon=netdata.png
+  #     - homepage.ping=https://netdata.$DOMAIN_NAME
+  #     - homepage.href=https://netdata.$DOMAIN_NAME
+  #     - homepage.description=Real time performance monitoring
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.netdata.rule=Host(`netdata.$DOMAIN_NAME`)
+  #     - traefik.http.services.netdata.loadbalancer.server.port=19999
   
   # scrutiny:
   #   image: ghcr.io/analogj/scrutiny:master-omnibus
