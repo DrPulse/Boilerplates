@@ -3,42 +3,42 @@ version: "3"
 services:
 
 
-  mc-01:
-    container_name: mc-server-$MC_SERV_01
-    image: itzg/minecraft-server:2024.9.0
-    restart: always
-    ports:
-      - $PORT_MC_SERV_01:25565
-    environment:
-      EULA: "TRUE"
-      TYPE: "FABRIC"
-      SEED: $SEED_MC_SERV_01
-      DIFFICULTY: $DIFFICULTY_MC_SERV_01
-      SERVER_NAME: "Self Hosted Server"
-      MOTD: "Server running on container"
-      INIT_MEMORY: "1G"
-      MAX_MEMORY: "4G"
-      ANNOUNCE_PLAYER_ACHIEVEMENTS: true
-      GENERATE_STRUCTURES: true
-      ALLOW_NETHER: true
-      VERSION: $VERSION_MC_SERV_01
-      FABRIC_LAUNCHER_VERSION: $FABRIC_LAUNCHER_VERSION_MC_SERV_01
-      FABRIC_LOADER_VERSION: $FABRIC_LOADER_VERSION_MC_SERV_01
-      ICON: "https://b.thumbs.redditmedia.com/Flac-ySmslzY0SE583PNA42rFbcYxLt7hqgCeUrC11s.png"
-      UID: $PUID
-      GID: $GUID
-    tty: true
-    stdin_open: true
-    volumes:
-      - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_01:/data
-    labels:
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=MC Vanilla ++
-      - homepage.icon=minecraft.png
-      - homepage.description=Minecraft vanilla with QOL mods
-      - homepage.widget.type=minecraft
-      - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_01
+  # mc-01:
+  #   container_name: mc-server-$MC_SERV_01
+  #   image: itzg/minecraft-server:2024.9.0
+  #   restart: always
+  #   ports:
+  #     - $PORT_MC_SERV_01:25565
+  #   environment:
+  #     EULA: "TRUE"
+  #     TYPE: "FABRIC"
+  #     SEED: $SEED_MC_SERV_01
+  #     DIFFICULTY: $DIFFICULTY_MC_SERV_01
+  #     SERVER_NAME: "Self Hosted Server"
+  #     MOTD: "Server running on container"
+  #     INIT_MEMORY: "1G"
+  #     MAX_MEMORY: "4G"
+  #     ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+  #     GENERATE_STRUCTURES: true
+  #     ALLOW_NETHER: true
+  #     VERSION: $VERSION_MC_SERV_01
+  #     FABRIC_LAUNCHER_VERSION: $FABRIC_LAUNCHER_VERSION_MC_SERV_01
+  #     FABRIC_LOADER_VERSION: $FABRIC_LOADER_VERSION_MC_SERV_01
+  #     ICON: "https://b.thumbs.redditmedia.com/Flac-ySmslzY0SE583PNA42rFbcYxLt7hqgCeUrC11s.png"
+  #     UID: $PUID
+  #     GID: $GUID
+  #   tty: true
+  #   stdin_open: true
+  #   volumes:
+  #     - $MOUNT_POINT_GAMES/Minecraft/$MC_SERV_01:/data
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Tools
+  #     - homepage.name=MC Vanilla ++
+  #     - homepage.icon=minecraft.png
+  #     - homepage.description=Minecraft vanilla with QOL mods
+  #     - homepage.widget.type=minecraft
+  #     - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_01
 
 
   # mc-02:
