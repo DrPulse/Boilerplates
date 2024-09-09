@@ -107,3 +107,35 @@ services:
   #     - homepage.description=Modpack FTB University 1.19 Forge
   #     - homepage.widget.type=minecraft
   #     - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_03
+
+  satisfactory-server:
+    container_name: satisfactory-server
+    image: wolveix/satisfactory-server:v1
+    restart: unless-stopped
+    hostname: satisfactory-server
+    ports:
+      - 7777:7777/udp
+      - 15000:15000/udp
+      - 15777:15777/udp
+    volumes:
+        - $MOUNT_POINT_GAMES/satisfactory/$SATIS_SERV_01/config:/config
+    environment:
+        - MAXPLAYERS=4
+        - PGID=$GUID
+        - PUID=$PUID
+        - ROOTLESS=false
+        - STEAMBETA=false
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 12G
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Satisfactory
+      - homepage.icon=https://img2.storyblok.com/fit-in/0x200/filters:format(webp)/f/110098/268x268/d1ebbafe03/logo.png
+      - homepage.description=Satisfactory Vanilla
+      - homepage.widget.type=minecraft
+      - homepage.widget.url=udp://$MC_IP:15777
