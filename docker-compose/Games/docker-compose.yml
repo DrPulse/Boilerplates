@@ -115,8 +115,7 @@ services:
     hostname: satisfactory-server
     ports:
       - 7777:7777/udp
-      - 15000:15000/udp
-      - 15777:15777/udp
+      - 7777:7777/tcp
     volumes:
         - $MOUNT_POINT_GAMES/satisfactory/$SATIS_SERV_01/config:/config
     environment:
