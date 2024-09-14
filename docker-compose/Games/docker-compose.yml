@@ -137,9 +137,9 @@ services:
       - homepage.icon=https://img2.storyblok.com/fit-in/0x200/filters:format(webp)/f/110098/268x268/d1ebbafe03/logo.png
       - homepage.description=Satisfactory Vanilla
       - homepage.widget.type=minecraft
-      - homepage.widget.url=udp://$MC_IP:15777
+      - homepage.widget.url=udp://$MC_IP:7777
 
-  satisfactory-server-01:
+  satisfactory-server-02:
     container_name: satisfactory-server-01
     image: wolveix/satisfactory-server:v1.8.5
     restart: unless-stopped
@@ -169,4 +169,4 @@ services:
       - homepage.icon=https://img2.storyblok.com/fit-in/0x200/filters:format(webp)/f/110098/268x268/d1ebbafe03/logo.png
       - homepage.description=Satisfactory Vanilla
       - homepage.widget.type=minecraft
-      - homepage.widget.url=udp://$MC_IP:15778
+      - homepage.widget.url=udp://$MC_IP:7778
