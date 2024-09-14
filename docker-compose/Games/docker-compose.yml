@@ -140,7 +140,7 @@ services:
       - homepage.widget.url=udp://$MC_IP:7777
 
   satisfactory-server-02:
-    container_name: satisfactory-server-01
+    container_name: satisfactory-server-02
     image: wolveix/satisfactory-server:v1.8.5
     restart: unless-stopped
     hostname: satisfactory-server
