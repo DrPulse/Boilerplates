@@ -108,8 +108,8 @@ services:
   #     - homepage.widget.type=minecraft
   #     - homepage.widget.url=udp://$MC_IP:$PORT_MC_SERV_03
 
-  satisfactory-server:
-    container_name: satisfactory-server
+  satisfactory-server-01:
+    container_name: satisfactory-server-01
     image: wolveix/satisfactory-server:v1.8.5
     restart: unless-stopped
     hostname: satisfactory-server
@@ -138,3 +138,35 @@ services:
       - homepage.description=Satisfactory Vanilla
       - homepage.widget.type=minecraft
       - homepage.widget.url=udp://$MC_IP:15777
+
+  satisfactory-server-01:
+    container_name: satisfactory-server-01
+    image: wolveix/satisfactory-server:v1.8.5
+    restart: unless-stopped
+    hostname: satisfactory-server
+    ports:
+      - 7778:7777/udp
+      - 7778:7777/tcp
+    volumes:
+        - $MOUNT_POINT_GAMES/satisfactory/$SATIS_SERV_02/config:/config
+    environment:
+        - MAXPLAYERS=4
+        - PGID=$GUID
+        - PUID=$PUID
+        - ROOTLESS=false
+        - STEAMBETA=false
+        - SERVERGAMEPORT=7778
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 12G
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=Satisfactory-02
+      - homepage.icon=https://img2.storyblok.com/fit-in/0x200/filters:format(webp)/f/110098/268x268/d1ebbafe03/logo.png
+      - homepage.description=Satisfactory Vanilla
+      - homepage.widget.type=minecraft
+      - homepage.widget.url=udp://$MC_IP:15778
