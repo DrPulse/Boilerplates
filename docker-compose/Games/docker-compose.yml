@@ -145,8 +145,8 @@ services:
     restart: unless-stopped
     hostname: satisfactory-server
     ports:
-      - 7778:7777/udp
-      - 7778:7777/tcp
+      - 7778:7778/udp
+      - 7778:7778/tcp
     volumes:
         - $MOUNT_POINT_GAMES/satisfactory/$SATIS_SERV_02/config:/config
     environment:
