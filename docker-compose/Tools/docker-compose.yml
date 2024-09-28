@@ -120,8 +120,8 @@ services:
         - homepage.description=Car stuff tracker
         - homepage.widget.type=lubelogger
         - homepage.widget.url=https://lubelogger.$DOMAIN_NAME
-        - homepage.widget.username=$LUBELOGGER_USERNAME
-        - homepage.widget.password=$LUBELOGGER_PASSWORD
+        # - homepage.widget.username=$LUBELOGGER_USERNAME
+        # - homepage.widget.password=$LUBELOGGER_PASSWORD
         - homepage.widget.vehicleID=1
         # TRAEFIK
         - traefik.enable=true
