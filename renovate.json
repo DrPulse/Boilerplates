@@ -3,6 +3,12 @@
   "extends": [
     "config:base"
   ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    }
+  ],
   "prHourlyLimit": 0,
   "ignorePaths": ["**/Ansible/**", "**/cookiecutter/**"]
 }

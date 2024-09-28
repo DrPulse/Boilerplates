@@ -121,7 +121,7 @@ services:
 
 # Media Managers
   bazarr:
-    image: linuxserver/bazarr:1.4.3
+    image: linuxserver/bazarr:1.4.4
     container_name: bazarr
     restart: always
     networks:
@@ -172,7 +172,7 @@ services:
       - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
 
   prowlarr:
-    image: linuxserver/prowlarr:1.23.1
+    image: linuxserver/prowlarr:1.24.3
     container_name: prowlarr
     restart: always
     networks:
@@ -206,7 +206,7 @@ services:
 
   radarr:
     container_name: radarr
-    image: linuxserver/radarr:5.9.1
+    image: linuxserver/radarr:5.11.0
     restart: always
     networks:
       - proxy

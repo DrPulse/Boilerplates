@@ -134,7 +134,7 @@ services:
   #     - traefik.http.services.onlyoffice.loadbalancer.server.port=80
   
   paperless-server:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.12.0
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.12.1
     container_name: paperless-server
     restart: always
     depends_on:
@@ -213,7 +213,7 @@ services:
 
     
   wikijs:
-    image: lscr.io/linuxserver/wikijs:2.5.303
+    image: lscr.io/linuxserver/wikijs:2.5.304
     container_name: wikijs
     restart: always  
     networks:
