@@ -10,6 +10,6 @@
     }
   ],
   "prHourlyLimit": 0,
-  "ignoreTests": true
+  "ignoreTests": true,
   "ignorePaths": ["**/Ansible/**", "**/cookiecutter/**"]
 }
