@@ -41,7 +41,7 @@ services:
       - traefik.http.services.jellyfin.loadbalancer.server.port=8096
 
   plex:
-    image: linuxserver/plex:1.41.1
+    image: linuxserver/plex:1.41.2
     container_name: plex
     restart: always
     profiles: ["plex", "full"]
