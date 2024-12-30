@@ -42,7 +42,7 @@ services:
       EXTRA_FILESYSTEMS: $BESZEL_EXTRA_FILESYSTEM
 
   dozzle:
-    image: amir20/dozzle:v8.9.0
+    image: amir20/dozzle:v8.9.1
     container_name: dozzle
     restart: always
     networks:
