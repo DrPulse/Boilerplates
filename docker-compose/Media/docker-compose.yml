@@ -300,7 +300,7 @@ services:
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.$DOMAIN_NAME`, `jellyseerr.home`)
+      - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.$DOMAIN_NAME`)
       - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
 
   # ombi:
