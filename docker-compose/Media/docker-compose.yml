@@ -342,8 +342,8 @@ services:
     profiles: ["plex", "full"]
     networks:
       - proxy
-    #ports:
-    #  - 5055:5055
+    ports:
+     - 5055:5055
     environment:
       PUID: $PUID
       PGID: $PGID
