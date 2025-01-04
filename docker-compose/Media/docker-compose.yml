@@ -280,8 +280,8 @@ services:
     profiles: ["jellyfin", "full"]
     networks:
       - proxy
-    #ports:
-    #  - 5055:5055
+    ports:
+     - 5055:5055
     environment:
       TZ: $TZ
     volumes:
