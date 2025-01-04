@@ -273,35 +273,35 @@ services:
 
 
 # Media requesters
-  # jellyseerr:
-  #   image: fallenbagel/jellyseerr:1.8.1
-  #   container_name: jellyseerr
-  #   restart: always
-  #   profiles: ["jellyfin", "full"]
-  #   networks:
-  #     - proxy
-  #   #ports:
-  #   #  - 5055:5055
-  #   environment:
-  #     TZ: $TZ
-  #   volumes:
-  #     - $MOUNT_POINT_DATA/jellyseerr:/app/config
-  #   labels:
-  #     # HOMEPAGE
-  #     - homepage.group=Media Requesters
-  #     - homepage.name=jellyseerr
-  #     - homepage.icon=jellyseerr.png
-  #     - homepage.ping=jellyseerr.$DOMAIN_NAME
-  #     - homepage.href=https://jellyseerr.$DOMAIN_NAME
-  #     - homepage.description=Media requester for Plex/Jellyfin/Emby
-  #     - homepage.widget.type=jellyseerr
-  #     - homepage.widget.url=https://jellyseerr.$DOMAIN_NAME
-  #     - homepage.widget.key=$JELLYSEERR_API_KEY
-  #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.$DOMAIN_NAME`, `jellyseerr.home`)
-  #     - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+  jellyseerr:
+    image: fallenbagel/jellyseerr:1.8.1
+    container_name: jellyseerr
+    restart: always
+    profiles: ["jellyfin", "full"]
+    networks:
+      - proxy
+    #ports:
+    #  - 5055:5055
+    environment:
+      TZ: $TZ
+    volumes:
+      - $MOUNT_POINT_DATA/jellyseerr:/app/config
+    labels:
+      # HOMEPAGE
+      - homepage.group=Media Requesters
+      - homepage.name=jellyseerr
+      - homepage.icon=jellyseerr.png
+      - homepage.ping=jellyseerr.$DOMAIN_NAME
+      - homepage.href=https://jellyseerr.$DOMAIN_NAME
+      - homepage.description=Media requester for Plex/Jellyfin/Emby
+      - homepage.widget.type=jellyseerr
+      - homepage.widget.url=https://jellyseerr.$DOMAIN_NAME
+      - homepage.widget.key=$JELLYSEERR_API_KEY
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.$DOMAIN_NAME`, `jellyseerr.home`)
+      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
 
   # ombi:
   #   image: linuxserver/ombi:4.43.5
@@ -342,8 +342,8 @@ services:
     profiles: ["plex", "full"]
     networks:
       - proxy
-    ports:
-     - 5055:5055
+    # ports:
+    #  - 5055:5055
     environment:
       PUID: $PUID
       PGID: $PGID
