@@ -110,7 +110,7 @@ services:
 
   satisfactory-server-01:
     container_name: satisfactory-server-01
-    image: wolveix/satisfactory-server:v1.9.2
+    image: wolveix/satisfactory-server:v1.9.3
     restart: unless-stopped
     hostname: satisfactory-server
     ports:
@@ -141,7 +141,7 @@ services:
 
   satisfactory-server-02:
     container_name: satisfactory-server-02
-    image: wolveix/satisfactory-server:v1.9.2
+    image: wolveix/satisfactory-server:v1.9.3
     restart: unless-stopped
     hostname: satisfactory-server
     ports:
