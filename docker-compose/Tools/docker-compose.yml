@@ -100,7 +100,7 @@ services:
       - traefik.http.services.homebox.loadbalancer.server.port=7745
   
   lubelogger:
-      image: ghcr.io/hargata/lubelogger:v1.4.3
+      image: ghcr.io/hargata/lubelogger:v1.4.4
       #build: .
       restart: unless-stopped
       volumes:
