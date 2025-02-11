@@ -167,7 +167,7 @@ services:
   #     - traefik.http.services.mealie.loadbalancer.server.port=3000
 
   pairdrop:
-    image: lscr.io/linuxserver/pairdrop:1.10.10
+    image: lscr.io/linuxserver/pairdrop:1.10.11
     container_name: pairdrop
     restart: always
     networks:
