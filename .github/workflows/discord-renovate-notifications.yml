@@ -1,0 +1,126 @@
+name: Discord Renovate Notifications
+
+on:
+  pull_request:
+    types: [opened, closed]
+
+jobs:
+  notify_discord:
+    # Only run for Renovate PRs
+    if: contains(github.head_ref, 'renovate') || startsWith(github.head_ref, 'renovate/') || contains(github.actor, 'renovate')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+          
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_STATE: ${{ github.event.pull_request.state }}
+          PR_MERGED: ${{ github.event.pull_request.merged }}
+          PR_ACTION: ${{ github.event.action }}
+        run: |
+          import os
+          import re
+          import requests
+          import json
+          
+          # Get PR details from environment variables
+          pr_title = os.environ['PR_TITLE']
+          pr_url = os.environ['PR_URL']
+          pr_state = os.environ['PR_STATE']
+          pr_merged = os.environ['PR_MERGED'].lower() == 'true'
+          action = os.environ['PR_ACTION']
+          
+          # Extract service name and version from PR title
+          service_name = ""
+          new_version = ""
+          old_version = ""
+          
+          # Try to match common Renovate PR title patterns
+          update_match = re.search(r"Update (.*?) (from|to) (v?\d+\.\d+\.\d+.*?)( |$)", pr_title, re.IGNORECASE)
+          if update_match:
+              # Get the last part of the image path as service name
+              service_name = update_match.group(1).split('/')[-1]
+              
+              if update_match.group(2) == "from":
+                  old_version = update_match.group(3)
+                  # Try to find the "to" part
+                  to_match = re.search(r"to (v?\d+\.\d+\.\d+.*?)( |$)", pr_title, re.IGNORECASE)
+                  if to_match:
+                      new_version = to_match.group(1)
+              else:
+                  new_version = update_match.group(3)
+          else:
+              # Fallback if the pattern doesn't match
+              parts = pr_title.replace("Update dependency ", "", 1).split(' ')
+              service_name = parts[0].split('/')[-1] if parts else "Unknown"
+          
+          # Determine emoji and color based on PR state
+          emoji = ""
+          color = 0
+          status_text = ""
+          
+          if action == "opened":
+              emoji = "🆕"
+              status_text = "New update available"
+              color = 3447003  # Blue
+          elif pr_merged:
+              emoji = "✅"
+              status_text = "Update merged"
+              color = 5763719  # Green
+          elif action == "closed" and not pr_merged:
+              emoji = "❌"
+              status_text = "Update rejected"
+              color = 15548997  # Red
+          
+          # Create a Discord embed
+          embed = {
+              "title": f"{emoji} {status_text}: {service_name}",
+              "description": f"**PR**: [{pr_title}]({pr_url})",
+              "color": color,
+              "fields": []
+          }
+          
+          if new_version:
+              embed["fields"].append({
+                  "name": "New Version",
+                  "value": f"`{new_version}`",
+                  "inline": True
+              })
+          
+          if old_version:
+              embed["fields"].append({
+                  "name": "Previous Version",
+                  "value": f"`{old_version}`",
+                  "inline": True
+              })
+          
+          # Send to Discord
+          webhook_url = os.environ['DISCORD_WEBHOOK_URL']
+          payload = {"embeds": [embed]}
+          
+          response = requests.post(
+              webhook_url,
+              data=json.dumps(payload),
+              headers={"Content-Type": "application/json"}
+          )
+          
+          if not response.ok:
+              print(f"Error sending Discord notification: {response.text}")
+              exit(1)
+          else:
+              print("Discord notification sent successfully!")
+        shell: python
