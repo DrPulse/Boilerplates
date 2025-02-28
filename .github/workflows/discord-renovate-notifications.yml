@@ -69,13 +69,11 @@ jobs:
           
           # Simpler service name extraction as suggested
           # Format: Update {image_name} to {version}
-          parts = pr_title.split('Update ')[-1].split(' to ')[0].strip()
-          service_name = parts.split('/')[-1]  # Take last part after any slashes
+          service_name = pr_title.split('/')[1].split(' ')[0]
           
           # Initialize version variables
           old_version = ""
           new_version = ""
-          release_notes = ""
           
           # Get PR body to extract version info and release notes
           pr_body = get_pr_details()
@@ -87,17 +85,6 @@ jobs:
               if table_match:
                   old_version = table_match.group(1)
                   new_version = table_match.group(2)
-              
-              # Try to get release notes if this is a new PR
-              if action == "opened":
-                  # Look for release notes in PR body
-                  notes_match = re.search(r"## Release Notes(.*?)(?:##|$)", pr_body, re.DOTALL)
-                  if notes_match:
-                      raw_notes = notes_match.group(1).strip()
-                      # Clean up and format release notes
-                      lines = [line.strip() for line in raw_notes.split('\n') if line.strip()]
-                      if lines:
-                          release_notes = "\n".join(lines)
           
           # If we couldn't extract versions from PR body, try from title
           if not new_version:
@@ -142,18 +129,6 @@ jobs:
               embed["fields"].append({
                   "name": "Version Update",
                   "value": version_field,
-                  "inline": False
-              })
-          
-          # Add release notes for new PRs if available
-          if action == "opened" and release_notes:
-              # Truncate release notes if too long (Discord has a 1024 char limit per field)
-              if len(release_notes) > 1000:
-                  release_notes = release_notes[:997] + "..."
-              
-              embed["fields"].append({
-                  "name": "Release Notes",
-                  "value": release_notes,
                   "inline": False
               })
           
