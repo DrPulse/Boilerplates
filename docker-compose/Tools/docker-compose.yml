@@ -48,7 +48,7 @@ services:
       - traefik.http.services.it-tools.loadbalancer.server.port=80
 
   homeassistant:
-    image: homeassistant/home-assistant:2025.2
+    image: homeassistant/home-assistant:2025.3
     container_name: homeassistant
     restart: unless-stopped
     networks:
