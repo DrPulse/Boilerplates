@@ -7,9 +7,6 @@ services:
     image: ghcr.io/gethomepage/homepage:v1.1.1
     container_name: homepage
     restart: always
-    profiles: 
-      - homepage
-      - full
     networks:
       - proxy
     #ports:
