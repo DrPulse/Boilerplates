@@ -8,7 +8,9 @@ services:
     image: linuxserver/jellyfin:10.10.6
     container_name: jellyfin
     restart: always
-    profiles: ["jellyfin", "full"]
+    profiles: 
+      - jellyfin
+      - full
     networks:
       - proxy
     ports:
@@ -44,7 +46,9 @@ services:
     image: linuxserver/plex:1.41.5
     container_name: plex
     restart: always
-    profiles: ["plex", "full"]
+    profiles: 
+      - plex
+      - full
     networks:
       - proxy
     ports:
@@ -313,7 +317,9 @@ services:
     image: fallenbagel/jellyseerr:2.5.2
     container_name: jellyseerr
     restart: always
-    profiles: ["jellyfin", "full"]
+    profiles: 
+      - jellyfin
+      - full
     networks:
       - proxy
     ports:
@@ -375,7 +381,9 @@ services:
     image: linuxserver/overseerr:1.34.0
     container_name: overseerr
     restart: always
-    profiles: ["plex", "full"]
+    profiles: 
+      - plex
+      - full
     networks:
       - proxy
     # ports:

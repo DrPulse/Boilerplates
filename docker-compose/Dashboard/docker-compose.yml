@@ -7,7 +7,9 @@ services:
     image: ghcr.io/gethomepage/homepage:v1.1.1
     container_name: homepage
     restart: always
-    profiles: ["homepage", "full"]
+    profiles: 
+      - homepage
+      - full
     networks:
       - proxy
     #ports:
@@ -31,7 +33,9 @@ services:
   #   image: lissy93/dashy:3.1.0
   #   container_name: Dashy
   #   restart: always
-  #   profiles: ["dashy", "full"]
+  #   profiles: 
+  #     - dashy
+  #     - full
   #   networks:
   #     - proxy
   #   #ports:
