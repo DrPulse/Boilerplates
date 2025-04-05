@@ -16,6 +16,7 @@ services:
     environment:
       PUID: $PUID
       PGID: $PGID
+      HOMEPAGE_ALLOWED_HOSTS: homepage.$DOMAIN_NAME
     volumes:
       - $MONT_POINT_DATA/homepage:/app/config
     labels:
