@@ -220,7 +220,7 @@ services:
       - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 
   wallos:
-    image: bellamy/wallos:2.49.0
+    image: bellamy/wallos:2.49.1
     container_name: wallos
     restart: unless-stopped
     networks:
