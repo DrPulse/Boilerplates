@@ -52,7 +52,7 @@ services:
       MYSQL_PASSWORD: $DB_PASSWORD
   
   semaphore-server:
-    image: semaphoreui/semaphore:v2.14.3@sha256:ae7f610560536d44a92bf550ca95df55f267c1180ea438f0195edf1f4740507e
+    image: semaphoreui/semaphore:v2.14.4@sha256:8c8d498a969d1a888292dda7b5bcdbf73f11e56d34ce1de5c640f2c51692696e
     container_name: semaphore
     restart: unless-stopped
     networks:
