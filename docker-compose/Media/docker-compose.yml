@@ -176,7 +176,7 @@ services:
       - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
 
   prowlarr:
-    image: linuxserver/prowlarr:1.35.1
+    image: linuxserver/prowlarr:1.36.3
     container_name: prowlarr
     restart: always
     networks:
