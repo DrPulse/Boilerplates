@@ -210,7 +210,7 @@ services:
 
   radarr:
     container_name: radarr
-    image: linuxserver/radarr:5.24.1
+    image: linuxserver/radarr:5.25.0
     restart: always
     networks:
       - proxy
