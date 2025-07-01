@@ -180,7 +180,7 @@ services:
       - $MOUNT_POINT_DATA/paperless/cache:/data
   
   syncthing:
-    image: syncthing/syncthing:1.29
+    image: syncthing/syncthing:1.30
     container_name: syncthing
     hostname: syncthing
     restart: always
