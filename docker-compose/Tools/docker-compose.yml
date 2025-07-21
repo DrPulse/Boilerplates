@@ -40,7 +40,7 @@ services:
       LOCKOUT_TIME: 15 # Minutes
       MAX_SESSION_AGE: 24 # Hours
       # (OPTIONAL) - List of allowed origins for CORS
-      # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
+      ALLOWED_ORIGINS: "*"
     labels:
       # HOMEPAGE
       - homepage.group=Tools
