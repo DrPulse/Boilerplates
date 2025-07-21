@@ -112,6 +112,12 @@ services:
     image: dartsteven/nutify:amd64-0.1.6
     container_name: Nutify
     restart: always
+    networks:
+      - proxy
+    # ports:
+      # - 3493:3493
+      # - 5050:5050
+      # - 443:443
     privileged: true
     cap_add:
       - SYS_ADMIN
@@ -131,10 +137,6 @@ services:
     environment:
       - SECRET_KEY=$NUTIFY_SECRET_KEY
       - UDEV=1                    # Improve USB detection
-    # ports:
-      # - 3493:3493
-      # - 5050:5050
-      # - 443:443
     user: root
     labels:
       # HOMEPAGE

@@ -4,10 +4,12 @@ services:
     image: dumbwareio/dumbassets:1.0.11
     container_name: dumbasset
     restart: unless-stopped
-    volumes:
-      - $MOUNT_POINT_DATA/dumbassets:/app/data
+    networks:
+      - proxy
     # ports:
     #   - 3000:3000
+    volumes:
+      - $MOUNT_POINT_DATA/dumbassets:/app/data
     labels:
       # HOMEPAGE
       - homepage.group=Tools
@@ -26,6 +28,8 @@ services:
     image: dumbwareio/dumbterm:1.1.1
     container_name: dumbterm
     restart: unless-stopped
+    networks:
+      - proxy
     # ports:
     #   - 3000:3000
     volumes:
