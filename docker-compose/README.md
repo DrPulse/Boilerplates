@@ -59,6 +59,7 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
 - [Monitoring](Monitoring)
   - Dozzle
   - Netdata
+  - Nutify
   - Scrutiny
   - Speedtest
   - Uptime-kuma

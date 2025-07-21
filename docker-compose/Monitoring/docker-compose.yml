@@ -66,7 +66,7 @@ services:
       - traefik.docker.network=proxy
       - traefik.http.routers.dozzle.rule=Host(`dozzle.$DOMAIN_NAME`)
       - traefik.http.services.dozzle.loadbalancer.server.port=8080
-  
+
   # netdata:
   #   image: netdata/netdata:v1.47
   #   container_name: netdata
@@ -107,7 +107,49 @@ services:
   #     - traefik.docker.network=proxy
   #     - traefik.http.routers.netdata.rule=Host(`netdata.$DOMAIN_NAME`)
   #     - traefik.http.services.netdata.loadbalancer.server.port=19999
-  
+
+  nutify:
+    image: dartsteven/nutify:amd64-0.1.6
+    container_name: Nutify
+    restart: always
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RAWIO
+      - MKNOD
+    devices:
+      - /dev/bus/usb:/dev/bus/usb:rwm
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - $MOUNT_POINT_DATA/nutify/logs:/app/nutify/logs
+      - $MOUNT_POINT_DATA/nutify/instance:/app/nutify/instance
+      - $MOUNT_POINT_DATA/nutify/ssl:/app/ssl
+      - $MOUNT_POINT_DATA/nutify/nut:/etc/nut
+      - /dev:/dev:rw              # Full /dev access improves hotplug handling
+      - /run/udev:/run/udev:ro    # Access to udev events
+    environment:
+      - SECRET_KEY=$NUTIFY_SECRET_KEY
+      - UDEV=1                    # Improve USB detection
+    # ports:
+      # - 3493:3493
+      # - 5050:5050
+      # - 443:443
+    user: root
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Nutify
+      - homepage.icon=nutify.png
+      - homepage.ping=https://nutify.$DOMAIN_NAME
+      - homepage.href=https://nutify.$DOMAIN_NAME
+      - homepage.description=UPS monitoring tool
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.nutify.rule=Host(`nutify.$DOMAIN_NAME`)
+      - traefik.http.services.nutify.loadbalancer.server.port=5050
+
   # scrutiny:
   #   image: ghcr.io/analogj/scrutiny:master-omnibus
   #   container_name: scrutiny
@@ -149,7 +191,7 @@ services:
   #     - traefik.docker.network=proxy
   #     - traefik.http.routers.scrutiny.rule=Host(`scrutiny.$DOMAIN_NAME`)
   #     - traefik.http.services.scrutiny.loadbalancer.server.port=8080
-  
+
   speedtest:
     container_name: speedtest
     image: ghcr.io/alexjustesen/speedtest-tracker:v0.19.0
@@ -180,7 +222,7 @@ services:
       - traefik.docker.network=proxy
       - traefik.http.routers.speedtest.rule=Host(`speedtest.$DOMAIN_NAME`)
       - traefik.http.services.speedtest.loadbalancer.server.port=80
-  
+
   uptime-kuma:
     image: louislam/uptime-kuma:1.23.16
     container_name: uptime-kuma
