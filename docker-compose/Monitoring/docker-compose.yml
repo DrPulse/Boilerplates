@@ -3,7 +3,7 @@ version: '3'
 services:
 
   beszel:
-    image: henrygd/beszel:0.9.1
+    image: henrygd/beszel:0.11.1
     container_name: beszel
     restart: unless-stopped
     networks:
@@ -29,7 +29,7 @@ services:
       - traefik.http.services.beszel.loadbalancer.server.port=8090
 
   beszel-agent:
-    image: henrygd/beszel-agent:0.9.1
+    image: henrygd/beszel-agent:0.11.1
     container_name: beszel-agent
     restart: unless-stopped
     network_mode: host
@@ -42,7 +42,7 @@ services:
       EXTRA_FILESYSTEMS: $BESZEL_EXTRA_FILESYSTEM
 
   dozzle:
-    image: amir20/dozzle:v8.11.7
+    image: amir20/dozzle:v8.13.7
     container_name: dozzle
     restart: always
     networks:

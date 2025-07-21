@@ -134,7 +134,7 @@ services:
   #     - traefik.http.services.onlyoffice.loadbalancer.server.port=80
   
   paperless-server:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.14.7
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.17.1
     container_name: paperless-server
     restart: always
     depends_on:
@@ -171,7 +171,7 @@ services:
       - traefik.http.services.paperless.loadbalancer.server.port=8000
   
   paperless-cache:
-    image: docker.io/library/redis:7
+    image: docker.io/library/redis:8
     restart: always
     container_name: paperless-cache
     networks:
@@ -180,7 +180,7 @@ services:
       - $MOUNT_POINT_DATA/paperless/cache:/data
   
   syncthing:
-    image: syncthing/syncthing:1.29
+    image: syncthing/syncthing:1.30
     container_name: syncthing
     hostname: syncthing
     restart: always
@@ -213,7 +213,7 @@ services:
 
     
   wikijs:
-    image: lscr.io/linuxserver/wikijs:2.5.306
+    image: lscr.io/linuxserver/wikijs:2.5.307
     container_name: wikijs
     restart: always  
     networks:

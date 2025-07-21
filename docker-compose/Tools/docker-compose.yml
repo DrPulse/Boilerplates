@@ -48,7 +48,7 @@ services:
       - traefik.http.services.it-tools.loadbalancer.server.port=80
 
   homeassistant:
-    image: homeassistant/home-assistant:2025.2
+    image: homeassistant/home-assistant:2025.7
     container_name: homeassistant
     restart: unless-stopped
     networks:
@@ -100,7 +100,7 @@ services:
       - traefik.http.services.homebox.loadbalancer.server.port=7745
   
   lubelogger:
-      image: ghcr.io/hargata/lubelogger:v1.4.4
+      image: ghcr.io/hargata/lubelogger:v1.4.9
       #build: .
       restart: unless-stopped
       volumes:
@@ -193,7 +193,7 @@ services:
       - traefik.http.services.pairdrop.loadbalancer.server.port=3000
 
   stirling-pdf:
-    image: frooodle/s-pdf:0.43.1
+    image: frooodle/s-pdf:0.46.2
     container_name: stirling-pdf
     # ports:
     #   - '8080:8080'
@@ -220,7 +220,7 @@ services:
       - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 
   wallos:
-    image: bellamy/wallos:2.46.0
+    image: bellamy/wallos:3.3.1
     container_name: wallos
     restart: unless-stopped
     networks:
