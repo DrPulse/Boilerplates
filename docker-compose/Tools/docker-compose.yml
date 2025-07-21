@@ -23,7 +23,7 @@ services:
 
 
   dumbterm:
-    image: dumbwareio/dumbterm:1.1.0
+    image: dumbwareio/dumbterm:1.1.1
     container_name: dumbterm
     restart: unless-stopped
     # ports:
