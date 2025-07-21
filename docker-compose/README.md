@@ -70,6 +70,8 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Traefik
 - [Tools](Tools)
   - Blaze
+  - Dumbasset
+  - Dumbterm
   - Focalboard
   - Homebox
   - It-tools

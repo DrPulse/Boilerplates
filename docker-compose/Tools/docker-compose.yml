@@ -1,6 +1,58 @@
 version: "3"
 services:
+  dumbassets:
+    image: dumbwareio/dumbassets:1.0.10
+    container_name: dumbasset
+    restart: unless-stopped
+    volumes:
+      - $MOUNT_POINT_DATA/dumbassets:/app/data
+    # ports:
+    #   - 3000:3000
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=dumbasset
+      - homepage.icon=dumbasset.png
+      - homepage.ping=https://dumbasset.$DOMAIN_NAME
+      - homepage.href=https://dumbasset.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.dumbasset.rule=Host(`dumbasset.$DOMAIN_NAME`)
+      - traefik.http.services.dumbasset.loadbalancer.server.port=3000
 
+
+  dumbterm:
+    image: dumbwareio/dumbterm:1.1.0
+    container_name: dumbterm
+    restart: unless-stopped
+    # ports:
+    #   - 3000:3000
+    volumes:
+      - $MOUNT_POINT_DATA/config:/root/.config
+      - $MOUNT_POINT_DATA/data:/root/data
+    environment:
+      TZ: Europe/Paris
+      SITE_TITLE: DumbTerm
+      DUMBTERM_PIN: $DUMBTERM_PIN
+      BASE_URL: https://dumbterm.$DOMAIN_NAME
+      ENABLE_STARSHIP: true
+      LOCKOUT_TIME: 15 # Minutes
+      MAX_SESSION_AGE: 24 # Hours
+      # (OPTIONAL) - List of allowed origins for CORS
+      # ALLOWED_ORIGINS: ${DUMBTERM_ALLOWED_ORIGINS:-http://localhost:3000}
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=dumbterm
+      - homepage.icon=dumbterm.png
+      - homepage.ping=https://dumbterm.$DOMAIN_NAME
+      - homepage.href=https://dumbterm.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.dumbterm.rule=Host(`dumbterm.$DOMAIN_NAME`)
+      - traefik.http.services.dumbterm.loadbalancer.server.port=3000
 
   # focalboard:
   #   image: mattermost/focalboard:7.11.4
@@ -24,7 +76,7 @@ services:
   #     - traefik.docker.network=proxy
   #     - traefik.http.routers.focalboard.rule=Host(`focalboard.$DOMAIN_NAME`)
   #     - traefik.http.services.focalboard.loadbalancer.server.port=8000
-  
+
   it-tools:
     container_name: it-tools
     image: corentinth/it-tools:2024.5.13-a0bc346
@@ -98,7 +150,7 @@ services:
       - traefik.docker.network=proxy
       - traefik.http.routers.homebox.rule=Host(`homebox.$DOMAIN_NAME`)
       - traefik.http.services.homebox.loadbalancer.server.port=7745
-  
+
   lubelogger:
       image: ghcr.io/hargata/lubelogger:v1.4.9
       #build: .
@@ -235,7 +287,7 @@ services:
       - homepage.group=Tools
       - homepage.name=wallos
       - homepage.icon=wallos.png
-      - homepage.description=Subscriptions tracker 
+      - homepage.description=Subscriptions tracker
       - homepage.ping=https://wallos.$DOMAIN_NAME
       - homepage.href=https://wallos.$DOMAIN_NAME
       # TRAEFIK
