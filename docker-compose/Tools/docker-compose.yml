@@ -33,8 +33,8 @@ services:
     # ports:
     #   - 3000:3000
     volumes:
-      - $MOUNT_POINT_DATA/config:/root/.config
-      - $MOUNT_POINT_DATA/data:/root/data
+      - $MOUNT_POINT_DATA/dumbterm/config:/root/.config
+      - $MOUNT_POINT_DATA/dumbterm/data:/root/data
     environment:
       TZ: Europe/Paris
       SITE_TITLE: DumbTerm
