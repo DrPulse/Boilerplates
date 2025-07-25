@@ -3,7 +3,7 @@ version: '3'
 services:
 
   beszel:
-    image: henrygd/beszel:0.11.1
+    image: henrygd/beszel:0.12.0
     container_name: beszel
     restart: unless-stopped
     networks:
