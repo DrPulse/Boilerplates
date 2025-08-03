@@ -276,7 +276,7 @@ services:
       - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 
   postgres:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     container_name: reactive-resume-postgres
     restart: unless-stopped
     networks:
