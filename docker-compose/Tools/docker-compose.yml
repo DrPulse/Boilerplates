@@ -275,6 +275,96 @@ services:
       - traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.$DOMAIN_NAME`)
       - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 
+  postgres:
+    image: postgres:16-alpine
+    container_name: reactive-resume-postgres
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - $MOUNT_POINT_DATA/reactive-resume/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+
+  minio:
+    image: minio/minio:latest
+    container_name: reactive-resume-minio
+    restart: unless-stopped
+    command: server /data
+    networks:
+      - proxy
+    # ports:
+    #   - "9000:9000"
+    volumes:
+      - $MOUNT_POINT_DATA/reactive-resume/minio:/data
+    environment:
+      MINIO_ROOT_USER: $MINIO_ROOT_USER
+      MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
+
+  # Chrome Browser (for printing and previews)
+  chrome:
+    image: ghcr.io/browserless/chromium:v2.18.0 # Upgrading to newer versions causes issues
+    container_name: reactive-resume-chrome
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      TIMEOUT: 10000
+      CONCURRENT: 10
+      TOKEN: chrome_token
+      EXIT_ON_HEALTH_FAILURE: "true"
+      PRE_REQUEST_HEALTH_CHECK: "true"
+
+  app:
+    image: amruthpillai/reactive-resume:v4.3.7
+    container_name: reactive-resume
+    restart: unless-stopped
+    networks:
+      - proxy
+    # ports:
+    #  - "3000:3000"
+    depends_on:
+      - postgres
+      - minio
+      - chrome
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      # -- URLs --
+      PUBLIC_URL: https://reactive-resume.$DOMAIN_NAME
+      STORAGE_URL: http://reactive-resume-minio:9000/default
+      # -- Printer (Chrome) --
+      CHROME_TOKEN: chrome_token
+      CHROME_URL: ws://chrome:3000
+      # -- Database (Postgres) --
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
+      # -- Auth --
+      ACCESS_TOKEN_SECRET: $ACCESS_TOKEN_SECRET
+      REFRESH_TOKEN_SECRET: $REFRESH_TOKEN_SECRET
+      # -- Storage (Minio) --
+      STORAGE_ENDPOINT: minio
+      STORAGE_PORT: 9000
+      STORAGE_BUCKET: default
+      STORAGE_ACCESS_KEY: $MINIO_ROOT_USER
+      STORAGE_SECRET_KEY: $MINIO_ROOT_PASSWORD
+      STORAGE_USE_SSL: "false"
+      STORAGE_SKIP_BUCKET_CHECK: "false"
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=reactive-resume
+      - homepage.icon=reactive-resume.png
+      - homepage.description=Resume builder and tracker
+      - homepage.ping=https://reactive-resume.$DOMAIN_NAME
+      - homepage.href=https://reactive-resume.$DOMAIN_NAME
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.reactive-resume.rule=Host(`reactive-resume.$DOMAIN_NAME`)
+      - traefik.http.services.reactive-resume.loadbalancer.server.port=3000
+
   wallos:
     image: bellamy/wallos:3.3.1
     container_name: wallos
