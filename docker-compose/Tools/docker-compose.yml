@@ -289,7 +289,7 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
   minio:
-    image: minio/minio:latest
+    image: minio/minio:RELEASE.2025-07-18T21-56-31Z-cpuv1
     container_name: reactive-resume-minio
     restart: unless-stopped
     command: server /data
