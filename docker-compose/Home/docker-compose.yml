@@ -1,0 +1,126 @@
+services:
+
+
+  homeassistant:
+    image: homeassistant/home-assistant:2025.7
+    container_name: homeassistant
+    restart: unless-stopped
+    networks:
+      - proxy
+    #expose:
+    #  - 8123
+    #ports:
+    #  - 8123:8123
+    volumes:
+      - $MOUNT_POINT_DATA/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - homepage.group=Home
+      - homepage.name=homeassistant
+      - homepage.icon=home-assistant.png
+      - homepage.ping=https://homeassistant.$DOMAIN_NAME
+      - homepage.href=https://homeassistant.$DOMAIN_NAME
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.homeassistant.rule=Host(`homeassistant.$DOMAIN_NAME`)
+      - traefik.http.services.homeassistant.loadbalancer.server.port=8123
+
+  homebox:
+    image: ghcr.io/hay-kot/homebox:v0.10.3
+    container_name: homebox
+    restart: always
+    networks:
+      - proxy
+    #ports:
+    #  - 3100:7745
+    environment:
+      HBOX_LOG_LEVEL: info
+      HBOX_LOG_FORMAT: text
+      HBOX_WEB_MAX_UPLOAD_SIZE: 10
+    volumes:
+      - $MOUNT_POINT_DATA/homebox:/data/
+    labels:
+      # HOMEPAGE
+      - homepage.group=Home
+      - homepage.name=Homebox
+      - homepage.icon=homebox.png
+      - homepage.ping=https://homebox.$DOMAIN_NAME
+      - homepage.href=https://homebox.$DOMAIN_NAME
+      - homepage.description=Inventory and organization tool for home users
+      # TRAEFIK
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.homebox.rule=Host(`homebox.$DOMAIN_NAME`)
+      - traefik.http.services.homebox.loadbalancer.server.port=7745
+
+  lubelogger:
+      image: ghcr.io/hargata/lubelogger:v1.4.9
+      #build: .
+      restart: unless-stopped
+      volumes:
+        - $MOUNT_POINT_DATA/lubelogger/app:/App
+        - $MOUNT_POINT_DATA/lubelogger/keys:/root/.aspnet/DataProtection-Keys
+      #ports:
+      #  - 8080:8080
+      networks:
+        - proxy
+      labels:
+        # HOMEPAGE
+        - homepage.group=Home
+        - homepage.name=LubeLogger
+        - homepage.icon=lubelogger.png
+        - homepage.ping=lubelogger.$DOMAIN_NAME
+        - homepage.href=https://lubelogger.$DOMAIN_NAME
+        - homepage.description=Car stuff tracker
+        - homepage.widget.type=lubelogger
+        - homepage.widget.url=https://lubelogger.$DOMAIN_NAME
+        # - homepage.widget.username=$LUBELOGGER_USERNAME
+        # - homepage.widget.password=$LUBELOGGER_PASSWORD
+        - homepage.widget.vehicleID=1
+        # TRAEFIK
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.routers.lubelogger.rule=Host(`lubelogger.$DOMAIN_NAME`)
+        - traefik.http.services.lubelogger.loadbalancer.server.port=8080
+
+  # mealie:
+  #   container_name: mealie
+  #   image: hkotel/mealie:omni-nightly
+  #   restart: unless-stopped
+  #   # ports:
+  #     # - 9925:80
+  #     # - 3005:3000
+  #     # - 9005:9000
+  #   networks:
+  #     - proxy
+  #   environment:
+  #     PUID: $PUID
+  #     PGID: $PGID
+  #     TZ: $TZ
+  #     RECIPE_PUBLIC: 'true'
+  #     RECIPE_SHOW_NUTRITION: 'true'
+  #     RECIPE_SHOW_ASSETS: 'true'
+  #     RECIPE_LANDSCAPE_VIEW: 'true'
+  #     RECIPE_DISABLE_COMMENTS: 'false'
+  #     RECIPE_DISABLE_AMOUNT: 'false'
+  #     BASE_URL: https://mealie.$DOMAIN_NAME
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/mealie:/app/data
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Home
+  #     - homepage.name=Mealie
+  #     - homepage.icon=mealie.png
+  #     - homepage.description=Recipe manager and meal planner
+  #     - homepage.ping=https://mealie.$DOMAIN_NAME
+  #     - homepage.href=https://mealie.$DOMAIN_NAME
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.mealie.rule=Host(`mealie.$DOMAIN_NAME`, `food.home`)
+  #     - traefik.http.services.mealie.loadbalancer.server.port=3000
+
+
+networks:
+  proxy:
+    external: true
