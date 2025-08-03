@@ -305,7 +305,7 @@ services:
 
   # Chrome Browser (for printing and previews)
   chrome:
-    image: ghcr.io/browserless/chromium:v2.33.0 # Upgrading to newer versions causes issues
+    image: ghcr.io/browserless/chromium:v2.18.0 # Upgrading to newer versions causes issues
     container_name: reactive-resume-chrome
     restart: unless-stopped
     extra_hosts:
