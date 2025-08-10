@@ -67,10 +67,10 @@ services:
     environment:
       - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
     volumes:
-      - '[[MOUNT_POINT_DATA]]/godoxy/config:/app/config'
-      - '[[MOUNT_POINT_DATA]]/godoxy/logs:/app/logs'
-      - '[[MOUNT_POINT_DATA]]/godoxy/error_pages:/app/error_pages:ro'
-      - '[[MOUNT_POINT_DATA]]/godoxy/data:/app/data'
+      - [[MOUNT_POINT_DATA]]/godoxy/config:/app/config
+      - [[MOUNT_POINT_DATA]]/godoxy/logs:/app/logs
+      - [[MOUNT_POINT_DATA]]/godoxy/error_pages:/app/error_pages:ro
+      - [[MOUNT_POINT_DATA]]/godoxy/data:/app/data
 
       # To use autocert, certs will be stored in "./certs".
       # You can also use a docker volume to store it
