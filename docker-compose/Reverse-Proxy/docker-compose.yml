@@ -1,38 +1,121 @@
-version: '3'
 services:
 
-  traefik:
-    image: traefik:v3.5.0
-    container_name: traefik
-    restart: always
-    networks:
-      - proxy
-    ports:
-      - 80:80
-      - 443:443
+  # traefik:
+  #   image: traefik:v3.5.0
+  #   container_name: traefik
+  #   restart: always
+  #   networks:
+  #     - proxy
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - $MOUNT_POINT_DATA/traefik/traefik.yml:/etc/traefik/traefik.yml
+  #     - $MOUNT_POINT_DATA/traefik/traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
+  #     - $MOUNT_POINT_DATA/traefik/certs:/etc/traefik/certs:ro
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Networking
+  #     - homepage.name=Traefik
+  #     - homepage.icon=traefik.png
+  #     - homepage.href=https://traefik.$DOMAIN_NAME
+  #     - homepage.ping=https://traefik.$DOMAIN_NAME
+  #     - homepage.description=Reverse proxy
+  #     - homepage.widget.type=traefik
+  #     - homepage.widget.url=https://traefik.$DOMAIN_NAME
+  #     # TRAEFIK
+  #     - traefik.enable=true
+  #     - traefik.docker.network=proxy
+  #     - traefik.http.routers.traefik.rule=Host(`traefik.$DOMAIN_NAME`)
+  #     - traefik.http.routers.traefik.service=api@internal
+  #   extra_hosts:
+  #       - host.docker.internal:172.17.0.1
+
+  socket-proxy:
+    container_name: socket-proxy
+    image: ghcr.io/yusing/socket-proxy:latest
+    environment:
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      - CONTAINERS=1
+      - EVENTS=1
+      - INFO=1
+      - PING=1
+      - POST=1
+      - VERSION=1
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - $MOUNT_POINT_DATA/traefik/traefik.yml:/etc/traefik/traefik.yml
-      - $MOUNT_POINT_DATA/traefik/traefik-dynamic.yml:/etc/traefik/traefik-dynamic.yml
-      - $MOUNT_POINT_DATA/traefik/certs:/etc/traefik/certs:ro
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    restart: unless-stopped
+    tmpfs:
+      - /run
+    ports:
+      - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+  frontend:
+    image: ghcr.io/yusing/godoxy-frontend:v0.12.0
+    container_name: godoxy-frontend
+    restart: unless-stopped
+    network_mode: host # do not change this
+    env_file: .env
+    user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    depends_on:
+      - app
+    environment:
+      HOSTNAME: 127.0.0.1
+      PORT: ${GODOXY_FRONTEND_PORT:-3000}
     labels:
-      # HOMEPAGE
-      - homepage.group=Networking
-      - homepage.name=Traefik
-      - homepage.icon=traefik.png
-      - homepage.href=https://traefik.$DOMAIN_NAME
-      - homepage.ping=https://traefik.$DOMAIN_NAME
-      - homepage.description=Reverse proxy
-      - homepage.widget.type=traefik
-      - homepage.widget.url=https://traefik.$DOMAIN_NAME
-      # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.traefik.rule=Host(`traefik.$DOMAIN_NAME`)
-      - traefik.http.routers.traefik.service=api@internal
-    extra_hosts: 
-        - host.docker.internal:172.17.0.1
+      proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
+      proxy.#1.port: ${GODOXY_FRONTEND_PORT:-3000}
+      # proxy.#1.middlewares.cidr_whitelist: |
+      #   status: 403
+      #   message: IP not allowed
+      #   allow:
+      #     - 127.0.0.1
+      #     - 10.0.0.0/8
+      #     - 192.168.0.0/16
+      #     - 172.16.0.0/12
+  app:
+    image: ghcr.io/yusing/godoxy:v0.16.2
+    container_name: godoxy-proxy
+    restart: always
+    network_mode: host # do not change this
+    env_file: .env
+    user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
+    depends_on:
+      socket-proxy:
+        condition: service_started
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - all
+    cap_add:
+      - NET_BIND_SERVICE
+    environment:
+      - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
+    volumes:
+      - "[[MOUNT_POINT_DATA]]/godoxy/config:/app/config"
+      - "[[MOUNT_POINT_DATA]]/godoxy/logs:/app/logs"
+      - "[[MOUNT_POINT_DATA]]/godoxy/error_pages:/app/error_pages:ro"
+      - "[[MOUNT_POINT_DATA]]/godoxy/data:/app/data"
+
+      # To use autocert, certs will be stored in "./certs".
+      # You can also use a docker volume to store it
+      - "[[MOUNT_POINT_DATA]]/godoxy/certs:/app/certs"
+
+      # remove "./certs:/app/certs" and uncomment below to use existing certificate
+      # - /path/to/certs/cert.crt:/app/certs/cert.crt
+      # - /path/to/certs/priv.key:/app/certs/priv.key
+    # dns:
+    #   - 1.1.1.1
+    #   - 1.1.1.2
+
 
 networks:
-  proxy:
+  proxy:  # for traefik
     external: true
