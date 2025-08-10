@@ -1,20 +1,21 @@
 # Docker composes
 
-Sets of containers ready to be deployed natively is docker-compose, in stacks portainer / yacht or in gitops mode.
+Sets of containers ready to be deployed natively in docker-compose, in stacks komodo in gitops mode.
+Some tweaking is needed to make it ready for portainer / docker compose standard stacks like removing use of komodo variables / secrets
 Additional config may be needed for some containers. Details are in each stack folder.
 
 ## Usage
 
 ### Deployement informations
 
-Made for deploying the other stacks from portainer / docker-compose with environment variables.
+Made for deploying the other stacks from komodo with environment variables.
 The default credentials, account creation commands, required files etc, will be referenced inside each stack directory.
 
-By default, a stack will be configured to use traefik as the reverse proxy, using the docker network called proxy. The ports will still be commented, in case a reverse proxy is not needed. Be careful, the ports are the defaults ones and some containers use commons ports like 8080, so change them to not used ones. If not running through traefik, the network field can be changed/deleted to fit your needs.
+By default, a stack will be configured to use godoxy as the reverse proxy, running in host mode. Traefik is also in the compose file if prefered.
 
-I use 2 mounting points, one for the container data/config and one for common files to be shared everywhere (movies, shows...), but docker volumes or single mount point would work aswell. some containers can't work without a docker volume though, so make sure to backup the docker volumes.
+I use 2 mounting points, one for the container data/config and one for common files to be shared everywhere (movies, shows...), but docker volumes or single mount point would work aswell. Some containers can't work without a docker volume though, so make sure to backup the docker volumes.
 
-Environment variables are needed for the stacks, either by loading them or referencing a file. A .env-exemple is inside each stack directory, ready to be filled.  
+Environment variables are needed for the stacks, either by loading them or referencing a file. A .env-exemple is inside each stack directory, ready to be filled. Some variables are set at komodo level, using its interpolation with [[VAR]] instead of standard $VAR to retrieve the value.  
 
 ### Dashboard
 
