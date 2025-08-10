@@ -4,42 +4,44 @@ services:
     image: dumbwareio/dumbassets:1.0.11
     container_name: dumbasset
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
     #   - 3000:3000
     volumes:
-      - $MOUNT_POINT_DATA/dumbassets:/app/data
+      - "[[MOUNT_POINT_DATA]]/dumbassets:/app/data"
     labels:
       # HOMEPAGE
       - homepage.group=Tools
-      - homepage.name=dumbasset
-      - homepage.icon=dumbasset.png
-      - homepage.ping=https://dumbasset.$DOMAIN_NAME
-      - homepage.href=https://dumbasset.$DOMAIN_NAME
+      - homepage.name=dumbassets
+      - homepage.icon=dumbassets.png
+      - homepage.ping=https://dumbassets.[[DOMAIN_NAME]]
+      - homepage.href=https://dumbassets.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.dumbasset.rule=Host(`dumbasset.$DOMAIN_NAME`)
-      - traefik.http.services.dumbasset.loadbalancer.server.port=3000
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.dumbasset.rule=Host(`dumbasset.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.dumbasset.loadbalancer.server.port=3000
+      # GODOXY
+      - proxy.port= 3000
 
 
   dumbterm:
     image: dumbwareio/dumbterm:1.1.1
     container_name: dumbterm
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
     #   - 3000:3000
     volumes:
-      - $MOUNT_POINT_DATA/dumbterm/config:/root/.config
-      - $MOUNT_POINT_DATA/dumbterm/data:/root/data
+      - "[[MOUNT_POINT_DATA]]/dumbterm/config:/root/.config"
+      - "[[MOUNT_POINT_DATA]]/dumbterm/data:/root/data"
     environment:
       TZ: Europe/Paris
       SITE_TITLE: DumbTerm
       DUMBTERM_PIN: $DUMBTERM_PIN
-      BASE_URL: https://dumbterm.$DOMAIN_NAME
+      BASE_URL: https://dumbterm.[[DOMAIN_NAME]]
       ENABLE_STARSHIP: true
       LOCKOUT_TIME: 15 # Minutes
       MAX_SESSION_AGE: 24 # Hours
@@ -50,13 +52,16 @@ services:
       - homepage.group=Tools
       - homepage.name=dumbterm
       - homepage.icon=dumbterm.png
-      - homepage.ping=https://dumbterm.$DOMAIN_NAME
-      - homepage.href=https://dumbterm.$DOMAIN_NAME
+      - homepage.ping=https://dumbterm.[[DOMAIN_NAME]]
+      - homepage.href=https://dumbterm.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.dumbterm.rule=Host(`dumbterm.$DOMAIN_NAME`)
-      - traefik.http.services.dumbterm.loadbalancer.server.port=3000
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.dumbterm.rule=Host(`dumbterm.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.dumbterm.loadbalancer.server.port=3000
+      # GODOXY
+      - proxy.port=3000
+
 
   # focalboard:
   #   image: mattermost/focalboard:7.11.4
@@ -73,12 +78,12 @@ services:
   #     - homepage.group=Tools
   #     - homepage.name=focalboard
   #     - homepage.icon=focalboard.png
-  #     - homepage.ping=https://focalboard.$DOMAIN_NAME
-  #     - homepage.href=https://focalboard.$DOMAIN_NAME
+  #     - homepage.ping=https://focalboard.[[DOMAIN_NAME]]
+  #     - homepage.href=https://focalboard.[[DOMAIN_NAME]]
   #     # TRAEFIK
   #     - traefik.enable=true
   #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.focalboard.rule=Host(`focalboard.$DOMAIN_NAME`)
+  #     - traefik.http.routers.focalboard.rule=Host(`focalboard.[[DOMAIN_NAME]]`)
   #     - traefik.http.services.focalboard.loadbalancer.server.port=8000
 
   it-tools:
@@ -87,28 +92,30 @@ services:
     restart: always
     #ports:
     #  - 8080:80
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     labels:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=It-tools
       - homepage.icon=mdi-tools
       - homepage.description=Useful tools for developer and people working in IT
-      - homepage.ping=https://it-tools.$DOMAIN_NAME
-      - homepage.href=https://it-tools.$DOMAIN_NAME
+      - homepage.ping=https://it-tools.[[DOMAIN_NAME]]
+      - homepage.href=https://it-tools.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.it-tools.rule=Host(`it-tools.$DOMAIN_NAME`)
-      - traefik.http.services.it-tools.loadbalancer.server.port=80
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.it-tools.rule=Host(`it-tools.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.it-tools.loadbalancer.server.port=80
+      # GODOXY
+      - proxy.port=80
 
   pairdrop:
     image: lscr.io/linuxserver/pairdrop:1.11.2
     container_name: pairdrop
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     environment:
       PUID: $PUID
       PGID: $PGID
@@ -121,13 +128,15 @@ services:
       - homepage.name=pairdrop
       - homepage.icon=snapdrop.png
       - homepage.description=LAN file/text sharing
-      - homepage.ping=https://pairdrop.$DOMAIN_NAME
-      - homepage.href=https://pairdrop.$DOMAIN_NAME
+      - homepage.ping=https://pairdrop.[[DOMAIN_NAME]]
+      - homepage.href=https://pairdrop.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.pairdrop.rule=Host(`pairdrop.$DOMAIN_NAME`)
-      - traefik.http.services.pairdrop.loadbalancer.server.port=3000
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.pairdrop.rule=Host(`pairdrop.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.pairdrop.loadbalancer.server.port=3000
+      # GODOXY
+      - proxy.port=3000
 
   stirling-pdf:
     image: frooodle/s-pdf:1.1.1
@@ -135,35 +144,37 @@ services:
     # ports:
     #   - '8080:8080'
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     environment:
       - DOCKER_ENABLE_SECURITY=false
     volumes:
-      - $MOUNT_POINT_DATA/stirlingpdf/trainingData:/usr/share/tesseract-ocr/5/tessdata #Required for extra OCR languages
-      - $MOUNT_POINT_DATA/stirlingpdf/extraConfigs:/configs
+      - "[[MOUNT_POINT_DATA]]/stirlingpdf/trainingData:/usr/share/tesseract-ocr/5/tessdata #Required for extra OCR languages"
+      - "[[MOUNT_POINT_DATA]]/stirlingpdf/extraConfigs:/configs"
     labels:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=stirling-pdf
       - homepage.icon=mdi-file-pdf-box
       - homepage.description=PDF Toolbox
-      - homepage.ping=https://stirling-pdf.$DOMAIN_NAME
-      - homepage.href=https://stirling-pdf.$DOMAIN_NAME
+      - homepage.ping=https://stirling-pdf.[[DOMAIN_NAME]]
+      - homepage.href=https://stirling-pdf.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.$DOMAIN_NAME`)
-      - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
+      # GODOXY
+      - proxy.port=8080
 
   postgres:
     image: postgres:16-alpine
     container_name: reactive-resume-postgres
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     volumes:
-      - $MOUNT_POINT_DATA/reactive-resume/postgres:/var/lib/postgresql/data
+      - "[[MOUNT_POINT_DATA]]/reactive-resume/postgres:/var/lib/postgresql/data"
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: $POSTGRES_USER
@@ -174,12 +185,12 @@ services:
     container_name: reactive-resume-minio
     restart: unless-stopped
     command: server /data
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
     #   - "9000:9000"
     volumes:
-      - $MOUNT_POINT_DATA/reactive-resume/minio:/data
+      - "[[MOUNT_POINT_DATA]]/reactive-resume/minio:/data"
     environment:
       MINIO_ROOT_USER: $MINIO_ROOT_USER
       MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
@@ -202,8 +213,8 @@ services:
     image: amruthpillai/reactive-resume:v4.4.4
     container_name: reactive-resume
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
     #  - "3000:3000"
     depends_on:
@@ -214,7 +225,7 @@ services:
       PORT: 3000
       NODE_ENV: production
       # -- URLs --
-      PUBLIC_URL: https://reactive-resume.$DOMAIN_NAME
+      PUBLIC_URL: https://reactive-resume.[[DOMAIN_NAME]]
       STORAGE_URL: http://reactive-resume-minio:9000/default
       # -- Printer (Chrome) --
       CHROME_TOKEN: chrome_token
@@ -238,44 +249,47 @@ services:
       - homepage.name=reactive-resume
       - homepage.icon=reactive-resume.png
       - homepage.description=Resume builder and tracker
-      - homepage.ping=https://reactive-resume.$DOMAIN_NAME
-      - homepage.href=https://reactive-resume.$DOMAIN_NAME
+      - homepage.ping=https://reactive-resume.[[DOMAIN_NAME]]
+      - homepage.href=https://reactive-resume.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.reactive-resume.rule=Host(`reactive-resume.$DOMAIN_NAME`)
-      - traefik.http.services.reactive-resume.loadbalancer.server.port=3000
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.reactive-resume.rule=Host(`reactive-resume.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.reactive-resume.loadbalancer.server.port=3000
+      # GODOXY
+      - proxy.port=3000
 
   wallos:
     image: bellamy/wallos:4.0.0
     container_name: wallos
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     environment:
       TZ: $TZ
     volumes:
-      - $MOUNT_POINT_DATA/wallos/db:/var/www/html/db
-      - $MOUNT_POINT_DATA/wallos/logos:/var/www/html/images/uploads/logos
+      - "[[MOUNT_POINT_DATA]]/wallos/db:/var/www/html/db"
+      - "[[MOUNT_POINT_DATA]]/wallos/logos:/var/www/html/images/uploads/logos"
     labels:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=wallos
       - homepage.icon=wallos.png
       - homepage.description=Subscriptions tracker
-      - homepage.ping=https://wallos.$DOMAIN_NAME
-      - homepage.href=https://wallos.$DOMAIN_NAME
+      - homepage.ping=https://wallos.[[DOMAIN_NAME]]
+      - homepage.href=https://wallos.[[DOMAIN_NAME]]
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.wallos.rule=Host(`wallos.$DOMAIN_NAME`)
-      - traefik.http.services.wallos.loadbalancer.server.port=80
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.wallos.rule=Host(`wallos.[[DOMAIN_NAME]]`)
+      # - traefik.http.services.wallos.loadbalancer.server.port=80
+      # GODOXY
+      - proxy.port=80
+
+# volumes:
+#   focalboard-data:
 
 
-volumes:
-  focalboard-data:
-
-
-networks:
-  proxy:
-    external: true
+# networks:
+#   proxy:
+#     external: true
