@@ -57,7 +57,6 @@ services:
     container_name: godoxy-frontend
     restart: unless-stopped
     network_mode: host # do not change this
-    env_file: .env
     user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
     read_only: true
     security_opt:
@@ -85,7 +84,6 @@ services:
     container_name: godoxy-proxy
     restart: always
     network_mode: host # do not change this
-    env_file: .env
     user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
     # depends_on:
     #   socket-proxy:
