@@ -32,26 +32,26 @@ services:
   #   extra_hosts:
   #       - host.docker.internal:172.17.0.1
 
-  # socket-proxy:
-  #   container_name: socket-proxy
-  #   image: ghcr.io/yusing/socket-proxy:latest
-  #   environment:
-  #     - ALLOW_START=1
-  #     - ALLOW_STOP=1
-  #     - ALLOW_RESTARTS=1
-  #     - CONTAINERS=1
-  #     - EVENTS=1
-  #     - INFO=1
-  #     - PING=1
-  #     - POST=1
-  #     - VERSION=1
-  #   volumes:
-  #     - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-  #   restart: unless-stopped
-  #   tmpfs:
-  #     - /run
-  #   ports:
-  #     - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+  socket-proxy:
+    container_name: socket-proxy
+    image: ghcr.io/yusing/socket-proxy:latest
+    environment:
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      - CONTAINERS=1
+      - EVENTS=1
+      - INFO=1
+      - PING=1
+      - POST=1
+      - VERSION=1
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    restart: unless-stopped
+    tmpfs:
+      - /run
+    ports:
+      - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
   frontend:
     image: ghcr.io/yusing/godoxy-frontend:v0.12.0
     container_name: godoxy-frontend
