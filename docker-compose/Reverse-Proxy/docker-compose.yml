@@ -52,6 +52,10 @@ services:
       - /run
     ports:
       - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+    labels:
+      # KOMODO
+      komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
+
   frontend:
     image: ghcr.io/yusing/godoxy-frontend:v0.12.0
     container_name: godoxy-frontend
@@ -69,6 +73,9 @@ services:
       HOSTNAME: 127.0.0.1
       PORT: ${GODOXY_FRONTEND_PORT:-3000}
     labels:
+      # KOMODO
+      komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
+      # GODOXY
       proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
       proxy.#1.port: ${GODOXY_FRONTEND_PORT:-3000}
       # proxy.#1.middlewares.cidr_whitelist: |
@@ -112,8 +119,10 @@ services:
     # dns:
     #   - 1.1.1.1
     #   - 1.1.1.2
+    labels:
+      # KOMODO
+      komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
 
-
-networks:
-  proxy:  # for traefik
-    external: true
+# networks:
+#   proxy:  # for traefik
+#     external: true
