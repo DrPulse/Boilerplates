@@ -23,7 +23,7 @@ services:
       # - traefik.http.routers.dumbasset.rule=Host(`dumbasset.${DOMAIN_NAME}`)
       # - traefik.http.services.dumbasset.loadbalancer.server.port=3000
       # GODOXY
-      - proxy.port= 3000
+      - proxy.port=3000
 
 
   dumbterm:
