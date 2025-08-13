@@ -25,7 +25,7 @@ services:
       # - traefik.http.routers.homepage.rule=Host(`homepage.$DOMAIN_NAME`)
       # - traefik.http.services.homepage.loadbalancer.server.port=3000
       # GODOXY
-      proxy.port: 3000
+      proxy.homepage.port: 3000
 
 
   # dashy:
