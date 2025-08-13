@@ -118,10 +118,10 @@ services:
     restart: always
     # networks:
     #   - proxy
-    ports:
+    # ports:
       # - 3493:3493
-      - 5055:5050
-      - 448:443
+      # - 5050:5050
+      # - 443:443
     privileged: true
     cap_add:
       - SYS_ADMIN
