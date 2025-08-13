@@ -114,7 +114,7 @@ services:
 
   nutify:
     image: dartsteven/nutify:amd64-0.1.6
-    container_name: Nutify
+    container_name: nutify
     restart: always
     # networks:
     #   - proxy
