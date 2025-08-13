@@ -50,7 +50,7 @@ services:
     container_name: tailscale
     restart: always
     hostname: nas-tailscale
-    network_mode: "host"
+    network_mode: host
     privileged: true
     environment:
       TS_AUTH_KEY: ${TS_AUTH_KEY}
