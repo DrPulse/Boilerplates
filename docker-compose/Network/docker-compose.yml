@@ -1,6 +1,48 @@
 version: "3"
 # name: network
 services:
+  adguardhome:
+    container_name: adguardhome
+    image: adguard/adguardhome:v0.107.63
+    restart: always
+    networks:
+      qnet-static-eth1:
+        ipv4_address: ${LOCAL_DNS_ADDRESS}
+    ports:
+      - 3000:80
+      - 53:53/tcp
+      - 53:53/udp
+    volumes:
+      - ${MOUNT_POINT_DATA}/adguard/workdir:/opt/adguardhome/work
+      - ${MOUNT_POINT_DATA}/adguard/conf:/opt/adguardhome/conf
+    labels:
+      # KOMODO
+      komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
+      # HOMEPAGE
+      homepage.group: Networking
+      homepage.name: Adguard Home
+      homepage.icon: adguard-home.png
+      homepage.description: Ad blocker, local DNS, DHCP server
+      homepage.widget.type: adguard
+      homepage.widget.url: https://adguardhome.${DOMAIN_NAME}
+      homepage.widget.username: ${ADGUARD_USERNAME}
+      homepage.widget.password: ${ADGUARD_PASSWORD}
+      # TRAEFIK
+      # - "traefik.enable=true"
+      # - "traefik.docker.network=proxy"
+      # - "traefik.http.routers.adguardhome.entrypoints=http"
+      # - "traefik.http.routers.adguardhome.rule=Host(`adguardhome.pulselabs.me`)"
+      # - "traefik.http.middlewares.adguardhome-https-redirect.redirectscheme.scheme=https"
+      # - "traefik.http.routers.adguardhome.middlewares=adguardhome-https-redirect"
+      # - "traefik.http.routers.adguardhome-secure.entrypoints=https"
+      # - "traefik.http.routers.adguardhome-secure.rule=Host(`adguardhome.pulselabs.me`)"
+      # - "traefik.http.routers.adguardhome-secure.tls=true"
+      # - "traefik.http.routers.adguardhome-secure.tls.certresolver=cloudflare"
+      # - "traefik.http.routers.adguardhome-secure.service=adguardhome"
+      # - "traefik.http.services.adguardhome.loadbalancer.server.port=80"
+      # GODOXY
+      proxy.port: 80
+
 
   tailscale:
     image: tailscale/tailscale:v1.86.2
@@ -13,64 +55,68 @@ services:
       TS_AUTH_KEY: $TS_AUTH_KEY
       TS_ROUTES: $NETWORK_ADDRESS/24
     volumes:
-      - $MOUNT_POINT_DATA/tailscale:/var/lib # State data will be stored in this directory
+      - ${MOUNT_POINT_DATA}/tailscale:/var/lib # State data will be stored in this directory
       - /dev/net/tun:/dev/net/tun # Required for tailscale to work
       - /var/lib:/var/lib
     cap_add: # Required for tailscale to work
       - net_admin
       - sys_module
     labels:
+      # KOMODO
+      komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
       # HOMEPAGE
-      - homepage.group=Networking
-      - homepage.name=Tailscale
-      - homepage.icon=tailscale.png
-      - homepage.description=Zero config mesh VPN
-      
-  pihole:
-    image: pihole/pihole:2025.07.1
-    container_name: pihole
-    hostname: nas-pihole
-    restart: always
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "80:80/tcp"
-    environment:
-      TZ: $TZ
-      WEBPASSWORD: $PIHOLE_PASSWORD
-      FTLCONF_LOCAL_IPV4: $PIHOLE_ADDRESS
-      VIRTUAL_HOST: $SERVER_ADDRESS
-      PIHOLE_DNS_: "1.1.1.1;1.0.0.1;9.9.9.9;9.9.9.11;149.112.112.112;149.112.112.11"  # Cloud Flare, Quad9
-      PIHOLE_UID: 0
-      PIHOLE_GID: 100
-    networks:
-      interface-xxx:
-        ipv4_address: $PIHOLE_ADDRESS
-    volumes:
-      - $MOUNT_POINT_DATA/pihole:/etc/pihole
-      - $MOUNT_POINT_DATA/pihole/dnsmasq:/etc/dnsmasq.d
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    cap_add:
-      - NET_ADMIN
-    labels:
-      # HOMEPAGE
-      - homepage.group=Networking
-      - homepage.name=Pihole
-      - homepage.icon=pi-hole.png
-      - homepage.ping=http://$PIHOLE_ADDRESS
-      - homepage.href=http://$DASHBOARD_PIHOLE_ADDRESS/admin
-      - homepage.description=Ad blocker, local DNS, DHCP server
-      - homepage.widget.type=pihole
-      - homepage.widget.url=http://$PIHOLE_ADDRESS
-      - homepage.widget.key=$PIHOLE_API_KEY
-      # WATCHTOWER
-      - com.centurylinklabs.watchtower.monitor-only
+      homepage.group: Networking
+      homepage.name: Tailscale
+      homepage.icon: tailscale.png
+      homepage.description: Zero config mesh VPN
+
+
+  # pihole:
+  #   image: pihole/pihole:2025.07.1
+  #   container_name: pihole
+  #   hostname: nas-pihole
+  #   restart: always
+  #   ports:
+  #     - "53:53/tcp"
+  #     - "53:53/udp"
+  #     - "67:67/udp"
+  #     - "80:80/tcp"
+  #   environment:
+  #     TZ: $TZ
+  #     WEBPASSWORD: $PIHOLE_PASSWORD
+  #     FTLCONF_LOCAL_IPV4: $LOCAL_DNS_ADDRESS
+  #     VIRTUAL_HOST: $SERVER_ADDRESS
+  #     PIHOLE_DNS_: "1.1.1.1;1.0.0.1;9.9.9.9;9.9.9.11;149.112.112.112;149.112.112.11"  # Cloud Flare, Quad9
+  #     PIHOLE_UID: 0
+  #     PIHOLE_GID: 100
+  #   networks:
+  #     interface-xxx:
+  #       ipv4_address: $LOCAL_DNS_ADDRESS
+  #   volumes:
+  #     - $MOUNT_POINT_DATA/pihole:/etc/pihole
+  #     - $MOUNT_POINT_DATA/pihole/dnsmasq:/etc/dnsmasq.d
+  #   dns:
+  #     - 127.0.0.1
+  #     - 1.1.1.1
+  #   cap_add:
+  #     - NET_ADMIN
+  #   labels:
+  #     # KOMODO
+  #     komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
+  #     # HOMEPAGE
+  #     homepage.group: Networking
+  #     homepage.name: Pihole
+  #     homepage.icon: pi-hole.png
+  #     homepage.ping: http://$LOCAL_DNS_ADDRESS
+  #     homepage.href: http://pihole.$DOMAIN_NAME/admin
+  #     homepage.description: Ad blocker, local DNS, DHCP server
+  #     homepage.widget.type: pihole
+  #     homepage.widget.url: http://$LOCAL_DNS_ADDRESS
+  #     homepage.widget.key: $PIHOLE_API_KEY
 
 
 networks:
-  interface-xxx:
+  qnet-static-eth1:
     external: true
-    
+
+
