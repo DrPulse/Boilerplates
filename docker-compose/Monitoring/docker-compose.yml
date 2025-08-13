@@ -156,7 +156,7 @@ services:
       # - traefik.http.routers.nutify.rule=Host(`nutify.${DOMAIN_NAME}`)
       # - traefik.http.services.nutify.loadbalancer.server.port=5050
       # GODOXY
-      - proxy.port=5050
+      - proxy.nutify.port=5050
 
   # scrutiny:
   #   image: ghcr.io/analogj/scrutiny:master-omnibus
