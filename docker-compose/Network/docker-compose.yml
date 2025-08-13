@@ -41,7 +41,7 @@ services:
       # - "traefik.http.routers.adguardhome-secure.service=adguardhome"
       # - "traefik.http.services.adguardhome.loadbalancer.server.port=3000"
       # GODOXY
-      proxy.port: 3000
+      proxy.adguardhome.port: 3000
 
 
   tailscale:
