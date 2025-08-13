@@ -1,37 +1,38 @@
 version: "3"
 # name: development
 services:
-  
-  
+
+
   code-server:
     image: lscr.io/linuxserver/code-server:4.102.3
     container_name: code-server
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 8443:8443
     environment:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
-      - SUDO_PASSWORD=$SUDO_PASSWORD
+      - SUDO_PASSWORD=${SUDO_PASSWORD}
       - DEFAULT_WORKSPACE=/config/workspace
     volumes:
-      - $MOUNT_POINT_DATA/code-server:/config
+      - ${MOUNT_POINT_DATA}/code-server:/config
     labels:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=Code-Server
       - homepage.icon=code.png
-      - homepage.ping=https://code-server.$DOMAIN_NAME
-      - homepage.href=https://code-server.$DOMAIN_NAME
+      - homepage.ping=https://code-server.${DOMAIN_NAME}
+      - homepage.href=https://code-server.${DOMAIN_NAME}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.code-server.rule=Host(`code-server.$DOMAIN_NAME`)
-      - traefik.http.services.code-server.loadbalancer.server.port=8443
-
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.code-server.rule=Host(`code-server.${DOMAIN_NAME}`)
+      # - traefik.http.services.code-server.loadbalancer.server.port=8443
+      # GODOXY
+      - port.proxy=8443
 
 
   semaphore-db:
@@ -39,24 +40,24 @@ services:
     container_name: semaphore-db
     hostname: mysql
     restart: unless-stopped
-    networks:
-      - proxy
-    ports:
-      - 3306:3306
+    # networks:
+    #   - proxy
+    # ports:
+    #   - 3306:3306
     volumes:
-      - $MOUNT_POINT_DATA/semaphore/db:/var/lib/mysql
+      - ${MOUNT_POINT_DATA}/semaphore/db:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: semaphore
       MYSQL_USER: semaphore
-      MYSQL_PASSWORD: $DB_PASSWORD
-  
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
   semaphore-server:
     image: semaphoreui/semaphore:v2.15.4
     container_name: semaphore
     restart: unless-stopped
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 3000:3000
     user: "${PUID}:${PGID}"
@@ -64,36 +65,37 @@ services:
       - semaphore-db
     environment:
       SEMAPHORE_DB_USER: semaphore
-      SEMAPHORE_DB_PASS: $DB_PASSWORD
+      SEMAPHORE_DB_PASS: ${DB_PASSWORD}
       SEMAPHORE_DB_HOST: mysql
-      SEMAPHORE_DB_PORT: 3306 
+      SEMAPHORE_DB_PORT: 3306
       SEMAPHORE_DB_DIALECT: mysql
       SEMAPHORE_DB: semaphore
       SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
-      SEMAPHORE_ADMIN_PASSWORD: $SEMAPHORE_PASSWORD
+      SEMAPHORE_ADMIN_PASSWORD: ${SEMAPHORE_PASSWORD}
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
-      SEMAPHORE_ADMIN: $SEMAPHORE_USER
-      SEMAPHORE_ACCESS_KEY_ENCRYPTION: $SEMAPHORE_KEY_ENCRYPTION
+      SEMAPHORE_ADMIN: ${SEMAPHORE_USER}
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: ${SEMAPHORE_KEY_ENCRYPTION}
       ANSIBLE_HOST_KEY_CHECKING: false  # (optional) change to true if you want to enable host key checking
     volumes:
-      - $MOUNT_POINT_DATA/semaphore/inventory:/inventory:ro
-      - $MOUNT_POINT_DATA/semaphore/authorized-keys:/authorized-keys:ro
-      - $MOUNT_POINT_DATA/semaphore/config:/etc/semaphore:rw
+      - ${MOUNT_POINT_DATA}/semaphore/inventory:/inventory:ro
+      - ${MOUNT_POINT_DATA}/semaphore/authorized-keys:/authorized-keys:ro
+      - ${MOUNT_POINT_DATA}/semaphore/config:/etc/semaphore:rw
     labels:
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=Semaphore
       - homepage.icon=ansible.png
-      - homepage.ping=https://semaphore.$DOMAIN_NAME
-      - homepage.href=https://semaphore.$DOMAIN_NAME
+      - homepage.ping=https://semaphore.${DOMAIN_NAME}
+      - homepage.href=https://semaphore.${DOMAIN_NAME}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.semaphore.rule=Host(`semaphore.$DOMAIN_NAME`)
-      - traefik.http.services.semaphore.loadbalancer.server.port=3000
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.semaphore.rule=Host(`semaphore.${DOMAIN_NAME}`)
+      # - traefik.http.services.semaphore.loadbalancer.server.port=3000
+      # GODOXY
+      - proxy.port=3000
 
-
-networks:
-  proxy:
-    external: true
+# networks:
+#   proxy:
+#     external: true
