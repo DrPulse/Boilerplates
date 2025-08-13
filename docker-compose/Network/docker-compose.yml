@@ -42,6 +42,7 @@ services:
       # - "traefik.http.services.adguardhome.loadbalancer.server.port=3000"
       # GODOXY
       proxy.adguardhome.port: 3000
+      proxy.network: qnet-static-eth1
 
 
   tailscale:
