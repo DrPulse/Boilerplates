@@ -18,6 +18,7 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: homepage.$DOMAIN_NAME
     volumes:
       - $MOUNT_POINT_DATA/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       # TRAEFIK
       # - traefik.enable=true
