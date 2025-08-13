@@ -39,9 +39,9 @@ services:
       # - "traefik.http.routers.adguardhome-secure.tls=true"
       # - "traefik.http.routers.adguardhome-secure.tls.certresolver=cloudflare"
       # - "traefik.http.routers.adguardhome-secure.service=adguardhome"
-      # - "traefik.http.services.adguardhome.loadbalancer.server.port=3000"
+      # - "traefik.http.services.adguardhome.loadbalancer.server.port=80"
       # GODOXY
-      proxy.adguardhome.port: 3000
+      proxy.adguardhome.port: 80
       proxy.network: qnet-static-eth1
 
 
