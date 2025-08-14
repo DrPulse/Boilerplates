@@ -1,0 +1,117 @@
+services:
+  db:
+    image: mariadb:12.0.2
+    container_name: pterodactyl_mariadb
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ${MOUNT_POINT_DATA}/pterodactyl/panel/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: panel
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - pterodactyl
+
+  cache:
+    image: redis:alpine
+    container_name: pterodactyl_redis
+    restart: unless-stopped
+    networks:
+      - pterodactyl
+
+  panel:
+    image: ghcr.io/pterodactyl/panel:v1.11.10
+    container_name: pterodactyl_panel
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+# port required if you do not use a reverse proxy
+#    ports:
+#      - 8080:80
+#      - 8443:443 # OPTIONAL
+    volumes:
+      - ${MOUNT_POINT_DATA}/pterodactyl/panel/var/:/app/var/
+      - ${MOUNT_POINT_DATA}/pterodactyl/panel/logs/:/app/storage/logs
+      - ${MOUNT_POINT_DATA}/pterodactyl/panel/nginx/:/etc/nginx/conf.d/
+    environment:
+      RECAPTCHA_ENABLED: false
+      TZ: ${TZ}
+      APP_TIMEZONE: Europe/London
+      APP_ENV: production
+      APP_ENVIRONMENT_ONLY: false
+      APP_URL: https://panel.${DOMAIN_NAME}
+      APP_SERVICE_AUTHOR: noreply@${DOMAIN_NAME}
+      # MAIL_FROM: noreply@${DOMAIN_NAME}
+      # MAIL_DRIVER: smtp
+      # MAIL_HOST: mail.${DOMAIN_NAME}
+      # MAIL_PORT: 587
+      # MAIL_USERNAME: noreply@${DOMAIN_NAME}
+      # MAIL_PASSWORD: REPLACE_WITH_YOUR_EMAIL_PASSWORD
+      # MAIL_ENCRYPTION: false
+      TRUSTED_PROXIES: "*"
+      PTERODACTYL_TELEMETRY_ENABLED: false
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: cache
+#      LE_EMAIL: "" # Uncomment if you want to use Let's Encrypt to generate an SSL certificate for the Panel.
+    #dns:
+    #  - 192.168.1.94
+    networks:
+      - pterodactyl
+    labels:
+      proxy.aliases: panel
+      proxy.panel.port: 80
+      proxy.network: pterodactyl
+
+  wings:
+    image: ghcr.io/pterodactyl/wings:v1.11.12
+    container_name: pterodactyl_wings
+    restart: unless-stopped
+    networks:
+      - wings0
+    ports:
+      #- 8443:443
+      - 2022 # SFTP
+    stdin_open: true
+    tty: true
+    environment:
+      TZ: ${TZ}
+      APP_TIMEZONE: Europe/London
+      WINGS_UID: ${PUID}
+      WINGS_GID: ${PGID}
+      WINGS_USERNAME: pterodactyl
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers/:/var/lib/docker/containers/
+      - ${MOUNT_POINT_DATA}/pterodactyl/config/:/etc/pterodactyl/
+      - ${MOUNT_POINT_DATA}/pterodactyl/other/lib:/var/lib/pterodactyl/
+      - ${MOUNT_POINT_DATA}/pterodactyl/other/logs/:/var/log/pterodactyl/
+      - ${MOUNT_POINT_DATA}/pterodactyl/other/tmp/:/tmp/pterodactyl/
+      - /etc/ssl/certs:/etc/ssl/certs:ro
+    # dns:
+    #   - $DNS_ADDRESS
+    labels:
+      proxy.aliases: wings0
+      proxy.wings0.port: 443
+      proxy.network: wings0
+      proxy.wings0.scheme: http
+
+
+networks:
+  pterodactyl:
+    name: pterodactyl
+  wings0:
+    name: wings0
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "172.50.0.0/16" # make sure this doesn't conflict with existing networks
+    driver_opts:
+      com.docker.network.bridge.name: wings0
