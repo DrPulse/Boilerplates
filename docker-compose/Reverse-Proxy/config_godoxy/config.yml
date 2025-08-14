@@ -1,0 +1,132 @@
+# Autocert (choose one below and uncomment to enable)
+#
+# 1. use existing cert
+
+# autocert:
+#   provider: local
+
+# 2. cloudflare
+autocert:
+  provider: cloudflare
+  email:  # ACME Email
+  domains: # a list of domains for cert registration
+    - "*.[[DOMAIN_NAME]]"
+    - "[[DOMAIN_NAME]]"
+  options:
+    auth_token: [[CLOUDFLARE_ZONE_AUTH_TOKEN]] # your zone API token
+
+# 3. other providers, see https://docs.godoxy.dev/DNS-01-Providers
+
+# acl:
+#   default: allow # or deny (default: allow)
+#   allow_local: true # or false (default: true)
+#   allow:
+#     - ip:1.2.3.4
+#     - cidr:1.2.3.4/32
+#     - country:US
+#     - timezone:Asia/Shanghai
+#   deny:
+#     - ip:1.2.3.4
+#     - cidr:1.2.3.4/32
+#     - country:US
+#     - timezone:Asia/Shanghai
+#   log: # warning: logging ACL can be slow based on the number of incoming connections and configured rules
+#     buffer_size: 65536 # (default: 64KB)
+#     path: /app/logs/acl.log # (default: none)
+#     stdout: false # (default: false)
+#     keep: last 10 # (default: none)
+
+entrypoint:
+  # Below define an example of middleware config
+  # 1. set security headers
+  # 2. block non local IP connections
+  # 3. redirect HTTP to HTTPS
+  #
+  middlewares:
+    - use: CloudflareRealIP
+    - use: ModifyResponse
+      set_headers:
+        Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD
+        Access-Control-Allow-Headers: "*"
+        Access-Control-Allow-Origin: "*"
+        Access-Control-Max-Age: 180
+        Vary: "*"
+        X-XSS-Protection: 1; mode=block
+        Content-Security-Policy: "object-src 'self'; frame-ancestors 'self';"
+        X-Content-Type-Options: nosniff
+        X-Frame-Options: SAMEORIGIN
+        Referrer-Policy: same-origin
+        Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+    # - use: CIDRWhitelist
+    #   allow:
+    #     - "127.0.0.1"
+    #     - "10.0.0.0/8"
+    #     - "172.16.0.0/12"
+    #     - "192.168.0.0/16"
+    #   status: 403
+    #   message: "Forbidden"
+    # - use: RedirectHTTP
+
+  # below enables access log
+  access_log:
+    format: combined
+    path: /app/logs/entrypoint.log
+
+providers:
+  # include files are standalone yaml files under `config/` directory
+  #
+  # include:
+  #   - file1.yml
+  #   - file2.yml
+
+  docker:
+    # $DOCKER_HOST implies environment variable `DOCKER_HOST` or unix:///var/run/docker.sock by default
+    local: $DOCKER_HOST
+
+    # explicit only mode
+    # only containers with explicit aliases will be proxied
+    # add "!" after provider name to enable explicit only mode
+    #
+    # local!: $DOCKER_HOST
+    #
+    # add more docker providers if needed
+    # for value format, see https://docs.docker.com/reference/cli/dockerd/
+    #
+    # remote-1: tcp://10.0.2.1:2375
+    # remote-2: ssh://root:1234@10.0.2.2
+
+  # notification providers (notify when service health changes)
+  #
+  # notification:
+  #   - name: gotify
+  #     provider: gotify
+  #     url: https://gotify.domain.tld
+  #     token: abcd
+  #   - name: discord
+  #     provider: webhook
+  #     url: https://discord.com/api/webhooks/...
+  #     template: discord # this means use payload template from internal/notif/templates/discord.json
+
+  # Proxmox providers (for idlesleep support for proxmox LXCs)
+  #
+  # proxmox:
+  #   - url: https://pve.domain.com:8006/api2/json
+  #     token_id: root@pam!abcdef
+  #     secret: aaaa-bbbb-cccc-dddd
+  #     no_tls_verify: true
+
+# Check https://docs.godoxy.dev/Certificates-and-domain-matching
+# for explaination of `match_domains`
+#
+match_domains:
+  - [[DOMAIN_NAME]]
+
+# homepage config
+homepage:
+  # use default app categories detected from alias or docker image name
+  use_default_categories: true
+
+# Below are fixed options (non hot-reloadable)
+
+# timeout for shutdown (in seconds)
+timeout_shutdown: 5

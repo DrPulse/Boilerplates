@@ -1,17 +1,15 @@
-version: '3'
-#name: monitoring-alerting-rp
 services:
 
   beszel:
     image: henrygd/beszel:0.12.3
     container_name: beszel
-    restart: unless-stopped
-    networks:
-      - proxy
+    restart: always
+    # networks:
+    #   - proxy
     # ports:
     #  - '8090:8090'
     volumes:
-      - $MOUNT_POINT_DATA/beszel_data:/beszel_data
+      - ${MOUNT_POINT_DATA}/beszel_data:/beszel_data
     extra_hosts:
       - host.docker.internal:host-gateway
     labels:
@@ -19,38 +17,40 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Beszel
       - homepage.icon=beszel.png
-      - homepage.ping=https://beszel.$DOMAIN_NAME
-      - homepage.href=https://beszel.$DOMAIN_NAME
+      - homepage.ping=https://beszel.${DOMAIN_NAME}
+      - homepage.href=https://beszel.${DOMAIN_NAME}
       - homepage.description=Lightweight monitoring service
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.beszel.rule=Host(`beszel.$DOMAIN_NAME`)
-      - traefik.http.services.beszel.loadbalancer.server.port=8090
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.beszel.rule=Host(`beszel.${DOMAIN_NAME}`)
+      # - traefik.http.services.beszel.loadbalancer.server.port=8090
+      # GODOXY
+      - proxy.beszel.port=8090
 
   beszel-agent:
     image: henrygd/beszel-agent:0.12.3
     container_name: beszel-agent
-    restart: unless-stopped
+    restart: always
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       PORT: 45876
-      KEY: $BESZEL_SSH_KEY
-      FILESYSTEM: $BESZEL_FILESYSTEM # set to the correct filesystem for disk I/O stats
-      EXTRA_FILESYSTEMS: $BESZEL_EXTRA_FILESYSTEM
+      KEY: ${BESZEL_SSH_KEY}
+      FILESYSTEM: ${BESZEL_FILESYSTEM} # set to the correct filesystem for disk I/O stats
+      EXTRA_FILESYSTEMS: ${BESZEL_EXTRA_FILESYSTEM}
 
   dozzle:
     image: amir20/dozzle:v8.13.8
     container_name: dozzle
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 9999:8080
     environment:
-      - DOZZLE_REMOTE_AGENT=$DOZZLE_REMOTE_AGENT
+      - DOZZLE_REMOTE_AGENT=${DOZZLE_REMOTE_AGENT}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
@@ -58,22 +58,24 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Dozzle
       - homepage.icon=dozzle.png
-      - homepage.ping=https://dozzle.$DOMAIN_NAME
-      - homepage.href=https://dozzle.$DOMAIN_NAME
+      - homepage.ping=https://dozzle.${DOMAIN_NAME}
+      - homepage.href=https://dozzle.${DOMAIN_NAME}
       - homepage.description=Log viewer
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.dozzle.rule=Host(`dozzle.$DOMAIN_NAME`)
-      - traefik.http.services.dozzle.loadbalancer.server.port=8080
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.dozzle.rule=Host(`dozzle.${DOMAIN_NAME}`)
+      # - traefik.http.services.dozzle.loadbalancer.server.port=8080
+      # GODOXY
+      - proxy.dozzle.port=8080
 
   # netdata:
   #   image: netdata/netdata:v1.47
   #   container_name: netdata
   #   restart: always
   #   hostname: netdata.home # set to fqdn of host
-  #   networks:
-  #     - proxy
+  # #   networks:
+  # #     - proxy
   #   #ports:
   #   #  - 19999:19999
   #   environment:
@@ -99,21 +101,21 @@ services:
   #     - homepage.group=Monitoring & Alerting
   #     - homepage.name=Netdata
   #     - homepage.icon=netdata.png
-  #     - homepage.ping=https://netdata.$DOMAIN_NAME
-  #     - homepage.href=https://netdata.$DOMAIN_NAME
+  #     - homepage.ping=https://netdata.${DOMAIN_NAME}
+  #     - homepage.href=https://netdata.${DOMAIN_NAME}
   #     - homepage.description=Real time performance monitoring
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.netdata.rule=Host(`netdata.$DOMAIN_NAME`)
-  #     - traefik.http.services.netdata.loadbalancer.server.port=19999
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.netdata.rule=Host(`netdata.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.netdata.loadbalancer.server.port=19999
 
   nutify:
     image: dartsteven/nutify:amd64-0.1.6
-    container_name: Nutify
+    container_name: nutify
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
       # - 3493:3493
       # - 5050:5050
@@ -128,10 +130,10 @@ services:
     device_cgroup_rules:
       - 'c 189:* rwm'
     volumes:
-      - $MOUNT_POINT_DATA/nutify/logs:/app/nutify/logs
-      - $MOUNT_POINT_DATA/nutify/instance:/app/nutify/instance
-      - $MOUNT_POINT_DATA/nutify/ssl:/app/ssl
-      - $MOUNT_POINT_DATA/nutify/nut:/etc/nut
+      - ${MOUNT_POINT_DATA}/nutify/logs:/app/nutify/logs
+      - ${MOUNT_POINT_DATA}/nutify/instance:/app/nutify/instance
+      - ${MOUNT_POINT_DATA}/nutify/ssl:/app/ssl
+      - ${MOUNT_POINT_DATA}/nutify/nut:/etc/nut
       - /dev:/dev:rw              # Full /dev access improves hotplug handling
       - /run/udev:/run/udev:ro    # Access to udev events
     environment:
@@ -143,21 +145,23 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Nutify
       - homepage.icon=nutify.png
-      - homepage.ping=https://nutify.$DOMAIN_NAME
-      - homepage.href=https://nutify.$DOMAIN_NAME
+      - homepage.ping=https://nutify.${DOMAIN_NAME}
+      - homepage.href=https://nutify.${DOMAIN_NAME}
       - homepage.description=UPS monitoring tool
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.nutify.rule=Host(`nutify.$DOMAIN_NAME`)
-      - traefik.http.services.nutify.loadbalancer.server.port=5050
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.nutify.rule=Host(`nutify.${DOMAIN_NAME}`)
+      # - traefik.http.services.nutify.loadbalancer.server.port=5050
+      # GODOXY
+      - proxy.nutify.port=5050
 
   # scrutiny:
   #   image: ghcr.io/analogj/scrutiny:master-omnibus
   #   container_name: scrutiny
   #   restart: unless-stopped
-  #   networks:
-  #     - proxy
+  # #   networks:
+  # #     - proxy
   #   ports:
   #     #- 8080:8080 # webapp
   #     - 8086:8086 # indluxdb
@@ -169,8 +173,8 @@ services:
   #     PUID: $PUID
   #     PGID: $GUID
   #   volumes:
-  #     - $MOUNT_POINT_DATA/scrutiny:/config
-  #     - $MOUNT_POINT_DATA/scrutiny/influxdb:/opt/scrutiny/influxdb
+  #     - ${MOUNT_POINT_DATA}/scrutiny:/config
+  #     - ${MOUNT_POINT_DATA}/scrutiny/influxdb:/opt/scrutiny/influxdb
   #     - /run/udev:/run/udev:ro
   #   devices:
   #     - /dev/sda:/dev/sda
@@ -183,84 +187,89 @@ services:
   #     - homepage.group=Monitoring & Alerting
   #     - homepage.name=Scrutiny
   #     - homepage.icon=scrutiny.png
-  #     - homepage.ping=https://scrutiny.$DOMAIN_NAME
-  #     - homepage.href=https://scrutiny.$DOMAIN_NAME
+  #     - homepage.ping=https://scrutiny.${DOMAIN_NAME}
+  #     - homepage.href=https://scrutiny.${DOMAIN_NAME}
   #     - homepage.description=S.M.A.R.T drives monitoring
   #     - homepage.widget.type=scrutiny
-  #     - homepage.widget.url=https://scrutiny.$DOMAIN_NAME
+  #     - homepage.widget.url=https://scrutiny.${DOMAIN_NAME}
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.scrutiny.rule=Host(`scrutiny.$DOMAIN_NAME`)
-  #     - traefik.http.services.scrutiny.loadbalancer.server.port=8080
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.scrutiny.rule=Host(`scrutiny.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.scrutiny.loadbalancer.server.port=8080
+        # GODOXY
+  # #     - proxy.port=8080
 
   speedtest:
     container_name: speedtest
     image: ghcr.io/alexjustesen/speedtest-tracker:v0.19.0
-    restart: always
-    networks:
-      - proxy
+    restart: unless-stopped
+    # networks:
+    #   - proxy
     #ports:
     #  - 8080:80
     #  - 8443:443
     environment:
-      PUID: $PUID
-      GUID: $GUID
-      APP_KEY: $SPEEDTEST_APP_KEY
+      PUID: ${PUID}
+      GUID: ${GUID}
+      APP_KEY: ${SPEEDTEST_APP_KEY}
     volumes:
-      - $MOUNT_POINT_DATA/speedtest:/config
+      - ${MOUNT_POINT_DATA}/speedtest:/config
     labels:
       # HOMEPAGE
       - homepage.group=Monitoring & Alerting
       - homepage.name=Speedtest
       - homepage.icon=speedtest-tracker.png
-      - homepage.ping=https://speedtest.$DOMAIN_NAME
-      - homepage.href=https://speedtest.$DOMAIN_NAME
+      - homepage.ping=https://speedtest.${DOMAIN_NAME}
+      - homepage.href=https://speedtest.${DOMAIN_NAME}
       - homepage.description=Internet speed measurement
       - homepage.widget.type=speedtest
-      - homepage.widget.url=https://speedtest.$DOMAIN_NAME
+      - homepage.widget.url=https://speedtest.${DOMAIN_NAME}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.speedtest.rule=Host(`speedtest.$DOMAIN_NAME`)
-      - traefik.http.services.speedtest.loadbalancer.server.port=80
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.speedtest.rule=Host(`speedtest.${DOMAIN_NAME}`)
+      # - traefik.http.services.speedtest.loadbalancer.server.port=80
+      # GODOXY
+      - proxy.speedtest.port=80
 
   uptime-kuma:
     image: louislam/uptime-kuma:1.23.16
     container_name: uptime-kuma
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 3001:3001
-    dns:
-      - $DNS_ADDRESS
+    # dns:
+    #   - $DNS_ADDRESS
     volumes:
-      - $MOUNT_POINT_DATA/uptime-kuma:/app/data
+      - ${MOUNT_POINT_DATA}/uptime-kuma:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       # HOMEPAGE
       - homepage.group=Monitoring & Alerting
       - homepage.name=Uptime Kuma
       - homepage.icon=uptime-kuma.png
-      - homepage.ping=https://uptime-kuma.$DOMAIN_NAME
-      - homepage.href=https://uptime-kuma.$DOMAIN_NAME
+      - homepage.ping=https://uptime-kuma.${DOMAIN_NAME}
+      - homepage.href=https://uptime-kuma.${DOMAIN_NAME}
       - homepage.description=Uptime monitoring
       - homepage.widget.type=uptimekuma
-      - homepage.widget.url=https://uptime-kuma.$DOMAIN_NAME
+      - homepage.widget.url=https://uptime-kuma.${DOMAIN_NAME}
       - homepage.widget.slug=$UPTIME_KUMA_PAGE
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.$DOMAIN_NAME`)
-      - traefik.http.services.uptime-kuma.loadbalancer.server.port=3001
-
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.${DOMAIN_NAME}`)
+      # - traefik.http.services.uptime-kuma.loadbalancer.server.port=3001
+    # GODOXY
+      - proxy.uptime-kuma.port=3001
 
 volumes:
   netdataconfig:
   netdatalib:
   netdatacache:
 
-networks:
-  proxy:
-    external: true
+# networks:
+#   proxy:
+#     external: true
