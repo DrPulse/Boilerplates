@@ -1,6 +1,5 @@
-version: "3"
-# name: network
 services:
+
   adguardhome:
     container_name: adguardhome
     image: adguard/adguardhome:v0.107.63

@@ -1,5 +1,3 @@
-version: '3'
-#name: monitoring-alerting-rp
 services:
 
   beszel:

@@ -1,7 +1,4 @@
-version: "3"
-# name: documents
 services:
-
 
   # drawio:
   #   image: jgraph/drawio:24.4.0
