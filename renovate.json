@@ -17,18 +17,6 @@
       "enabled": false
     },
     {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
-        "ghcr.io/yusing/godoxy-frontend"
-      ],
-      "matchPaths": [
-        "docker-compose/Reverse-Proxy/docker-compose.yml"
-      ],
-      "automerge": false
-    },
-    {
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
     }
