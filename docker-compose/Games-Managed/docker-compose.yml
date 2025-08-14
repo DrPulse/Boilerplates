@@ -91,9 +91,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers/:/var/lib/docker/containers/
       - ${MOUNT_POINT_DATA}/pterodactyl/config/:/etc/pterodactyl/
-      - ${MOUNT_POINT_DATA}/pterodactyl/other/lib:/var/lib/pterodactyl/
-      - ${MOUNT_POINT_DATA}/pterodactyl/other/logs/:/var/log/pterodactyl/
-      - ${MOUNT_POINT_DATA}/pterodactyl/other/tmp/:/tmp/pterodactyl/
+      - /var/lib/pterodactyl/:/var/lib/pterodactyl/
+      - /var/log/pterodactyl/:/var/log/pterodactyl/
+      - /tmp/pterodactyl/:/tmp/pterodactyl/
       - /etc/ssl/certs:/etc/ssl/certs:ro
     dns:
       - $DNS_ADDRESS
