@@ -187,7 +187,8 @@ services:
       - paperless
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/cache:/data
-
+    labels:
+      - proxy.exclude=true
   syncthing:
     image: syncthing/syncthing:1.30
     container_name: syncthing
