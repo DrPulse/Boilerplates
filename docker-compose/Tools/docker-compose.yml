@@ -226,17 +226,17 @@ services:
       NODE_ENV: production
       # -- URLs --
       PUBLIC_URL: https://reactive-resume.${DOMAIN_NAME}
-      STORAGE_URL: http://reactive-resume-minio:9000/default
+      STORAGE_URL: http://reactive-minio:9000/default
       # -- Printer (Chrome) --
       CHROME_TOKEN: chrome_token
-      CHROME_URL: ws://chrome:3000
+      CHROME_URL: ws://reactive-chrome:3000
       # -- Database (Postgres) --
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@reactive-postgres:5432/postgres
       # -- Auth --
       ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
       REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
       # -- Storage (Minio) --
-      STORAGE_ENDPOINT: minio
+      STORAGE_ENDPOINT: reactive-minio
       STORAGE_PORT: 9000
       STORAGE_BUCKET: default
       STORAGE_ACCESS_KEY: ${MINIO_ROOT_USER}
