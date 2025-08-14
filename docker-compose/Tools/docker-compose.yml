@@ -23,7 +23,7 @@ services:
       # - traefik.http.routers.dumbasset.rule=Host(`dumbasset.${DOMAIN_NAME}`)
       # - traefik.http.services.dumbasset.loadbalancer.server.port=3000
       # GODOXY
-      - proxy.port=3000
+      - proxy.dumbasset.port=3000
 
 
   dumbterm:
@@ -60,7 +60,7 @@ services:
       # - traefik.http.routers.dumbterm.rule=Host(`dumbterm.${DOMAIN_NAME}`)
       # - traefik.http.services.dumbterm.loadbalancer.server.port=3000
       # GODOXY
-      - proxy.port=3000
+      - proxy.dumbterm.port=3000
 
 
   # focalboard:
@@ -108,7 +108,7 @@ services:
       # - traefik.http.routers.it-tools.rule=Host(`it-tools.${DOMAIN_NAME}`)
       # - traefik.http.services.it-tools.loadbalancer.server.port=80
       # GODOXY
-      - proxy.port=80
+      - proxy.it-tools.port=80
 
   pairdrop:
     image: lscr.io/linuxserver/pairdrop:1.11.2
@@ -136,7 +136,7 @@ services:
       # - traefik.http.routers.pairdrop.rule=Host(`pairdrop.${DOMAIN_NAME}`)
       # - traefik.http.services.pairdrop.loadbalancer.server.port=3000
       # GODOXY
-      - proxy.port=3000
+      - proxy.pairdrop.port=3000
 
   stirling-pdf:
     image: frooodle/s-pdf:1.1.1
@@ -165,7 +165,7 @@ services:
       # - traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.${DOMAIN_NAME}`)
       # - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
       # GODOXY
-      - proxy.port=8080
+      - proxy.stirling-pdf.port=8080
 
   postgres:
     image: postgres:16-alpine
@@ -257,7 +257,7 @@ services:
       # - traefik.http.routers.reactive-resume.rule=Host(`reactive-resume.${DOMAIN_NAME}`)
       # - traefik.http.services.reactive-resume.loadbalancer.server.port=3000
       # GODOXY
-      - proxy.port=3000
+      - proxy.reactive-resume.port=3000
 
   wallos:
     image: bellamy/wallos:4.0.0
@@ -284,7 +284,7 @@ services:
       # - traefik.http.routers.wallos.rule=Host(`wallos.${DOMAIN_NAME}`)
       # - traefik.http.services.wallos.loadbalancer.server.port=80
       # GODOXY
-      - proxy.port=80
+      - proxy.wallos.port=80
 
 # volumes:
 #   focalboard-data:
