@@ -95,8 +95,8 @@ services:
       - ${MOUNT_POINT_DATA}/pterodactyl/other/logs/:/var/log/pterodactyl/
       - ${MOUNT_POINT_DATA}/pterodactyl/other/tmp/:/tmp/pterodactyl/
       - /etc/ssl/certs:/etc/ssl/certs:ro
-    # dns:
-    #   - $DNS_ADDRESS
+    dns:
+      - $DNS_ADDRESS
     labels:
       proxy.aliases: wings0
       proxy.wings0.port: 443
