@@ -22,7 +22,7 @@ services:
       - pterodactyl
 
   panel:
-    image: ghcr.io/pterodactyl/panel:v1.11.10
+    image: ghcr.io/pterodactyl/panel:v1.11.11
     container_name: pterodactyl_panel
     restart: unless-stopped
     stdin_open: true
@@ -71,7 +71,7 @@ services:
       proxy.network: pterodactyl
 
   wings:
-    image: ghcr.io/pterodactyl/wings:v1.11.12
+    image: ghcr.io/pterodactyl/wings:v1.11.13
     container_name: pterodactyl_wings
     restart: unless-stopped
     networks:
