@@ -39,7 +39,7 @@ services:
       # - traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_NAME}`)
       # - traefik.http.services.jellyfin.loadbalancer.server.port=8096
       # GODOXY
-      - proxy.jellyfin.port=8920
+      - proxy.jellyfin.port=8096
 
   plex:
     image: linuxserver/plex:1.41.9
