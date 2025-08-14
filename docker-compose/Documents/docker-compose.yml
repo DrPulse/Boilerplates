@@ -175,6 +175,7 @@ services:
       # - traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN_NAME}`)
       # - traefik.http.services.paperless.loadbalancer.server.port=8000
       # GODOXY
+      - proxy.aliases=paperless
       - proxy.paperless.port=8000
       - proxy.network=paperless
 
@@ -186,8 +187,6 @@ services:
       - paperless
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/cache:/data
-    labels:
-      - proxy.exclude=true
 
   syncthing:
     image: syncthing/syncthing:1.30
