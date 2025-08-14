@@ -1,86 +1,87 @@
 services:
 
-
 # Media servers
   jellyfin:
     image: linuxserver/jellyfin:10.10.7
     container_name: jellyfin
-    restart: always
+    restart: unless-stopped
     profiles:
       - jellyfin
       - full
-    networks:
-      - proxy
-    ports:
-      - 7359:7359/udp  # Optional - Allows clients to discover Jellyfin on the local network.
-      - 8920:8920      # Optional - Https webUI (you need to set up your own certificate)
-      #- 1900:1900/udp  # Optional - Service discovery used by DNLA and clients.
-      - 8096:8096
+    # networks:
+    #   - proxy
+    # ports:
+    #   - 7359:7359/udp  # Optional - Allows clients to discover Jellyfin on the local network.
+    #   - 8920:8920      # Optional - Https webUI (you need to set up your own certificate)
+    #   #- 1900:1900/udp  # Optional - Service discovery used by DNLA and clients.
+    #   - 8096:8096
     environment:
-      TZ: $TZ
-      PUID: $PUID
-      PGID: $PGID
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
     volumes:
-      - $MOUNT_POINT_DATA/jellyfin:/config
-      - $MOUNT_POINT_COMMON/multimedia/media:/data/media
+      - ${MOUNT_POINT_DATA}/jellyfin:/config
+      - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
       - homepage.group=Media
       - homepage.name=jellyfin
       - homepage.icon=jellyfin.png
-      - homepage.ping=jellyfin.$DOMAIN_NAME
-      - homepage.href=https://jellyfin.$DOMAIN_NAME
+      - homepage.ping=jellyfin.${DOMAIN_NAME}
+      - homepage.href=https://jellyfin.${DOMAIN_NAME}
       - homepage.description=Media server
       - homepage.widget.type=jellyfin
-      - homepage.widget.url=https://jellyfin.$DOMAIN_NAME
-      - homepage.widget.key=$JELLYFIN_API_KEY
+      - homepage.widget.url=https://jellyfin.${DOMAIN_NAME}
+      - homepage.widget.key=${JELLYFIN_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.jellyfin.rule=Host(`jellyfin.$DOMAIN_NAME`)
-      - traefik.http.services.jellyfin.loadbalancer.server.port=8096
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_NAME}`)
+      # - traefik.http.services.jellyfin.loadbalancer.server.port=8096
+      # GODOXY
+      - proxy.jellyfin.port=8096
 
   plex:
     image: linuxserver/plex:1.41.9
     container_name: plex
-    restart: always
+    restart: unless-stopped
     profiles:
       - plex
       - full
-    networks:
-      - proxy
-    ports:
-      - 32400:32400      # WebUI
-      #- 1900:1900/udp    # UDP DLNA access
-      - 32469:32469      # TCP DLNA access
-      #- 5353:5353/udp    # Bonjour/Avahi discovery
+    # networks:
+    #   - proxy
+    # ports:
+      # - 32400:32400      # WebUI
+      # #- 1900:1900/udp    # UDP DLNA access
+      # - 32469:32469      # TCP DLNA access
+      # #- 5353:5353/udp    # Bonjour/Avahi discovery
     environment:
-      TZ: $TZ
-      PUID: $PUID
-      PGID: $PGID
-      VERSION: $VERSION
-      PLEX_CLAIM: $PLEX_CLAIM
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
+      VERSION: ${VERSION}
+      PLEX_CLAIM: ${PLEX_CLAIM}
       ADVERTISE_IP: http://${SERVER_ADDRESS}:32400
     volumes:
-      - $MOUNT_POINT_DATA/plex:/config
-      - $MOUNT_POINT_COMMON/multimedia/media/tv:/tv
-      - $MOUNT_POINT_COMMON/multimedia/media/films:/movies
-      - $MOUNT_POINT_COMMON/multimedia/media/animes:/animes
+      - ${MOUNT_POINT_DATA}/plex:/config
+      - ${MOUNT_POINT_COMMON}/multimedia/media/tv:/tv
+      - ${MOUNT_POINT_COMMON}/multimedia/media/films:/movies
+      - ${MOUNT_POINT_COMMON}/multimedia/media/animes:/animes
     labels:
       # HOMEPAGE
       - homepage.group=Media
       - homepage.name=plex
       - homepage.icon=plex.png
-      - homepage.ping=plex.$DOMAIN_NAME/web/index.html
-      - homepage.href=https://plex.$DOMAIN_NAME/web/index.html
+      - homepage.ping=plex.${DOMAIN_NAME}/web/index.html
+      - homepage.href=https://plex.${DOMAIN_NAME}/web/index.html
       - homepage.description=Media server
       - homepage.widget.type=plex
-      - homepage.widget.url=https://plex.$DOMAIN_NAME
-      - homepage.widget.key=$PLEX_API_KEY
+      - homepage.widget.url=https://plex.${DOMAIN_NAME}
+      - homepage.widget.key=${PLEX_API_KEY}
       # TRAEFIK
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.plex.rule=Host(`plex.$DOMAIN_NAME`)
+      - traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)
       - traefik.http.services.plex.loadbalancer.server.port=32400
 
 
@@ -89,335 +90,353 @@ services:
     container_name: deluge
     image: linuxserver/deluge:2.2.0
     restart: always
-    networks:
-      - proxy
-    ports:
-      #- 8112:8112        # WebUI
-      - 6881:6881        # Inbound torrent traffic
-      - 6881:6881/udp    # Inbound torrent traffic
+    # networks:
+    #   - proxy
+    # ports:
+    #   #- 8112:8112        # WebUI
+    #   - 6881:6881        # Inbound torrent traffic
+    #   - 6881:6881/udp    # Inbound torrent traffic
     environment:
-      PUID: $PUID
-      PGID: $PGID
-      TZ: $TZ
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
     volumes:
-      - $MOUNT_POINT_DATA/deluge:/config
-      - $MOUNT_POINT_COMMON/multimedia/torrents:/data/torrents
-      - $MOUNT_POINT_ISO/ISOs:/data/torrents/iso
-
+      - ${MOUNT_POINT_DATA}/deluge:/config
+      - ${MOUNT_POINT_COMMON}/multimedia/torrents:/data/torrents
+      - ${MOUNT_POINT_ISO}/ISOs:/data/torrents/iso
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
       - homepage.name=deluge
       - homepage.icon=deluge.png
-      - homepage.ping=deluge.$DOMAIN_NAME
-      - homepage.href=https://deluge.$DOMAIN_NAME
+      - homepage.ping=deluge.${DOMAIN_NAME}
+      - homepage.href=https://deluge.${DOMAIN_NAME}
       - homepage.widget.type=deluge
-      - homepage.widget.url=https://deluge.$DOMAIN_NAME
-      - homepage.widget.password=$DELUGE_PASSWORD
+      - homepage.widget.url=https://deluge.${DOMAIN_NAME}
+      - homepage.widget.password=${DELUGE_PASSWORD}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.deluge.rule=Host(`deluge.$DOMAIN_NAME`)
-      - traefik.http.services.deluge.loadbalancer.server.port=8112
-
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.deluge.rule=Host(`deluge.${DOMAIN_NAME}`)
+      # - traefik.http.services.deluge.loadbalancer.server.port=8112
+      # GODOXY
+      - proxy.deluge.port=8112
 
 # Media Managers
   bazarr:
     image: linuxserver/bazarr:1.5.2
     container_name: bazarr
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 6767:6767
     environment:
-      PUID: $PUID
-      PGID: $PGID
-      TZ: $TZ
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
     volumes:
-      - $MOUNT_POINT_DATA/bazarr:/config
-      - $MOUNT_POINT_COMMON/multimedia/media:/data/media
+      - ${MOUNT_POINT_DATA}/bazarr:/config
+      - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
       - homepage.name=bazarr
       - homepage.icon=bazarr.png
-      - homepage.ping=bazarr.$DOMAIN_NAME
-      - homepage.href=https://bazarr.$DOMAIN_NAME
+      - homepage.ping=bazarr.${DOMAIN_NAME}
+      - homepage.href=https://bazarr.${DOMAIN_NAME}
       - homepage.description=Subtitles for films and shows
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.bazarr.rule=Host(`bazarr.$DOMAIN_NAME`)
-      - traefik.http.services.bazarr.loadbalancer.server.port=6767
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.bazarr.rule=Host(`bazarr.${DOMAIN_NAME}`)
+      # - traefik.http.services.bazarr.loadbalancer.server.port=6767
+      # GODOXY
+      - proxy.bazarr.port=6767
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.3.25
     container_name: flaresolverr
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     environment:
-      - TZ=$TZ
+      - TZ=${TZ}
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
       - homepage.name=Flaresolverr
       - homepage.icon=cloudflare.png
-      - homepage.ping=flaresolverr.$DOMAIN_NAME
-      - homepage.href=https://flaresolverr.$DOMAIN_NAME
+      - homepage.ping=flaresolverr.${DOMAIN_NAME}
+      - homepage.href=https://flaresolverr.${DOMAIN_NAME}
       - homepage.description=Cloudflare Proxy server bypassser
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.flaresolverr.rule=Host(`flaresolverr.$DOMAIN_NAME`)
-      - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.flaresolverr.rule=Host(`flaresolverr.${DOMAIN_NAME}`)
+      # - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
+      # GODOXY
+      - proxy.flaresolverr.port=8191
 
   prowlarr:
     image: linuxserver/prowlarr:1.37.0
     container_name: prowlarr
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 9696:9696
-    dns:
-      - $DNS_ADDRESS
+    # dns:
+    #   - $DNS_ADDRESS
     environment:
-      TZ: $TZ
-      PUID: $PUID
-      PGID: $PGID
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
     volumes:
-      - $MOUNT_POINT_DATA/prowlarr:/config
+      - ${MOUNT_POINT_DATA}/prowlarr:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
       - homepage.name=Prowlarr
       - homepage.icon=prowlarr.png
-      - homepage.ping=prowlarr.$DOMAIN_NAME
-      - homepage.href=https://prowlarr.$DOMAIN_NAME
+      - homepage.ping=prowlarr.${DOMAIN_NAME}
+      - homepage.href=https://prowlarr.${DOMAIN_NAME}
       - homepage.description=Indexer manager
       - homepage.widget.type=prowlarr
-      - homepage.widget.url=https://prowlarr.$DOMAIN_NAME
-      - homepage.widget.key=$PROWLARR_API_KEY
+      - homepage.widget.url=https://prowlarr.${DOMAIN_NAME}
+      - homepage.widget.key=${PROWLARR_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.prowlarr.rule=Host(`prowlarr.$DOMAIN_NAME`)
-      - traefik.http.services.prowlarr.loadbalancer.server.port=9696
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN_NAME}`)
+      # - traefik.http.services.prowlarr.loadbalancer.server.port=9696
+      # GODOXY
+      - proxy.prowlarr.port=9696
 
   radarr:
     container_name: radarr
     image: linuxserver/radarr:5.26.2
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 7878:7878
     environment:
-      TZ: $TZ
-      PUID: $PUID
-      PGID: $PGID
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
     volumes:
-      - $MOUNT_POINT_DATA/radarr:/config
-      - $MOUNT_POINT_COMMON/multimedia:/data
+      - ${MOUNT_POINT_DATA}/radarr:/config
+      - ${MOUNT_POINT_COMMON}/multimedia:/data
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
       - homepage.name=radarr
       - homepage.icon=radarr.png
-      - homepage.ping=radarr.$DOMAIN_NAME
-      - homepage.href=https://radarr.$DOMAIN_NAME
+      - homepage.ping=radarr.${DOMAIN_NAME}
+      - homepage.href=https://radarr.${DOMAIN_NAME}
       - homepage.description=Films requester
       - homepage.widget.type=radarr
-      - homepage.widget.url=https://radarr.$DOMAIN_NAME
-      - homepage.widget.key=$RADARR_API_KEY
+      - homepage.widget.url=https://radarr.${DOMAIN_NAME}
+      - homepage.widget.key=${RADARR_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.radarr.rule=Host(`radarr.$DOMAIN_NAME`)
-      - traefik.http.services.radarr.loadbalancer.server.port=7878
-
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)
+      # - traefik.http.services.radarr.loadbalancer.server.port=7878
+      # GODOXY
+      - proxy.radarr.port=7878
 
   sonarr:
     image: linuxserver/sonarr:4.0.15
     container_name: sonarr
     restart: always
     hostname: sonarr
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     #ports:
     #  - 8989:8989
     environment:
-      TZ: $TZ
-      PUID: $PUID
-      PGID: $PGID
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
       UMASK: 022
     volumes:
-      - $MOUNT_POINT_DATA/sonarr:/config
-      - $MOUNT_POINT_COMMON/multimedia:/data
+      - ${MOUNT_POINT_DATA}/sonarr:/config
+      - ${MOUNT_POINT_COMMON}/multimedia:/data
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
       - homepage.name=sonarr
       - homepage.icon=sonarr.png
-      - homepage.ping=sonarr.$DOMAIN_NAME
-      - homepage.href=https://sonarr.$DOMAIN_NAME
+      - homepage.ping=sonarr.${DOMAIN_NAME}
+      - homepage.href=https://sonarr.${DOMAIN_NAME}
       - homepage.description=Shows requester
       - homepage.widget.type=sonarr
-      - homepage.widget.url=https://sonarr.$DOMAIN_NAME
-      - homepage.widget.key=$SONARR_API_KEY
+      - homepage.widget.url=https://sonarr.${DOMAIN_NAME}
+      - homepage.widget.key=${SONARR_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.sonarr.rule=Host(`sonarr.$DOMAIN_NAME`)
-      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)
+      # - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      # GODOXY
+      - proxy.sonarr.port=8989
 
   calibre-web-automated:
     image: crocodilestick/calibre-web-automated:V3.1.2
     container_name: calibre-web-automated
     restart: unless-stopped
     networks:
-      - proxy
+      # - proxy
       - calibre
-    ports:
-      - 8083:8083
+    # ports:
+    #   - 8083:8083
     environment:
-      - PUID=1001
-      - PGID=100
-      - TZ=UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - DOCKER_MODS=lscr.io/linuxserver/mods:universal-calibre-v7.16.0
     volumes:
-      - $MOUNT_POINT_DATA/calibre/data:/config
-      - $MOUNT_POINT_DATA/calibre/ingest:/cwa-book-ingest
-      - $MOUNT_POINT_DATA/calibre/library:/calibre-library
+      - ${MOUNT_POINT_DATA}/calibre/data:/config
+      - ${MOUNT_POINT_DATA}/calibre/ingest:/cwa-book-ingest
+      - ${MOUNT_POINT_DATA}/calibre/library:/calibre-library
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
       - homepage.name=calibre-web
       - homepage.icon=calibre-web.png
-      - homepage.ping=https://calibreweb.$DOMAIN_NAME
-      - homepage.href=https://calibreweb.$DOMAIN_NAME
+      - homepage.ping=https://calibreweb.${DOMAIN_NAME}
+      - homepage.href=https://calibreweb.${DOMAIN_NAME}
       - homepage.description=Book management
       - homepage.widget.type=calibreweb
-      - homepage.widget.url=https://calibreweb.$DOMAIN_NAME
-      - homepage.widget.username=$CALIBREWEB_USERNAME
-      - homepage.widget.password=$CALIBREWEB_PASSWORD
+      - homepage.widget.url=https://calibreweb.${DOMAIN_NAME}
+      - homepage.widget.username=${CALIBREWEB_USERNAME}
+      - homepage.widget.password=${CALIBREWEB_PASSWORD}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.calibreweb.rule=Host(`calibreweb.$DOMAIN_NAME`)
-      - traefik.http.services.calibreweb.loadbalancer.server.port=8083
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.calibreweb.rule=Host(`calibreweb.${DOMAIN_NAME}`)
+      # - traefik.http.services.calibreweb.loadbalancer.server.port=8083
+      # GODOXY
+      - proxy.calibreweb.port=8083
+      - proxy.network=calibre
 
 
 # Media requesters
   jellyseerr:
     image: fallenbagel/jellyseerr:2.7.2
     container_name: jellyseerr
-    restart: always
+    restart: unless-stopped
     profiles:
       - jellyfin
       - full
-    networks:
-      - proxy
-    ports:
-     - 5055:5055
+    # networks:
+    #   - proxy
+    # ports:
+    #   - 5055:5055
     environment:
-      TZ: $TZ
+      TZ: ${TZ}
     volumes:
-      - $MOUNT_POINT_DATA/jellyseerr:/app/config
+      - ${MOUNT_POINT_DATA}/jellyseerr:/app/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
       - homepage.name=jellyseerr
       - homepage.icon=jellyseerr.png
-      - homepage.ping=jellyseerr.$DOMAIN_NAME
-      - homepage.href=https://jellyseerr.$DOMAIN_NAME
+      - homepage.ping=jellyseerr.${DOMAIN_NAME}
+      - homepage.href=https://jellyseerr.${DOMAIN_NAME}
       - homepage.description=Media requester for Plex/Jellyfin/Emby
       - homepage.widget.type=jellyseerr
-      - homepage.widget.url=https://jellyseerr.$DOMAIN_NAME
-      - homepage.widget.key=$JELLYSEERR_API_KEY
+      - homepage.widget.url=https://jellyseerr.${DOMAIN_NAME}
+      - homepage.widget.key=${JELLYSEERR_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.$DOMAIN_NAME`)
-      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.${DOMAIN_NAME}`)
+      # - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+      # GODOXY
+      - proxy.jellyseerr.port=5055
 
   # ombi:
   #   image: linuxserver/ombi:4.43.5
   #   container_name: ombi
   #   restart: unless-stopped
-  #   networks:
-  #     - proxy
+  # #   networks:
+  # #     - proxy
   #   #ports:
   #   #  - 3579:3579
   #   environment:
-  #     TZ: $TZ
-  #     PUID: $PUID
-  #     PGID: $PGID
+  #     TZ: ${TZ}
+  #     PUID: ${PUID}
+  #     PGID: ${PGID}
   #     #- BASE_URL=/ombi #optional
   #   volumes:
-  #     - $MOUNT_POINT_DATA/ombi:/config
+  #     - ${MOUNT_POINT_DATA}/ombi:/config
   #   labels:
   #     # HOMEPAGE
   #     - homepage.group=Media Requesters
   #     - homepage.name=ombi
   #     - homepage.icon=ombi.png
-  #     - homepage.ping=ombi.$DOMAIN_NAME
-  #     - homepage.href=https://ombi.$DOMAIN_NAME
+  #     - homepage.ping=ombi.${DOMAIN_NAME}
+  #     - homepage.href=https://ombi.${DOMAIN_NAME}
   #     - homepage.description=Media requester for Plex/Emby
   #     - homepage.widget.type=ombi
-  #     - homepage.widget.url=https://ombi.$DOMAIN_NAME
-  #     - homepage.widget.key=$OMBI_API_KEY
+  #     - homepage.widget.url=https://ombi.${DOMAIN_NAME}
+  #     - homepage.widget.key=${OMBI_API_KEY}
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.ombi.rule=Host(`ombi.$DOMAIN_NAME`)
-  #     - traefik.http.services.ombi.loadbalancer.server.port=3579
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.ombi.rule=Host(`ombi.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.ombi.loadbalancer.server.port=3579
+        # GODOXY
+  #      - proxy.ombi.port=3579
 
   overseerr:
     image: linuxserver/overseerr:1.34.0
     container_name: overseerr
-    restart: always
+    restart: unless-stopped
     profiles:
       - plex
       - full
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
     #  - 5055:5055
     environment:
-      PUID: $PUID
-      PGID: $PGID
-      TZ: $TZ
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
     volumes:
-      - $MOUNT_POINT_DATA/overseerr:/config
+      - ${MOUNT_POINT_DATA}/overseerr:/config
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
       - homepage.name=overseerr
       - homepage.icon=overseerr.png
-      - homepage.ping=overseerr.$DOMAIN_NAME
-      - homepage.href=https://overseerr.$DOMAIN_NAME
+      - homepage.ping=overseerr.${DOMAIN_NAME}
+      - homepage.href=https://overseerr.${DOMAIN_NAME}
       - homepage.description=Media requester for plex
       - homepage.widget.type=overseerr
-      - homepage.widget.url=https://overseerr.$DOMAIN_NAME
-      - homepage.widget.key=$OVERSEER_API_KEY
+      - homepage.widget.url=https://overseerr.${DOMAIN_NAME}
+      - homepage.widget.key=${OVERSEER_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.overseerr.rule=Host(`overseerr.$DOMAIN_NAME`)
-      - traefik.http.services.overseerr.loadbalancer.server.port=5055
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.overseerr.rule=Host(`overseerr.${DOMAIN_NAME}`)
+      # - traefik.http.services.overseerr.loadbalancer.server.port=5055
+      # GODOXY
+      - proxy.overseerr.port=5055
 
   calibre-web-automated-book-downloader:
     image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
     container_name: calibre-web-automated-book-downloader
     restart: unless-stopped
     networks:
-      - proxy
+      # - proxy
       - calibre
-    ports:
-      - 8084:8084
+    # ports:
+    #   - 8084:8084
     environment:
       FLASK_PORT: 8084
       FLASK_DEBUG: false
@@ -425,29 +444,31 @@ services:
       INGEST_DIR: /cwa-book-ingest
       BOOK_LANGUAGE: fr
     volumes:
-      - $MOUNT_POINT_DATA/calibre/ingest:/cwa-book-ingest
+      - ${MOUNT_POINT_DATA}/calibre/ingest:/cwa-book-ingest
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
       - homepage.name=calibre-download
       - homepage.icon=calibre.png
-      - homepage.ping=https://calibre-download.$DOMAIN_NAME
-      - homepage.href=https://calibre-download.$DOMAIN_NAME
+      - homepage.ping=https://calibre-download.${DOMAIN_NAME}
+      - homepage.href=https://calibre-download.${DOMAIN_NAME}
       - homepage.description=Book requester for calibre web
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.calibre-download.rule=Host(`calibre-download.$DOMAIN_NAME`)
-      - traefik.http.services.calibre-download.loadbalancer.server.port=8084
-
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.calibre-download.rule=Host(`calibre-download.${DOMAIN_NAME}`)
+      # - traefik.http.services.calibre-download.loadbalancer.server.port=8084
+      # GODOXY
+      - proxy.calibre-download.port=8084
 
   cloudflarebypassforscraping:
     image: ghcr.io/sarperavci/cloudflarebypassforscraping:latest
     container_name: cloudflarebypass
-    restart: unless-stopped
+    restart: always
     networks:
       - calibre
-
+    labels:
+      - proxy.exclude=true
 
 # Media server invitation
   # Wizarr image download broken for now
@@ -457,30 +478,31 @@ services:
   #   restart: unless-stopped
   #   #ports:
   #   #- 5690:5690
-  #   networks:
-  #     - proxy
-  #   dns:
-  #     - $DNS_ADDRESS
+  # #   networks:
+  # #     - proxy
+  # #   dns:
+  # #     - $DNS_ADDRESS
   #   environment:
-  #     - APP_URL=https://wizarr.$DOMAIN_NAME
+  #     - APP_URL=https://wizarr.${DOMAIN_NAME}
   #     - DISABLE_BUILTIN_AUTH=false #Set to true ONLY if you are using another auth provider (Authelia, Authentik, etc)
-  #     - TZ=$TZ
+  #     - TZ=${TZ}
   #   volumes:
-  #     - $MOUNT_POINT_DATA/wizarr/config:/data/database
+  #     - ${MOUNT_POINT_DATA}/wizarr/config:/data/database
   #   labels:
   #     # HOMEPAGE
   #     - homepage.group=Media Requesters
   #     - homepage.name=wizarr
   #     - homepage.icon=wizarr.png
-  #     - homepage.ping=wizarr.$DOMAIN_NAME
-  #     - homepage.href=https://wizarr.$DOMAIN_NAME
+  #     - homepage.ping=wizarr.${DOMAIN_NAME}
+  #     - homepage.href=https://wizarr.${DOMAIN_NAME}
   #     - homepage.description=Plex invitations
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.wizarr.rule=Host(`wizarr.$DOMAIN_NAME`)
-  #     - traefik.http.services.wizarr.loadbalancer.server.port=5690
-
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.wizarr.rule=Host(`wizarr.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.wizarr.loadbalancer.server.port=5690
+  #     # GODOXY
+  #     - proxy.wizarr.port=5690
 
 # arr* configurator
   # flemmarr:
@@ -490,7 +512,7 @@ services:
   #   networks:
   #     - proxy
   #   volumes:
-  #     - $MOUNT_POINT_DATA/flemmarr:/config
+  #     - ${MOUNT_POINT_DATA}/flemmarr:/config
   #   labels:
   #     # HOMEPAGE
   #     - homepage.group=Media Management
@@ -500,6 +522,6 @@ services:
 
 
 networks:
-  proxy:
-    external: true
+  # proxy:
+  #   external: true
   calibre:
