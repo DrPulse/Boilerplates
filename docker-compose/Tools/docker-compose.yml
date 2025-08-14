@@ -257,6 +257,7 @@ services:
       # - traefik.http.routers.reactive-resume.rule=Host(`reactive-resume.${DOMAIN_NAME}`)
       # - traefik.http.services.reactive-resume.loadbalancer.server.port=3000
       # GODOXY
+      - proxy.aliases=reactive-resume
       - proxy.reactive-resume.port=3000
 
   wallos:
