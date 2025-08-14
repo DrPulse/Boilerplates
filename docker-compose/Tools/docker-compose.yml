@@ -167,7 +167,7 @@ services:
       # GODOXY
       - proxy.stirling-pdf.port=8080
 
-  postgres:
+  reactive-postgres:
     image: postgres:16-alpine
     container_name: reactive-resume-postgres
     restart: unless-stopped
@@ -180,7 +180,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
-  minio:
+  reactive-minio:
     image: minio/minio:RELEASE.2025-07-18T21-56-31Z-cpuv1
     container_name: reactive-resume-minio
     restart: unless-stopped
@@ -196,7 +196,7 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
 
   # Chrome Browser (for printing and previews)
-  chrome:
+  reactive-chrome:
     image: ghcr.io/browserless/chromium:v2.18.0 # Upgrading to newer versions causes issues
     container_name: reactive-resume-chrome
     restart: unless-stopped
@@ -209,7 +209,7 @@ services:
       EXIT_ON_HEALTH_FAILURE: "true"
       PRE_REQUEST_HEALTH_CHECK: "true"
 
-  app:
+  reactive-app:
     image: amruthpillai/reactive-resume:v4.4.4
     container_name: reactive-resume
     restart: unless-stopped
