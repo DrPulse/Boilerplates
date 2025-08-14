@@ -1,14 +1,14 @@
 version: "3"
 # name: documents
 services:
-  
+
 
   # drawio:
   #   image: jgraph/drawio:24.4.0
   #   container_name: draw
   #   restart: unless-stopped
-  #   networks:
-  #     - proxy
+  # #   networks:
+  # #     - proxy
   #   #ports:
   #   #  - '8087:8080'
   #   #  - '8447:8443'
@@ -17,21 +17,23 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=Draw.io
   #     - homepage.icon=draw.png
-  #     - homepage.ping=https://drawio.$DOMAIN_NAME
-  #     - homepage.href=https://drawio.$DOMAIN_NAME
+  #     - homepage.ping=https://drawio.${DOMAIN_NAME}
+  #     - homepage.href=https://drawio.${DOMAIN_NAME}
   #     - homepage.description=Draw tool
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.drawio.rule=Host(`drawio.$DOMAIN_NAME`)
-  #     - traefik.http.services.drawio.loadbalancer.server.port=8080     
-      
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.drawio.rule=Host(`drawio.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.drawio.loadbalancer.server.port=8080
+  #     # GODOXY
+  #        - proxy.drawio.port=8080
+
   # excalidraw:
   #   image: excalidraw/excalidraw@sha256:5cfbf2770e6d7530193be8cca5bdb4b8e4ba6eb000fc64b4b50d079221c51eda
   #   container_name: excalidraw
   #   restart: unless-stopped
-  #   networks:
-  #     - proxy
+  # #   networks:
+  # #     - proxy
   #   #ports:
   #   #  - '5000:80'
   #   labels:
@@ -39,16 +41,17 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=excalidraw
   #     - homepage.icon=https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~2de41b4b-c986-4d60-a0c5-3e346c98de34/V1~14363c25c4230c54e02ae7416216600b0aee35b05c257a00152830492f4d581b~c5a9036392714767b9a63e7f2d796a53?quarantineState=evaluating
-  #     - homepage.ping=https://excalidraw.$DOMAIN_NAME
-  #     - homepage.href=https://excalidraw.$DOMAIN_NAME
+  #     - homepage.ping=https://excalidraw.${DOMAIN_NAME}
+  #     - homepage.href=https://excalidraw.${DOMAIN_NAME}
   #     - homepage.description=Browser local whiteboard
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.excalidraw.rule=Host(`excalidraw.$DOMAIN_NAME`, `draw.home`)
-  #     - traefik.http.services.excalidraw.loadbalancer.server.port=80
-      
-      
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.excalidraw.rule=Host(`excalidraw.${DOMAIN_NAME}`, `draw.home`)
+  # #     - traefik.http.services.excalidraw.loadbalancer.server.port=80
+  #     # GODOXY
+  #     - proxy.excalidraw.port=80
+
   # nextcloud-db:
   #   image: mariadb:10.11
   #   container_name: nextcloud-db
@@ -57,12 +60,12 @@ services:
   #   networks:
   #     - nextcloud
   #   environment:
-  #     MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-  #     MYSQL_PASSWORD: $MYSQL_PASSWORD
-  #     MYSQL_DATABASE: $MYSQL_DATABASE
-  #     MYSQL_USER: $MYSQL_USER
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: ${MYSQL_USER}
   #   volumes:
-  #     - $MOUNT_POINT_DATA/nextcloud/db:/var/lib/mysql
+  #     - ${MOUNT_POINT_DATA}/nextcloud/db:/var/lib/mysql
 
   # nextcloud:
   #   image: nextcloud:29.0.0
@@ -72,33 +75,36 @@ services:
   #     - nextcloud-db
   #   networks:
   #     - nextcloud
-  #     - proxy
+  # #     - proxy
   #   # ports:
   #   #   - 8080:80
   #   environment:
-  #     MYSQL_PASSWORD: $MYSQL_PASSWORD
-  #     MYSQL_DATABASE: $MYSQL_DATABASE
-  #     MYSQL_USER: $MYSQL_USER
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: ${MYSQL_USER}
   #     MYSQL_HOST: nextcloud-db
   #   volumes:
-  #     - $MOUNT_POINT_DATA/nextcloud/nextcloud:/var/www/html
-  #     - $MOUNT_POINT_DATA/nextcloud/apps:/var/www/html/custom_apps
-  #     - $MOUNT_POINT_DATA/nextcloud/config:/var/www/html/config
-  #     - $MOUNT_POINT_DATA/nextcloud/data:/var/www/html/data
-  #     - $MOUNT_POINT_DATA/nextcloud/theme:/var/www/html/themes
+  #     - ${MOUNT_POINT_DATA}/nextcloud/nextcloud:/var/www/html
+  #     - ${MOUNT_POINT_DATA}/nextcloud/apps:/var/www/html/custom_apps
+  #     - ${MOUNT_POINT_DATA}/nextcloud/config:/var/www/html/config
+  #     - ${MOUNT_POINT_DATA}/nextcloud/data:/var/www/html/data
+  #     - ${MOUNT_POINT_DATA}/nextcloud/theme:/var/www/html/themes
   #   labels:
   #     # HOMEPAGE
   #     - homepage.group=Documents & Files
   #     - homepage.name=Nextcloud
   #     - homepage.icon=nextcloud.png
-  #     - homepage.ping=https://nextcloud.$DOMAIN_NAME/login
-  #     - homepage.href=https://nextcloud.$DOMAIN_NAME
+  #     - homepage.ping=https://nextcloud.${DOMAIN_NAME}/login
+  #     - homepage.href=https://nextcloud.${DOMAIN_NAME}
   #     - homepage.description=Private Cloud
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.nextcloud.rule=Host(`nextcloud.$DOMAIN_NAME`)
-  #     - traefik.http.services.nextcloud.loadbalancer.server.port=80
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.nextcloud.loadbalancer.server.port=80
+  #     # GODOXY
+  #     - proxy.nextcloud.port=80
+  #     - proxy.network=nextcloud
 
   # onlyoffice:
   #   container_name: onlyoffice
@@ -113,117 +119,123 @@ services:
   #     PGID: $PGID
   #     JWT_ENABLED: false
   #   volumes:
-  #     - $MOUNT_POINT_DATA/onlyoffice/logs:/var/log/onlyoffice
-  #     - $MOUNT_POINT_DATA/onlyoffice/data:/var/www/onlyoffice/Data
-  #     - $MOUNT_POINT_DATA/onlyoffice/cache:/var/lib/onlyoffice
-  #     - $MOUNT_POINT_DATA/onlyoffice/db:/var/lib/postgresql
-  #     - $MOUNT_POINT_DATA/onlyoffice/redis:/var/lib/redis
-  #     - $MOUNT_POINT_DATA/onlyoffice/font:/usr/share/fonts/truetype/custom
-  #     - $MOUNT_POINT_DATA/onlyoffice/rabbitmq:/var/lib/rabbitmq
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/logs:/var/log/onlyoffice
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/data:/var/www/onlyoffice/Data
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/cache:/var/lib/onlyoffice
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/db:/var/lib/postgresql
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/redis:/var/lib/redis
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/font:/usr/share/fonts/truetype/custom
+  #     - ${MOUNT_POINT_DATA}/onlyoffice/rabbitmq:/var/lib/rabbitmq
   #   labels:
   #     # HOMEPAGE
   #     - homepage.group=Documents & Files
   #     - homepage.name=Onlyoffice
   #     - homepage.icon=onlyoffice.png
-  #     - homepage.href=http://onlyoffice.$DOMAIN_NAME
+  #     - homepage.href=http://onlyoffice.${DOMAIN_NAME}
   #     - homepage.description=Workd Excel and Powerpoint replacement
   #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.onlyoffice.rule=Host(`onlyoffice.$DOMAIN_NAME`)
-  #     - traefik.http.services.onlyoffice.loadbalancer.server.port=80
-  
+  # #     - traefik.enable=true
+  # #     - traefik.docker.network=proxy
+  # #     - traefik.http.routers.onlyoffice.rule=Host(`onlyoffice.${DOMAIN_NAME}`)
+  # #     - traefik.http.services.onlyoffice.loadbalancer.server.port=80
+  #     # GODOXY
+  #     - proxy.onlyoffice.port=80
+
   paperless-server:
     image: ghcr.io/paperless-ngx/paperless-ngx:2.17.1
     container_name: paperless-server
-    restart: always
+    restart: unless-stopped
     depends_on:
       - paperless-cache
     networks:
-      - proxy
+      # - proxy
       - paperless
-    ports:
-      - 8010:8000
+    # ports:
+    #   - 8010:8000
     environment:
       PAPERLESS_REDIS: "redis://paperless-cache:6379"
-      USERMAP_UID: 1001
-      USERMAP_GID: 100
-      PAPERLESS_ADMIN_USER: $ADMIN_USER
-      PAPERLESS_ADMIN_PASSWORD: $ADMIN_PASSWORD
+      USERMAP_UID: ${PUID}
+      USERMAP_GID: ${PGID}
+      PAPERLESS_ADMIN_USER: ${ADMIN_USER}
+      PAPERLESS_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       PAPERLESS_URL: "https://paperless.${DOMAIN_NAME}"
     volumes:
-      - $MOUNT_POINT_DATA/paperless/data:/usr/src/paperless/data
-      - $MOUNT_POINT_DATA/paperless/media:/usr/src/paperless/media
-      - $PAPERLESS_PATH_EXPORT/export:/usr/src/paperless/export
-      - $PAPERLESS_PATH_CONSUME/consume:/usr/src/paperless/consume
+      - ${MOUNT_POINT_DATA}/paperless/data:/usr/src/paperless/data
+      - ${MOUNT_POINT_DATA}/paperless/media:/usr/src/paperless/media
+      - ${PAPERLESS_PATH_EXPORT}/export:/usr/src/paperless/export
+      - ${PAPERLESS_PATH_CONSUME}/consume:/usr/src/paperless/consume
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
       - homepage.name=paperless
       - homepage.icon=paperless.png
-      - homepage.ping=https://paperless.$DOMAIN_NAME
-      - homepage.href=https://paperless.$DOMAIN_NAME
+      - homepage.ping=https://paperless.${DOMAIN_NAME}
+      - homepage.href=https://paperless.${DOMAIN_NAME}
       - homepage.description=Document Management System
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.paperless.rule=Host(`paperless.$DOMAIN_NAME`)
-      - traefik.http.services.paperless.loadbalancer.server.port=8000
-  
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN_NAME}`)
+      # - traefik.http.services.paperless.loadbalancer.server.port=8000
+      # GODOXY
+      - proxy.paperless.port=8000
+      - proxy.network=paperless
+
   paperless-cache:
     image: docker.io/library/redis:8
-    restart: always
+    restart: unless-stopped
     container_name: paperless-cache
     networks:
       - paperless
     volumes:
-      - $MOUNT_POINT_DATA/paperless/cache:/data
-  
+      - ${MOUNT_POINT_DATA}/paperless/cache:/data
+
   syncthing:
     image: syncthing/syncthing:1.30
     container_name: syncthing
     hostname: syncthing
     restart: always
-    networks:
-      - proxy
+    # networks:
+    #   - proxy
     # ports:
       # - 8384:8384 # WEB UI
       # - 22000:22000/tcp # listening tcp
       # - 22000:22000/udp # listening udp
       # - 21027:21027/udp # protocol discovery
     environment:
-      - PUID=$PUID
-      - PGID=$PGID
-      - TZ=$TZ
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - $MOUNT_POINT_DATA/syncthing/data:/var/syncthing
+      - ${MOUNT_POINT_DATA}/syncthing/data:/var/syncthing
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
       - homepage.name=Syncthing
       - homepage.icon=syncthing.png
-      - homepage.ping=https://syncthing.$DOMAIN_NAME/login
-      - homepage.href=https://syncthing.$DOMAIN_NAME
+      - homepage.ping=https://syncthing.${DOMAIN_NAME}/login
+      - homepage.href=https://syncthing.${DOMAIN_NAME}
       - homepage.description=Syncing file tool accross devices
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.syncthing.rule=Host(`syncthing.$DOMAIN_NAME`)
-      - traefik.http.services.syncthing.loadbalancer.server.port=8384
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.syncthing.rule=Host(`syncthing.${DOMAIN_NAME}`)
+      # - traefik.http.services.syncthing.loadbalancer.server.port=8384
+    # GODOXY
+      - proxy.syncthing.port=8384
 
-    
   wikijs:
     image: lscr.io/linuxserver/wikijs:2.5.307
     container_name: wikijs
-    restart: always  
-    networks:
-      - proxy
+    restart: unless-stopped
+    # networks:
+    #   - proxy
     #ports:
     #  - 3000:3000
     environment:
-      PUID: $PUID
-      PGID: $PGID
-      TZ: $TZ
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
       #DB_TYPE: sqlite #optional
       #DB_HOST: #optional
       #DB_PORT: #optional
@@ -231,27 +243,26 @@ services:
       #DB_USER: #optional
       #DB_PASS: #optional
     volumes:
-      - $MOUNT_POINT_DATA/wikijs/config:/config
-      - $MOUNT_POINT_DATA/wikijs:/data     
+      - ${MOUNT_POINT_DATA}/wikijs/config:/config
+      - ${MOUNT_POINT_DATA}/wikijs:/data
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
       - homepage.name=Wiki.js
       - homepage.icon=wikijs.png
-      - homepage.ping=https://wikijs.$DOMAIN_NAME/login
-      - homepage.href=https://wikijs.$DOMAIN_NAME
+      - homepage.ping=https://wikijs.${DOMAIN_NAME}/login
+      - homepage.href=https://wikijs.${DOMAIN_NAME}
       - homepage.description=Wiki
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.wikijs.rule=Host(`wikijs.$DOMAIN_NAME`)
-      - traefik.http.services.wikijs.loadbalancer.server.port=3000
-      # WATCHTOWER
-      - com.centurylinklabs.watchtower.monitor-only=true
-
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.wikijs.rule=Host(`wikijs.${DOMAIN_NAME}`)
+      # - traefik.http.services.wikijs.loadbalancer.server.port=3000
+      # GODOXY
+      - proxy.wikijs.port=3000
 
 networks:
-  proxy:
-    external: true
+  # proxy:
+  #   external: true
   paperless:
   nextcloud:
