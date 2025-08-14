@@ -218,9 +218,9 @@ services:
     # ports:
     #  - "3000:3000"
     depends_on:
-      - postgres
-      - minio
-      - chrome
+      - reactive-postgres
+      - reactive-minio
+      - reactive-chrome
     environment:
       PORT: 3000
       NODE_ENV: production
