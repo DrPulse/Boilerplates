@@ -8,6 +8,7 @@
 ## Node management
 
 - Create node
+  - If using reverse proxy: set "Behind Proxy" to yes, "Daemon Port" to 443
 - Copy the given config in settings page
 - Enrich it with what's in [the config example file](config-example.yml)
 - Place it in the folder mounted in wings container at : `/etc/pterodactyl/`
