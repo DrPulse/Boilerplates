@@ -119,7 +119,7 @@ services:
       homepage.widget.secret: "$KOMODO_WIDGET_SECRET"
       # GODOXY
       proxy.aliases: komodo
-      proxy.port: 9120
+      proxy.komodo.port: 9120
 
   periphery:
     image: ghcr.io/moghtech/komodo-periphery:1.18.3
