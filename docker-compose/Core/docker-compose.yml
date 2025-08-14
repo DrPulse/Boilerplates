@@ -110,13 +110,13 @@ services:
       homepage.group: Management
       homepage.name: Komodo
       homepage.icon: komodo.png
-      homepage.ping: https://komodo.$DOMAIN_NAME
-      homepage.href: https://komodo.$DOMAIN_NAME
+      homepage.ping: https://komodo.${DOMAIN_NAME}
+      homepage.href: https://komodo.${DOMAIN_NAME}
       homepage.description: Komodo core service
       homepage.widget.type: komodo
-      homepage.widget.url: https://komodo.$DOMAIN_NAME
-      homepage.widget.key: "$KOMODO_WIDGET_KEY"
-      homepage.widget.secret: "$KOMODO_WIDGET_SECRET"
+      homepage.widget.url: https://komodo.${DOMAIN_NAME}
+      homepage.widget.key: "${KOMODO_WIDGET_KEY}"
+      homepage.widget.secret: "${KOMODO_WIDGET_SECRET}"
       # GODOXY
       proxy.aliases: komodo
       proxy.komodo.port: 9120
