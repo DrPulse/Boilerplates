@@ -57,7 +57,7 @@ services:
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
 
   frontend:
-    image: ghcr.io/yusing/godoxy-frontend:v0.16.1
+    image: ghcr.io/yusing/godoxy-frontend:v0.13.0
     container_name: godoxy-frontend
     restart: unless-stopped
     network_mode: host # do not change this
