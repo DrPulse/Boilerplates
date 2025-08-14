@@ -231,7 +231,7 @@ services:
       CHROME_TOKEN: chrome_token
       CHROME_URL: ws://chrome:3000
       # -- Database (Postgres) --
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/postgres
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@reactive-postgres:5432/postgres
       # -- Auth --
       ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
       REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
