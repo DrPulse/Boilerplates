@@ -115,6 +115,7 @@ services:
   #     homepage.widget.key: $PIHOLE_API_KEY
 
 
+
 networks:
   qnet-static-eth1:
     external: true
