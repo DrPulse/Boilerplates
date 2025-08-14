@@ -3,7 +3,7 @@ services:
 
   homeassistant:
     image: homeassistant/home-assistant:2025.7
-    container_name: homeassistant
+    container_name: home-assistant
     restart: unless-stopped
     # networks:
     #   - proxy
@@ -27,7 +27,8 @@ services:
       # - traefik.http.routers.homeassistant.rule=Host(`homeassistant.${DOMAIN_NAME}`)
       # - traefik.http.services.homeassistant.loadbalancer.server.port=8123
       # GODOXY
-      - proxy.port=8123
+      - proxy.aliases=homeassistant
+      - proxy.homeassistant.port=8123
 
   homebox:
     image: ghcr.io/hay-kot/homebox:v0.10.3
@@ -57,7 +58,7 @@ services:
       # - traefik.http.routers.homebox.rule=Host(`homebox.${DOMAIN_NAME}`)
       # - traefik.http.services.homebox.loadbalancer.server.port=7745
       # GODOXY
-      - proxy.port=7745
+      - proxy.homebox.port=7745
 
   lubelogger:
     image: ghcr.io/hargata/lubelogger:v1.4.9
@@ -89,7 +90,7 @@ services:
       # - traefik.http.routers.lubelogger.rule=Host(`lubelogger.${DOMAIN_NAME}`)
       # - traefik.http.services.lubelogger.loadbalancer.server.port=8080
       # GODOXY
-      - proxy.port=8080
+      - proxy.lubelogger.port=8080
 
   # mealie:
   #   container_name: mealie
@@ -128,7 +129,7 @@ services:
   # #     - traefik.http.routers.mealie.rule=Host(`mealie.${DOMAIN_NAME}`, `food.home`)
   # #     - traefik.http.services.mealie.loadbalancer.server.port=3000
   #     # GODOXY
-  #     - proxy.port=3000
+  #     - proxy.mealie.port=3000
 
 # networks:
 #   proxy:
