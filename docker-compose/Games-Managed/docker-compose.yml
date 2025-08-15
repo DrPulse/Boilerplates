@@ -88,12 +88,15 @@ services:
       WINGS_GID: ${PGID}
       WINGS_USERNAME: pterodactyl
     volumes:
+      # Docker socket & logs (needed for Wings to manage other containers)
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers/:/var/lib/docker/containers/
+
+      # Centralized persistent storage for Wings
       - ${MOUNT_POINT_DATA}/pterodactyl/config/:/etc/pterodactyl/
       - ${MOUNT_POINT_DATA}/pterodactyl/wings/lib/:/var/lib/pterodactyl/
-      - /var/log/pterodactyl/:/var/log/pterodactyl/
-      - /tmp/pterodactyl/:/tmp/pterodactyl/
+      - ${MOUNT_POINT_DATA}/pterodactyl/wings/logs:/var/log/pterodactyl
+      - ${MOUNT_POINT_DATA}/pterodactyl/wings/tmp:/tmp/pterodactyl
       - /etc/ssl/certs:/etc/ssl/certs:ro
     dns:
       - $DNS_ADDRESS
