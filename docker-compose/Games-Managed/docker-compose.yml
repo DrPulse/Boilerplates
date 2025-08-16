@@ -94,9 +94,9 @@ services:
 
       # Centralized persistent storage for Wings
       - ${MOUNT_POINT_DATA}/pterodactyl/config/:/etc/pterodactyl/
-      - ${MOUNT_POINT_DATA}/pterodactyl/wings:${MOUNT_POINT_DATA}/pterodactyl/wings
-    # Config file (can live inside the root, but Wings reads it from /etc/pterodactyl)
-      #- ${MOUNT_POINT_DATA}/pterodactyl/wings/config:/etc/pterodactyl
+      - ${MOUNT_POINT_DATA}/pterodactyl/wings:/var/lib/pterodactyl/
+      - ${MOUNT_POINT_DATA}/pterodactyl/wings/logs:/var/log/pterodactyl/
+      - ${MOUNT_POINT_DATA}/pterodactyl/wings/tmp/:/tmp/pterodactyl/
       #- /var/lib/pterodactyl/:/var/lib/pterodactyl/
       #- /var/log/pterodactyl/:/var/log/pterodactyl/
       #- /tmp/pterodactyl/:/tmp/pterodactyl/
