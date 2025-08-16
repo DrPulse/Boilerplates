@@ -50,7 +50,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
   semaphore-server:
-    image: semaphoreui/semaphore:v2.16.12
+    image: semaphoreui/semaphore:v2.16.13
     container_name: semaphore
     restart: unless-stopped
     # networks:
