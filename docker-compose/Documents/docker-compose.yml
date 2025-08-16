@@ -139,7 +139,7 @@ services:
   #     - proxy.onlyoffice.port=80
 
   paperless-server:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.17.1
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.18.0
     container_name: paperless-server
     restart: unless-stopped
     depends_on:
