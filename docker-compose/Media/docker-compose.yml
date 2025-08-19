@@ -429,7 +429,7 @@ services:
       - proxy.overseerr.port=5055
 
   calibre-web-automated-book-downloader:
-    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.1.1
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.1.2
     container_name: calibre-web-automated-book-downloader
     restart: unless-stopped
     networks:
