@@ -33,7 +33,7 @@ services:
   #     - $MOUNT_POINT_DATA/portainer:/data
   #   labels:
   #     # HOMEPAGE
-  #     - homepage.group=Management
+  #     - homepage.group=Servers Management
   #     - homepage.name=portainer
   #     - homepage.icon=portainer.png
   #     - homepage.siteMonitor=https://portainer.$DOMAIN_NAME
@@ -108,7 +108,7 @@ services:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
       # HOMEPAGE
-      homepage.group: Management
+      homepage.group: Servers Management
       homepage.name: Komodo
       homepage.icon: komodo.png
       homepage.siteMonitor: https://komodo.${DOMAIN_NAME}

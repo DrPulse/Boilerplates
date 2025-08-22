@@ -66,6 +66,18 @@ services:
     networks:
       - pterodactyl
     labels:
+      # HOMEPAGE
+      homepage.group: Game Servers
+      homepage.name: Pterodactyl Panel
+      homepage.icon: pterodactyl
+      homepage.description: Pterodactyl Game Server Management Panel
+      homepage.href: https://panel.${DOMAIN_NAME}
+      homepage.siteMonitor: https://panel.${DOMAIN_NAME}
+      homepage.statusStyle: dot
+      homepage.widget.type: pterodactyl
+      homepage.widget.url: https://panel.${DOMAIN_NAME}
+      homepage.widget.key: ${PANEL_KEY}
+      # GODOXY
       proxy.aliases: panel
       proxy.panel.port: 80
       proxy.network: pterodactyl
@@ -102,6 +114,14 @@ services:
     dns:
       - $DNS_ADDRESS
     labels:
+      # HOMEPAGE
+      homepage.group: Game Servers
+      homepage.name: Pterodactyl Wings
+      homepage.icon: pterodactyl
+      homepage.description: Pterodactyl Game Server Management Wings
+      homepage.siteMonitor: https://wings.${DOMAIN_NAME}
+      homepage.statusStyle: dot
+      # GODOXY
       proxy.aliases: wings0
       proxy.wings0.port: 443
       proxy.network: wings0

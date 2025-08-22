@@ -31,7 +31,7 @@ services:
   #     - ${MOUNT_POINT_GAMES}/Minecraft/${MC_SERV_01}:/data
   #   labels:
   #     # HOMEPAGE
-  #     - homepage.group=Tools
+  #     - homepage.group=Game Servers
   #     - homepage.name=MC Vanilla ++
   #     - homepage.icon=minecraft.png
   #     - homepage.description=Minecraft vanilla with QOL mods
@@ -65,7 +65,7 @@ services:
   #     - ${MOUNT_POINT_GAMES}/Minecraft/${MC_SERV_02}:/data
   #   labels:
   #     # HOMEPAGE
-  #     - homepage.group=Tools
+  #     - homepage.group=Game Servers
   #     - homepage.name=Modded FTB Unstable
   #     - homepage.icon=minecraft.png
   #     - homepage.description=Modpack FTB Unstable 1.20 Fabric
@@ -99,7 +99,7 @@ services:
   #     - ${MOUNT_POINT_GAMES}/Minecraft/${MC_SERV_03}:/data
   #   labels:
   #     # HOMEPAGE
-  #     - homepage.group=Tools
+  #     - homepage.group=Game Servers
   #     - homepage.name=Modded FTB University
   #     - homepage.icon=minecraft.png
   #     - homepage.description=Modpack FTB University 1.19 Forge
@@ -130,7 +130,7 @@ services:
           memory: 12G
     labels:
       # HOMEPAGE
-      - homepage.group=Tools
+      - homepage.group=Game Servers
       - homepage.name=Satisfactory
       - homepage.icon=https://img2.storyblok.com/fit-in/0x200/filters:format(webp)/f/110098/268x268/d1ebbafe03/logo.png
       - homepage.description=Satisfactory Vanilla
@@ -160,7 +160,7 @@ services:
           memory: 12G
     labels:
       # HOMEPAGE
-      - homepage.group=Tools
+      - homepage.group=Game Servers
       - homepage.name=Satisfactory-02
       - homepage.icon=https://img2.storyblok.com/fit-in/0x200/filters:format(webp)/f/110098/268x268/d1ebbafe03/logo.png
       - homepage.description=Satisfactory Vanilla
