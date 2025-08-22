@@ -39,6 +39,7 @@ services:
   #     - homepage.siteMonitor=https://portainer.$DOMAIN_NAME
   #     - homepage.href=https://portainer.$DOMAIN_NAME
   #     - homepage.description=Container deployement interface
+  #     - homepage.statusStyle=dot
   #     - homepage.widget.type=portainer
   #     - homepage.widget.url=https://portainer.$DOMAIN_NAME
   #     - homepage.widget.env=X
@@ -111,6 +112,7 @@ services:
       homepage.name: Komodo
       homepage.icon: komodo.png
       homepage.siteMonitor: https://komodo.${DOMAIN_NAME}
+      homepage.statusStyle: dot
       homepage.href: https://komodo.${DOMAIN_NAME}
       homepage.description: Komodo core service
       homepage.widget.type: komodo

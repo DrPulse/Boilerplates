@@ -17,6 +17,7 @@ services:
       - homepage.icon=dumbassets.png
       - homepage.siteMonitor=https://dumbassets.${DOMAIN_NAME}
       - homepage.href=https://dumbassets.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
@@ -54,6 +55,7 @@ services:
       - homepage.icon=dumbterm.png
       - homepage.siteMonitor=https://dumbterm.${DOMAIN_NAME}
       - homepage.href=https://dumbterm.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
@@ -80,6 +82,7 @@ services:
   #     - homepage.icon=focalboard.png
   #     - homepage.siteMonitor=https://focalboard.${DOMAIN_NAME}
   #     - homepage.href=https://focalboard.${DOMAIN_NAME}
+  #     - homepage.statusStyle=dot
   #     # TRAEFIK
   #     - traefik.enable=true
   #     - traefik.docker.network=proxy
@@ -102,6 +105,7 @@ services:
       - homepage.description=Useful tools for developer and people working in IT
       - homepage.siteMonitor=https://it-tools.${DOMAIN_NAME}
       - homepage.href=https://it-tools.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
@@ -130,6 +134,7 @@ services:
       - homepage.description=LAN file/text sharing
       - homepage.siteMonitor=https://pairdrop.${DOMAIN_NAME}
       - homepage.href=https://pairdrop.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
@@ -159,6 +164,7 @@ services:
       - homepage.description=PDF Toolbox
       - homepage.siteMonitor=https://stirling-pdf.${DOMAIN_NAME}
       - homepage.href=https://stirling-pdf.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
@@ -251,6 +257,7 @@ services:
       - homepage.description=Resume builder and tracker
       - homepage.siteMonitor=https://reactive-resume.${DOMAIN_NAME}
       - homepage.href=https://reactive-resume.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
@@ -279,6 +286,7 @@ services:
       - homepage.description=Subscriptions tracker
       - homepage.siteMonitor=https://wallos.${DOMAIN_NAME}
       - homepage.href=https://wallos.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy

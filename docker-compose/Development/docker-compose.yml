@@ -22,6 +22,7 @@ services:
       - homepage.name=Code-Server
       - homepage.icon=code.png
       - homepage.siteMonitor=https://code-server.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       - homepage.href=https://code-server.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -85,6 +86,7 @@ services:
       - homepage.icon=ansible.png
       - homepage.siteMonitor=https://semaphore.${DOMAIN_NAME}
       - homepage.href=https://semaphore.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
