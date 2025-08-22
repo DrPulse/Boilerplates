@@ -119,7 +119,7 @@ services:
       homepage.name: Pterodactyl Wings
       homepage.icon: pterodactyl
       homepage.description: Pterodactyl Game Server Management Wings
-      homepage.siteMonitor: https://wings.${DOMAIN_NAME}
+      homepage.siteMonitor: https://wings0.${DOMAIN_NAME}
       homepage.statusStyle: dot
       # GODOXY
       proxy.aliases: wings0
