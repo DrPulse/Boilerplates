@@ -21,6 +21,10 @@ services:
       - homepage.statusStyle=dot
       - homepage.href=https://beszel.${DOMAIN_NAME}
       - homepage.description=Lightweight monitoring service
+      - homepage.widget.type=beszel
+      - homepage.widget.url=https://beszel.${DOMAIN_NAME}
+      - homepage.widget.username=${BESZEL_USERNAME}
+      - homepage.widget.password=${BESZEL_PASSWORD}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
