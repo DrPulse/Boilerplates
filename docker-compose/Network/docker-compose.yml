@@ -23,6 +23,7 @@ services:
       homepage.icon: adguard-home.png
       homepage.description: Ad blocker, local DNS, DHCP server
       homepage.siteMonitor: https://adguardhome.${DOMAIN_NAME}
+      homepage.href: https://adguardhome.${DOMAIN_NAME}
       homepage.statusStyle: dot
       homepage.widget.type: adguard
       homepage.widget.url: https://adguardhome.${DOMAIN_NAME}
