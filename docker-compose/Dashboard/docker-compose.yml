@@ -23,8 +23,8 @@ services:
     #   - proxy
     #ports:
     #  - 3000:3000
-    # dns:
-    #   - $DNS_ADDRESS
+    dns:
+      - $DNS_ADDRESS
     environment:
       PUID: $PUID
       PGID: $PGID
