@@ -107,7 +107,7 @@ services:
   #     homepage.group: Networking
   #     homepage.name: Pihole
   #     homepage.icon: pi-hole.png
-  #     homepage.ping: http://$LOCAL_DNS_ADDRESS
+  #     homepage.siteMonitor: http://$LOCAL_DNS_ADDRESS
   #     homepage.href: http://pihole.$DOMAIN_NAME/admin
   #     homepage.description: Ad blocker, local DNS, DHCP server
   #     homepage.widget.type: pihole

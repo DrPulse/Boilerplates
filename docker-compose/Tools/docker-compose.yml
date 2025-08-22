@@ -15,7 +15,7 @@ services:
       - homepage.group=Tools
       - homepage.name=dumbassets
       - homepage.icon=dumbassets.png
-      - homepage.ping=https://dumbassets.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://dumbassets.${DOMAIN_NAME}
       - homepage.href=https://dumbassets.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -52,7 +52,7 @@ services:
       - homepage.group=Tools
       - homepage.name=dumbterm
       - homepage.icon=dumbterm.png
-      - homepage.ping=https://dumbterm.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://dumbterm.${DOMAIN_NAME}
       - homepage.href=https://dumbterm.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -78,7 +78,7 @@ services:
   #     - homepage.group=Tools
   #     - homepage.name=focalboard
   #     - homepage.icon=focalboard.png
-  #     - homepage.ping=https://focalboard.${DOMAIN_NAME}
+  #     - homepage.siteMonitor=https://focalboard.${DOMAIN_NAME}
   #     - homepage.href=https://focalboard.${DOMAIN_NAME}
   #     # TRAEFIK
   #     - traefik.enable=true
@@ -100,7 +100,7 @@ services:
       - homepage.name=It-tools
       - homepage.icon=mdi-tools
       - homepage.description=Useful tools for developer and people working in IT
-      - homepage.ping=https://it-tools.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://it-tools.${DOMAIN_NAME}
       - homepage.href=https://it-tools.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -128,7 +128,7 @@ services:
       - homepage.name=pairdrop
       - homepage.icon=snapdrop.png
       - homepage.description=LAN file/text sharing
-      - homepage.ping=https://pairdrop.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://pairdrop.${DOMAIN_NAME}
       - homepage.href=https://pairdrop.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -157,7 +157,7 @@ services:
       - homepage.name=stirling-pdf
       - homepage.icon=mdi-file-pdf-box
       - homepage.description=PDF Toolbox
-      - homepage.ping=https://stirling-pdf.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://stirling-pdf.${DOMAIN_NAME}
       - homepage.href=https://stirling-pdf.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -249,7 +249,7 @@ services:
       - homepage.name=reactive-resume
       - homepage.icon=reactive-resume.png
       - homepage.description=Resume builder and tracker
-      - homepage.ping=https://reactive-resume.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://reactive-resume.${DOMAIN_NAME}
       - homepage.href=https://reactive-resume.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -277,7 +277,7 @@ services:
       - homepage.name=wallos
       - homepage.icon=wallos.png
       - homepage.description=Subscriptions tracker
-      - homepage.ping=https://wallos.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://wallos.${DOMAIN_NAME}
       - homepage.href=https://wallos.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true

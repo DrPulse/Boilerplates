@@ -36,7 +36,7 @@ services:
   #     - homepage.group=Management
   #     - homepage.name=portainer
   #     - homepage.icon=portainer.png
-  #     - homepage.ping=https://portainer.$DOMAIN_NAME
+  #     - homepage.siteMonitor=https://portainer.$DOMAIN_NAME
   #     - homepage.href=https://portainer.$DOMAIN_NAME
   #     - homepage.description=Container deployement interface
   #     - homepage.widget.type=portainer
@@ -110,7 +110,7 @@ services:
       homepage.group: Management
       homepage.name: Komodo
       homepage.icon: komodo.png
-      homepage.ping: https://komodo.${DOMAIN_NAME}
+      homepage.siteMonitor: https://komodo.${DOMAIN_NAME}
       homepage.href: https://komodo.${DOMAIN_NAME}
       homepage.description: Komodo core service
       homepage.widget.type: komodo

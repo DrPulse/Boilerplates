@@ -21,7 +21,7 @@ services:
       - homepage.group=Tools
       - homepage.name=Code-Server
       - homepage.icon=code.png
-      - homepage.ping=https://code-server.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://code-server.${DOMAIN_NAME}
       - homepage.href=https://code-server.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -83,7 +83,7 @@ services:
       - homepage.group=Tools
       - homepage.name=Semaphore
       - homepage.icon=ansible.png
-      - homepage.ping=https://semaphore.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://semaphore.${DOMAIN_NAME}
       - homepage.href=https://semaphore.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true

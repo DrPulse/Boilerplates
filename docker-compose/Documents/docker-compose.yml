@@ -14,7 +14,7 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=Draw.io
   #     - homepage.icon=draw.png
-  #     - homepage.ping=https://drawio.${DOMAIN_NAME}
+  #     - homepage.siteMonitor=https://drawio.${DOMAIN_NAME}
   #     - homepage.href=https://drawio.${DOMAIN_NAME}
   #     - homepage.description=Draw tool
   #     # TRAEFIK
@@ -38,7 +38,7 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=excalidraw
   #     - homepage.icon=https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~2de41b4b-c986-4d60-a0c5-3e346c98de34/V1~14363c25c4230c54e02ae7416216600b0aee35b05c257a00152830492f4d581b~c5a9036392714767b9a63e7f2d796a53?quarantineState=evaluating
-  #     - homepage.ping=https://excalidraw.${DOMAIN_NAME}
+  #     - homepage.siteMonitor=https://excalidraw.${DOMAIN_NAME}
   #     - homepage.href=https://excalidraw.${DOMAIN_NAME}
   #     - homepage.description=Browser local whiteboard
   #     # TRAEFIK
@@ -91,7 +91,7 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=Nextcloud
   #     - homepage.icon=nextcloud.png
-  #     - homepage.ping=https://nextcloud.${DOMAIN_NAME}/login
+  #     - homepage.siteMonitor=https://nextcloud.${DOMAIN_NAME}/login
   #     - homepage.href=https://nextcloud.${DOMAIN_NAME}
   #     - homepage.description=Private Cloud
   #     # TRAEFIK
@@ -166,7 +166,7 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=paperless
       - homepage.icon=paperless.png
-      - homepage.ping=https://paperless.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://paperless.${DOMAIN_NAME}
       - homepage.href=https://paperless.${DOMAIN_NAME}
       - homepage.description=Document Management System
       # TRAEFIK
@@ -212,7 +212,7 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=Syncthing
       - homepage.icon=syncthing.png
-      - homepage.ping=https://syncthing.${DOMAIN_NAME}/login
+      - homepage.siteMonitor=https://syncthing.${DOMAIN_NAME}/login
       - homepage.href=https://syncthing.${DOMAIN_NAME}
       - homepage.description=Syncing file tool accross devices
       # TRAEFIK
@@ -249,7 +249,7 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=Wiki.js
       - homepage.icon=wikijs.png
-      - homepage.ping=https://wikijs.${DOMAIN_NAME}/login
+      - homepage.siteMonitor=https://wikijs.${DOMAIN_NAME}/login
       - homepage.href=https://wikijs.${DOMAIN_NAME}
       - homepage.description=Wiki
       # TRAEFIK
