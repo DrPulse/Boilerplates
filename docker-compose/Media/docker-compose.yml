@@ -4,7 +4,7 @@ services:
   jellyfin:
     image: linuxserver/jellyfin:10.10.7
     container_name: jellyfin
-    restart: unless-stopped
+    restart: always
     profiles:
       - jellyfin
       - full
