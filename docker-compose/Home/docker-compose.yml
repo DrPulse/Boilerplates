@@ -79,7 +79,7 @@ services:
       - homepage.group=Home
       - homepage.name=LubeLogger
       - homepage.icon=lubelogger.png
-      - homepage.siteMonitor=lubelogger.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://lubelogger.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://lubelogger.${DOMAIN_NAME}
       - homepage.description=Car stuff tracker

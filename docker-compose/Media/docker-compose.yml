@@ -27,7 +27,7 @@ services:
       - homepage.group=Media
       - homepage.name=jellyfin
       - homepage.icon=jellyfin.png
-      - homepage.siteMonitor=jellyfin.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://jellyfin.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://jellyfin.${DOMAIN_NAME}
       - homepage.description=Media server
@@ -73,7 +73,7 @@ services:
       - homepage.group=Media
       - homepage.name=plex
       - homepage.icon=plex.png
-      - homepage.siteMonitor=plex.${DOMAIN_NAME}/web/index.html
+      - homepage.siteMonitor=https://plex.${DOMAIN_NAME}/web/index.html
       - homepage.statusStyle=dot
       - homepage.href=https://plex.${DOMAIN_NAME}/web/index.html
       - homepage.description=Media server
@@ -111,7 +111,7 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=deluge
       - homepage.icon=deluge.png
-      - homepage.siteMonitor=deluge.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://deluge.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://deluge.${DOMAIN_NAME}
       - homepage.widget.type=deluge
@@ -146,7 +146,7 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=bazarr
       - homepage.icon=bazarr.png
-      - homepage.siteMonitor=bazarr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://bazarr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://bazarr.${DOMAIN_NAME}
       - homepage.description=Subtitles for films and shows
@@ -171,7 +171,7 @@ services:
       - homepage.group=Media Management
       - homepage.name=Flaresolverr
       - homepage.icon=cloudflare.png
-      - homepage.siteMonitor=flaresolverr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://flaresolverr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://flaresolverr.${DOMAIN_NAME}
       - homepage.description=Cloudflare Proxy server bypassser
@@ -204,7 +204,7 @@ services:
       - homepage.group=Media Management
       - homepage.name=Prowlarr
       - homepage.icon=prowlarr.png
-      - homepage.siteMonitor=prowlarr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://prowlarr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://prowlarr.${DOMAIN_NAME}
       - homepage.description=Indexer manager
@@ -239,7 +239,7 @@ services:
       - homepage.group=Media Management
       - homepage.name=radarr
       - homepage.icon=radarr.png
-      - homepage.siteMonitor=radarr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://radarr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://radarr.${DOMAIN_NAME}
       - homepage.description=Films requester
@@ -276,7 +276,7 @@ services:
       - homepage.group=Media Management
       - homepage.name=sonarr
       - homepage.icon=sonarr.png
-      - homepage.siteMonitor=sonarr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://sonarr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://sonarr.${DOMAIN_NAME}
       - homepage.description=Shows requester
@@ -353,7 +353,7 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=jellyseerr
       - homepage.icon=jellyseerr.png
-      - homepage.siteMonitor=jellyseerr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://jellyseerr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://jellyseerr.${DOMAIN_NAME}
       - homepage.description=Media requester for Plex/Jellyfin/Emby
@@ -388,7 +388,7 @@ services:
   #     - homepage.group=Media Requesters
   #     - homepage.name=ombi
   #     - homepage.icon=ombi.png
-  #     - homepage.siteMonitor=ombi.${DOMAIN_NAME}
+  #     - homepage.siteMonitor=https://ombi.${DOMAIN_NAME}
   #     - homepage.statusStyle=dot
   #     - homepage.href=https://ombi.${DOMAIN_NAME}
   #     - homepage.description=Media requester for Plex/Emby
@@ -425,7 +425,7 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=overseerr
       - homepage.icon=overseerr.png
-      - homepage.siteMonitor=overseerr.${DOMAIN_NAME}
+      - homepage.siteMonitor=https://overseerr.${DOMAIN_NAME}
       - homepage.statusStyle=dot
       - homepage.href=https://overseerr.${DOMAIN_NAME}
       - homepage.description=Media requester for plex
@@ -506,7 +506,7 @@ services:
   #     - homepage.group=Media Requesters
   #     - homepage.name=wizarr
   #     - homepage.icon=wizarr.png
-  #     - homepage.siteMonitor=wizarr.${DOMAIN_NAME}
+  #     - homepage.siteMonitor=https://wizarr.${DOMAIN_NAME}
   #     - homepage.statusStyle=dot
   #     - homepage.href=https://wizarr.${DOMAIN_NAME}
   #     - homepage.description=Plex invitations
