@@ -90,7 +90,7 @@ services:
       - wings0
     ports:
       #- 8443:443
-      - 2022 # SFTP
+      - 2022:2022 # SFTP
     stdin_open: true
     tty: true
     environment:
