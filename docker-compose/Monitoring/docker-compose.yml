@@ -167,50 +167,50 @@ services:
       # GODOXY
       - proxy.nutify.port=5050
 
-  # scrutiny:
-  #   image: ghcr.io/analogj/scrutiny:master-omnibus
-  #   container_name: scrutiny
-  #   restart: unless-stopped
-  # #   networks:
-  # #     - proxy
-  #   ports:
-  #     #- 8080:8080 # webapp
-  #     - 8086:8086 # indluxdb
-  #   cap_add:
-  #     - SYS_RAWIO
-  #     - SYS_ADMIN
-  #   environment:
-  #     TZ: $TZ
-  #     PUID: $PUID
-  #     PGID: $GUID
-  #   volumes:
-  #     - ${MOUNT_POINT_DATA}/scrutiny:/config
-  #     - ${MOUNT_POINT_DATA}/scrutiny/influxdb:/opt/scrutiny/influxdb
-  #     - /run/udev:/run/udev:ro
-  #   devices:
-  #     - /dev/sda:/dev/sda
-  #     - /dev/sdb:/dev/sdb
-  #     - /dev/sdc:/dev/sdc
-  #     - /dev/sdd:/dev/sdd
-  #     - /dev/nvme0:/dev/nvme0
-  #   labels:
-  #     # HOMEPAGE
-  #     - homepage.group=Monitoring & Alerting
-  #     - homepage.name=Scrutiny
-  #     - homepage.icon=scrutiny.png
-  #     - homepage.siteMonitor=https://scrutiny.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
-  #     - homepage.href=https://scrutiny.${DOMAIN_NAME}
-  #     - homepage.description=S.M.A.R.T drives monitoring
-  #     - homepage.widget.type=scrutiny
-  #     - homepage.widget.url=https://scrutiny.${DOMAIN_NAME}
-  #     # TRAEFIK
-  # #     - traefik.enable=true
-  # #     - traefik.docker.network=proxy
-  # #     - traefik.http.routers.scrutiny.rule=Host(`scrutiny.${DOMAIN_NAME}`)
-  # #     - traefik.http.services.scrutiny.loadbalancer.server.port=8080
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:v0.8.0
+    container_name: scrutiny
+    restart: unless-stopped
+  #   networks:
+  #     - proxy
+    ports:
+      #- 8080:8080 # webapp
+      - 8086:8086 # influxdb
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+    environment:
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${GUID}
+    volumes:
+      - ${MOUNT_POINT_DATA}/scrutiny:/config
+      - ${MOUNT_POINT_DATA}/scrutiny/influxdb:/opt/scrutiny/influxdb
+      - /run/udev:/run/udev:ro
+    devices:
+      - /dev/sda:/dev/sda
+      - /dev/sdb:/dev/sdb
+      - /dev/sdc:/dev/sdc
+      - /dev/sdd:/dev/sdd
+      - /dev/nvme0:/dev/nvme0
+    labels:
+      # HOMEPAGE
+      - homepage.group=Monitoring & Alerting
+      - homepage.name=Scrutiny
+      - homepage.icon=scrutiny.png
+      - homepage.siteMonitor=https://scrutiny.${DOMAIN_NAME}
+      - homepage.statusStyle=dot
+      - homepage.href=https://scrutiny.${DOMAIN_NAME}
+      - homepage.description=S.M.A.R.T drives monitoring
+      - homepage.widget.type=scrutiny
+      - homepage.widget.url=https://scrutiny.${DOMAIN_NAME}
+      # # TRAEFIK
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.scrutiny.rule=Host(`scrutiny.${DOMAIN_NAME}`)
+      # - traefik.http.services.scrutiny.loadbalancer.server.port=8080
         # GODOXY
-  # #     - proxy.port=8080
+      - proxy.scrutiny.port=8080
 
   speedtest:
     container_name: speedtest
