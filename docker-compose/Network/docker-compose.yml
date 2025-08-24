@@ -51,8 +51,8 @@ services:
     image: alplat/dockflare:v2.1.5
     container_name: dockflare
     restart: always
-    #ports:
-    #  - "5000:5000"
+    ports:
+      - 5000:5000
     environment:
       - STATE_FILE_PATH=/app/data/state.json
       - TZ=${TZ}
