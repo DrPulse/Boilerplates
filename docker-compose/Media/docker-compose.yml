@@ -331,6 +331,7 @@ services:
       # - traefik.http.routers.calibreweb.rule=Host(`calibreweb.${DOMAIN_NAME}`)
       # - traefik.http.services.calibreweb.loadbalancer.server.port=8083
       # GODOXY
+      - proxy.aliases=calibreweb
       - proxy.calibreweb.port=8083
       - proxy.network=calibre
       - proxy.idle_timeout=30m
@@ -455,6 +456,8 @@ services:
       - calibre
     # ports:
     #   - 8084:8084
+    depends_on:
+      - cloudflarebypassforscraping
     environment:
       FLASK_PORT: 8084
       FLASK_DEBUG: false
@@ -478,6 +481,7 @@ services:
       # - traefik.http.routers.calibre-download.rule=Host(`calibre-download.${DOMAIN_NAME}`)
       # - traefik.http.services.calibre-download.loadbalancer.server.port=8084
       # GODOXY
+      - proxy.aliases=calibre-download
       - proxy.calibre-download.port=8084
       - proxy.idle_timeout=30m
 
