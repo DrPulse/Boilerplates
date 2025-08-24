@@ -186,6 +186,7 @@ services:
       - proxy.aliases=paperless
       - proxy.paperless.port=8000
       - proxy.network=paperless
+      - proxy.idle_timeout=30m
 
   paperless-cache:
     image: docker.io/library/redis:8
@@ -270,6 +271,7 @@ services:
       # - traefik.http.services.wikijs.loadbalancer.server.port=3000
       # GODOXY
       - proxy.wikijs.port=3000
+      - proxy.idle_timeout=15m
 
 networks:
   # proxy:

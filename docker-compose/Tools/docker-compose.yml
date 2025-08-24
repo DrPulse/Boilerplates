@@ -25,6 +25,7 @@ services:
       # - traefik.http.services.dumbassets.loadbalancer.server.port=3000
       # GODOXY
       - proxy.dumbassets.port=3000
+      - proxy.idle_timeout=5m
 
 
   dumbterm:
@@ -113,6 +114,7 @@ services:
       # - traefik.http.services.it-tools.loadbalancer.server.port=80
       # GODOXY
       - proxy.it-tools.port=80
+      - proxy.idle_timeout=5m
 
   pairdrop:
     image: lscr.io/linuxserver/pairdrop:1.11.2
@@ -172,6 +174,7 @@ services:
       # - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
       # GODOXY
       - proxy.stirling-pdf.port=8080
+      - proxy.idle_timeout=5m
 
   reactive-postgres:
     image: postgres:16-alpine
@@ -266,6 +269,7 @@ services:
       # GODOXY
       - proxy.aliases=reactive-resume
       - proxy.reactive-resume.port=3000
+      - proxy.idle_timeout=1h
 
   wallos:
     image: bellamy/wallos:4.1.1
@@ -297,6 +301,7 @@ services:
       # - traefik.http.services.wallos.loadbalancer.server.port=80
       # GODOXY
       - proxy.wallos.port=80
+      - proxy.wallos.idle_timeout=5m
 
 # volumes:
 #   focalboard-data:

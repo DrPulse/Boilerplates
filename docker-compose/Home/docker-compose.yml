@@ -2,7 +2,6 @@ services:
 
 
   homeassistant:
-
     image: homeassistant/home-assistant:2025.8
     container_name: homeassistant
     restart: unless-stopped
@@ -31,6 +30,7 @@ services:
       # GODOXY
       - proxy.aliases=homeassistant
       - proxy.homeassistant.port=8123
+      - proxy.idle_timeout=1h
 
   homebox:
     image: ghcr.io/hay-kot/homebox:v0.10.3
@@ -62,6 +62,7 @@ services:
       # - traefik.http.services.homebox.loadbalancer.server.port=7745
       # GODOXY
       - proxy.homebox.port=7745
+      - proxy.idle_timeout=15m
 
   lubelogger:
     image: ghcr.io/hargata/lubelogger:v1.5.0
@@ -95,6 +96,7 @@ services:
       # - traefik.http.services.lubelogger.loadbalancer.server.port=8080
       # GODOXY
       - proxy.lubelogger.port=8080
+      - proxy.idle_timeout=15m
 
   # mealie:
   #   container_name: mealie
