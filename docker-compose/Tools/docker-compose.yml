@@ -287,6 +287,9 @@ services:
       - homepage.siteMonitor=https://wallos.${DOMAIN_NAME}
       - homepage.href=https://wallos.${DOMAIN_NAME}
       - homepage.statusStyle=dot
+      - homepage.widget.type=wallos
+      - homepage.widget.url=https://wallos.${DOMAIN_NAME}
+      - homepage.widget.key=${WALLOS_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
