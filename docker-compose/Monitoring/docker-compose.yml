@@ -122,7 +122,9 @@ services:
     image: dartsteven/nutify:amd64-0.1.6
     container_name: nutify
     restart: always
-    # networks:
+    networks:
+      nutify_net:
+        ipv4_address: 172.51.0.1
     #   - proxy
     # ports:
       # - 3493:3493
@@ -282,6 +284,11 @@ volumes:
   netdatalib:
   netdatacache:
 
-# networks:
+networks:
+  nutify_net:
+    ipam:
+      config:
+        - subnet: 172.51.0.0/30
+
 #   proxy:
 #     external: true
