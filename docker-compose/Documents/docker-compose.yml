@@ -174,7 +174,7 @@ services:
       - homepage.statusStyle=dot
       - homepage.href=https://paperless.${DOMAIN_NAME}
       - homepage.description=Document Management System
-      - homepage.widget.type=paperless
+      - homepage.widget.type=paperlessngx
       - homepage.widget.url=https://paperless.${DOMAIN_NAME}
       - homepage.widget.key=${PAPERLESS_API_KEY}
       # TRAEFIK
