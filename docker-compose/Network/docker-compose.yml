@@ -47,6 +47,41 @@ services:
       proxy.network: qnet-static-eth1
 
 
+  dockflare:
+    image: alplat/dockflare:v2.1.5
+    container_name: dockflare
+    restart: always
+    #ports:
+    #  - "5000:5000"
+    environment:
+      - STATE_FILE_PATH=/app/data/state.json
+      - TZ=${TZ}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${MOUNT_POINT_DATA}/dockflare:/app/data
+    dns:
+      - ${LOCAL_DNS_ADDRESS}
+    networks:
+      - cloudflare-net
+    labels:
+      # DOCKFLARE
+      # Optional labels to expose DockFlare itself via DockFlare
+      #  dockflare.enable: true
+      #  dockflare.hostname: dockflare.yourdomain.tld
+      #  dockflare.service: http://dockflare:5000
+      #  dockflare.access.policy: authenticate # Example: require login
+      # HOMEPAGE
+      homepage.group: Networking
+      homepage.name: DockFlare
+      homepage.icon: dockflare.png
+      homepage.siteMonitor: https://dockflare.${DOMAIN_NAME}
+      homepage.href: https://dockflare.${DOMAIN_NAME}
+      homepage.statusStyle: dot
+      homepage.description: Automatic Cloudflare tunnel through labels
+      # GODOXY
+      proxy.dockflare.port: 5000
+      proxy.network: cloudflare-net
+
   tailscale:
     image: tailscale/tailscale:v1.86.5
     container_name: tailscale
@@ -123,5 +158,6 @@ services:
 networks:
   qnet-static-eth1:
     external: true
-
+  cloudflare-net:
+    name: cloudflare-net
 
