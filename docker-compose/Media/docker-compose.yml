@@ -187,7 +187,7 @@ services:
       - proxy.flaresolverr.port=8191
 
   prowlarr:
-    image: linuxserver/prowlarr:1.37.0
+    image: linuxserver/prowlarr:2.0.5
     container_name: prowlarr
     restart: always
     # networks:
@@ -444,7 +444,7 @@ services:
       - proxy.overseerr.port=5055
 
   calibre-web-automated-book-downloader:
-    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.1.5
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.1.6
     container_name: calibre-web-automated-book-downloader
     restart: unless-stopped
     networks:
