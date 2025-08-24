@@ -48,7 +48,7 @@ services:
 
 
   dockflare:
-    image: alplat/dockflare:v2.1.5
+    image: alplat/dockflare:v2.1.6
     container_name: dockflare
     restart: always
     ports:
