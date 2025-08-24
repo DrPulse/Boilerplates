@@ -150,6 +150,9 @@ services:
       - homepage.statusStyle=dot
       - homepage.href=https://bazarr.${DOMAIN_NAME}
       - homepage.description=Subtitles for films and shows
+      - homepage.widget.type=bazarr
+      - homepage.widget.url=https://bazarr.${DOMAIN_NAME}
+      - homepage.widget.key=${BAZARR_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
