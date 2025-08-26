@@ -448,7 +448,7 @@ services:
       - proxy.idle_timeout=30m
 
   calibre-web-automated-book-downloader:
-    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.1.7
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.1.8
     container_name: calibre-web-automated-book-downloader
     restart: unless-stopped
     networks:
