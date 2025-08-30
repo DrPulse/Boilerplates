@@ -1,7 +1,7 @@
 services:
 
   beszel:
-    image: henrygd/beszel:0.12.3
+    image: henrygd/beszel:0.12.6
     container_name: beszel
     restart: always
     # networks:
@@ -35,7 +35,7 @@ services:
       - proxy.beszel.port=8090
 
   beszel-agent:
-    image: henrygd/beszel-agent:0.12.3
+    image: henrygd/beszel-agent:0.12.5
     container_name: beszel-agent
     restart: always
     network_mode: host
@@ -48,7 +48,7 @@ services:
       EXTRA_FILESYSTEMS: ${BESZEL_EXTRA_FILESYSTEM}
 
   dozzle:
-    image: amir20/dozzle:v8.13.9
+    image: amir20/dozzle:v8.13.10
     container_name: dozzle
     restart: always
     # networks:

@@ -83,7 +83,7 @@ services:
       komodo.skip: # Prevent Komodo from stopping with StopAllContainers
 
   core:
-    image: ghcr.io/moghtech/komodo-core:1.19.0
+    image: ghcr.io/moghtech/komodo-core:1.19.1
     restart: unless-stopped
     depends_on:
       - ferretdb
@@ -124,7 +124,7 @@ services:
       proxy.komodo.port: 9120
 
   periphery:
-    image: ghcr.io/moghtech/komodo-periphery:1.19.0
+    image: ghcr.io/moghtech/komodo-periphery:1.19.1
     labels:
       komodo.skip: # Prevent Komodo from stopping with StopAllContainers
     restart: unless-stopped
