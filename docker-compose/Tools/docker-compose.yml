@@ -285,7 +285,7 @@ services:
       # - traefik.http.services.wallos.loadbalancer.server.port=80
       # GODOXY
       - proxy.wallos.port=80
-      - proxy.wallos.idle_timeout=5m
+      - proxy.idle_timeout=5m
 
 # volumes:
 #   focalboard-data:
