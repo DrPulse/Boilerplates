@@ -20,8 +20,6 @@ services:
   #     - homepage.name=Traefik
   #     - homepage.icon=traefik.png
   #     - homepage.href=https://traefik.$DOMAIN_NAME
-  #     - homepage.siteMonitor=https://traefik.$DOMAIN_NAME
-  #     - homepage.statusStyle=dot
   #     - homepage.description=Reverse proxy
   #     - homepage.widget.type=traefik
   #     - homepage.widget.url=https://traefik.$DOMAIN_NAME
@@ -129,8 +127,6 @@ services:
       homepage.icon: godoxy.png
       homepage.description: Simple and fast reverse proxy
       homepage.href: https://godoxy.$DOMAIN_NAME
-      homepage.siteMonitor: https://godoxy.$DOMAIN_NAME
-      homepage.statusStyle: dot
 
 
 # networks:

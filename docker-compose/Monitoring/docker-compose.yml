@@ -17,8 +17,6 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Beszel
       - homepage.icon=beszel.png
-      - homepage.siteMonitor=https://beszel.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://beszel.${DOMAIN_NAME}
       - homepage.description=Lightweight monitoring service
       - homepage.widget.type=beszel
@@ -64,8 +62,6 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Dozzle
       - homepage.icon=dozzle.png
-      - homepage.siteMonitor=https://dozzle.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://dozzle.${DOMAIN_NAME}
       - homepage.description=Log viewer
       # TRAEFIK
@@ -108,8 +104,6 @@ services:
   #     - homepage.group=Monitoring & Alerting
   #     - homepage.name=Netdata
   #     - homepage.icon=netdata.png
-  #     - homepage.siteMonitor=https://netdata.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://netdata.${DOMAIN_NAME}
   #     - homepage.description=Real time performance monitoring
   #     # TRAEFIK
@@ -155,8 +149,6 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Nutify
       - homepage.icon=nutify.png
-      - homepage.siteMonitor=https://nutify.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://nutify.${DOMAIN_NAME}
       - homepage.description=UPS monitoring tool
       # TRAEFIK
@@ -198,8 +190,6 @@ services:
   #     - homepage.group=Monitoring & Alerting
   #     - homepage.name=Scrutiny
   #     - homepage.icon=scrutiny.png
-  #     - homepage.siteMonitor=https://scrutiny.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://scrutiny.${DOMAIN_NAME}
   #     - homepage.description=S.M.A.R.T drives monitoring
   #     - homepage.widget.type=scrutiny
@@ -232,8 +222,6 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Speedtest
       - homepage.icon=speedtest-tracker.png
-      - homepage.siteMonitor=https://speedtest.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://speedtest.${DOMAIN_NAME}
       - homepage.description=Internet speed measurement
       - homepage.widget.type=speedtest
@@ -264,8 +252,6 @@ services:
       - homepage.group=Monitoring & Alerting
       - homepage.name=Uptime Kuma
       - homepage.icon=uptime-kuma.png
-      - homepage.siteMonitor=https://uptime-kuma.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://uptime-kuma.${DOMAIN_NAME}
       - homepage.description=Uptime monitoring
       - homepage.widget.type=uptimekuma

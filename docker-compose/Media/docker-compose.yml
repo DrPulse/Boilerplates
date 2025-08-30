@@ -27,8 +27,6 @@ services:
       - homepage.group=Media
       - homepage.name=jellyfin
       - homepage.icon=jellyfin.png
-      - homepage.siteMonitor=https://jellyfin.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://jellyfin.${DOMAIN_NAME}
       - homepage.description=Media server
       - homepage.widget.type=jellyfin
@@ -73,8 +71,6 @@ services:
       - homepage.group=Media
       - homepage.name=plex
       - homepage.icon=plex.png
-      - homepage.siteMonitor=https://plex.${DOMAIN_NAME}/web/index.html
-      - homepage.statusStyle=dot
       - homepage.href=https://plex.${DOMAIN_NAME}/web/index.html
       - homepage.description=Media server
       - homepage.widget.type=plex
@@ -111,8 +107,6 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=deluge
       - homepage.icon=deluge.png
-      - homepage.siteMonitor=https://deluge.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://deluge.${DOMAIN_NAME}
       - homepage.widget.type=deluge
       - homepage.widget.url=https://deluge.${DOMAIN_NAME}
@@ -146,8 +140,6 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=bazarr
       - homepage.icon=bazarr.png
-      - homepage.siteMonitor=https://bazarr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://bazarr.${DOMAIN_NAME}
       - homepage.description=Subtitles for films and shows
       - homepage.widget.type=bazarr
@@ -174,8 +166,6 @@ services:
       - homepage.group=Media Management
       - homepage.name=Flaresolverr
       - homepage.icon=cloudflare.png
-      - homepage.siteMonitor=https://flaresolverr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://flaresolverr.${DOMAIN_NAME}
       - homepage.description=Cloudflare Proxy server bypassser
       # TRAEFIK
@@ -207,8 +197,6 @@ services:
       - homepage.group=Media Management
       - homepage.name=Prowlarr
       - homepage.icon=prowlarr.png
-      - homepage.siteMonitor=https://prowlarr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://prowlarr.${DOMAIN_NAME}
       - homepage.description=Indexer manager
       - homepage.widget.type=prowlarr
@@ -242,8 +230,6 @@ services:
       - homepage.group=Media Management
       - homepage.name=radarr
       - homepage.icon=radarr.png
-      - homepage.siteMonitor=https://radarr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://radarr.${DOMAIN_NAME}
       - homepage.description=Films requester
       - homepage.widget.type=radarr
@@ -279,8 +265,6 @@ services:
       - homepage.group=Media Management
       - homepage.name=sonarr
       - homepage.icon=sonarr.png
-      - homepage.siteMonitor=https://sonarr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://sonarr.${DOMAIN_NAME}
       - homepage.description=Shows requester
       - homepage.widget.type=sonarr
@@ -317,8 +301,6 @@ services:
       - homepage.group=Media Management
       - homepage.name=calibre-web
       - homepage.icon=calibre-web.png
-      - homepage.siteMonitor=https://calibreweb.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://calibreweb.${DOMAIN_NAME}
       - homepage.description=Book management
       - homepage.widget.type=calibreweb
@@ -358,8 +340,6 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=jellyseerr
       - homepage.icon=jellyseerr.png
-      - homepage.siteMonitor=https://jellyseerr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://jellyseerr.${DOMAIN_NAME}
       - homepage.description=Media requester for Plex/Jellyfin/Emby
       - homepage.widget.type=jellyseerr
@@ -394,8 +374,6 @@ services:
   #     - homepage.group=Media Requesters
   #     - homepage.name=ombi
   #     - homepage.icon=ombi.png
-  #     - homepage.siteMonitor=https://ombi.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://ombi.${DOMAIN_NAME}
   #     - homepage.description=Media requester for Plex/Emby
   #     - homepage.widget.type=ombi
@@ -431,8 +409,6 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=overseerr
       - homepage.icon=overseerr.png
-      - homepage.siteMonitor=https://overseerr.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://overseerr.${DOMAIN_NAME}
       - homepage.description=Media requester for plex
       - homepage.widget.type=overseerr
@@ -471,8 +447,6 @@ services:
       - homepage.group=Media Requesters
       - homepage.name=calibre-download
       - homepage.icon=calibre.png
-      - homepage.siteMonitor=https://calibre-download.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://calibre-download.${DOMAIN_NAME}
       - homepage.description=Book requester for calibre web
       # TRAEFIK
@@ -517,8 +491,6 @@ services:
   #     - homepage.group=Media Requesters
   #     - homepage.name=wizarr
   #     - homepage.icon=wizarr.png
-  #     - homepage.siteMonitor=https://wizarr.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://wizarr.${DOMAIN_NAME}
   #     - homepage.description=Plex invitations
   #     # TRAEFIK

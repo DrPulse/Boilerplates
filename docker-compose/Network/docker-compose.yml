@@ -22,9 +22,7 @@ services:
       homepage.name: Adguard Home
       homepage.icon: adguard-home.png
       homepage.description: Ad blocker, local DNS, DHCP server
-      homepage.siteMonitor: https://adguardhome.${DOMAIN_NAME}
       homepage.href: https://adguardhome.${DOMAIN_NAME}
-      homepage.statusStyle: dot
       homepage.widget.type: adguard
       homepage.widget.url: https://adguardhome.${DOMAIN_NAME}
       homepage.widget.username: ${ADGUARD_USERNAME}
@@ -74,9 +72,7 @@ services:
       homepage.group: Networking
       homepage.name: DockFlare
       homepage.icon: dockflare.png
-      homepage.siteMonitor: https://dockflare.${DOMAIN_NAME}
       homepage.href: https://dockflare.${DOMAIN_NAME}
-      homepage.statusStyle: dot
       homepage.description: Automatic Cloudflare tunnel through labels
       # GODOXY
       proxy.dockflare.port: 5000
@@ -145,8 +141,6 @@ services:
   #     homepage.group: Networking
   #     homepage.name: Pihole
   #     homepage.icon: pi-hole.png
-  #     homepage.siteMonitor: http://$LOCAL_DNS_ADDRESS
-  #     homepage.statusStyle: dot
   #     homepage.href: http://pihole.$DOMAIN_NAME/admin
   #     homepage.description: Ad blocker, local DNS, DHCP server
   #     homepage.widget.type: pihole

@@ -19,8 +19,6 @@ services:
       - homepage.group=Home
       - homepage.name=homeassistant
       - homepage.icon=home-assistant.png
-      - homepage.siteMonitor=https://homeassistant.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://homeassistant.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
@@ -51,8 +49,6 @@ services:
       - homepage.group=Home
       - homepage.name=Homebox
       - homepage.icon=homebox.png
-      - homepage.siteMonitor=https://homebox.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://homebox.${DOMAIN_NAME}
       - homepage.description=Inventory and organization tool for home users
       # TRAEFIK
@@ -80,8 +76,6 @@ services:
       - homepage.group=Home
       - homepage.name=LubeLogger
       - homepage.icon=lubelogger.png
-      - homepage.siteMonitor=https://lubelogger.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://lubelogger.${DOMAIN_NAME}
       - homepage.description=Car stuff tracker
       - homepage.widget.type=lubelogger
@@ -127,8 +121,6 @@ services:
   #     - homepage.name=Mealie
   #     - homepage.icon=mealie.png
   #     - homepage.description=Recipe manager and meal planner
-  #     - homepage.siteMonitor=https://mealie.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://mealie.${DOMAIN_NAME}
   #     # TRAEFIK
   # #     - traefik.enable=true

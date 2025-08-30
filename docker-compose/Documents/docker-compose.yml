@@ -14,9 +14,7 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=Draw.io
   #     - homepage.icon=draw.png
-  #     - homepage.siteMonitor=https://drawio.${DOMAIN_NAME}
   #     - homepage.href=https://drawio.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.description=Draw tool
   #     # TRAEFIK
   # #     - traefik.enable=true
@@ -39,8 +37,6 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=excalidraw
   #     - homepage.icon=https://avatar-prod-us-east-2.webexcontent.com/Avtr~V1~2de41b4b-c986-4d60-a0c5-3e346c98de34/V1~14363c25c4230c54e02ae7416216600b0aee35b05c257a00152830492f4d581b~c5a9036392714767b9a63e7f2d796a53?quarantineState=evaluating
-  #     - homepage.siteMonitor=https://excalidraw.${DOMAIN_NAME}
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://excalidraw.${DOMAIN_NAME}
   #     - homepage.description=Browser local whiteboard
   #     # TRAEFIK
@@ -93,8 +89,6 @@ services:
   #     - homepage.group=Documents & Files
   #     - homepage.name=Nextcloud
   #     - homepage.icon=nextcloud.png
-  #     - homepage.siteMonitor=https://nextcloud.${DOMAIN_NAME}/login
-  #     - homepage.statusStyle=dot
   #     - homepage.href=https://nextcloud.${DOMAIN_NAME}
   #     - homepage.description=Private Cloud
   #     # TRAEFIK
@@ -133,7 +127,6 @@ services:
   #     - homepage.icon=onlyoffice.png
   #     - homepage.href=http://onlyoffice.${DOMAIN_NAME}
   #     - homepage.description=Workd Excel and Powerpoint replacement
-  #     - homepage.statusStyle=dot
   #     # TRAEFIK
   # #     - traefik.enable=true
   # #     - traefik.docker.network=proxy
@@ -170,8 +163,6 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=paperless
       - homepage.icon=paperless.png
-      - homepage.siteMonitor=https://paperless.${DOMAIN_NAME}
-      - homepage.statusStyle=dot
       - homepage.href=https://paperless.${DOMAIN_NAME}
       - homepage.description=Document Management System
       - homepage.widget.type=paperlessngx
@@ -222,8 +213,6 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=Syncthing
       - homepage.icon=syncthing.png
-      - homepage.siteMonitor=https://syncthing.${DOMAIN_NAME}/login
-      - homepage.statusStyle=dot
       - homepage.href=https://syncthing.${DOMAIN_NAME}
       - homepage.description=Syncing file tool accross devices
       # TRAEFIK
@@ -260,8 +249,6 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=Wiki.js
       - homepage.icon=wikijs.png
-      - homepage.siteMonitor=https://wikijs.${DOMAIN_NAME}/login
-      - homepage.statusStyle=dot
       - homepage.href=https://wikijs.${DOMAIN_NAME}
       - homepage.description=Wiki
       # TRAEFIK

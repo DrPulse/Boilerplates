@@ -72,8 +72,6 @@ services:
       homepage.icon: pterodactyl
       homepage.description: Pterodactyl Game Server Management Panel
       homepage.href: https://panel.${DOMAIN_NAME}
-      homepage.siteMonitor: https://panel.${DOMAIN_NAME}
-      homepage.statusStyle: dot
       homepage.widget.type: pterodactyl
       homepage.widget.url: https://panel.${DOMAIN_NAME}
       homepage.widget.key: ${PANEL_KEY}
@@ -119,8 +117,6 @@ services:
       homepage.name: Pterodactyl Wings
       homepage.icon: pterodactyl
       homepage.description: Pterodactyl Game Server Management Wings
-      homepage.siteMonitor: https://wings0.${DOMAIN_NAME}
-      homepage.statusStyle: dot
       # GODOXY
       proxy.aliases: wings0
       proxy.wings0.port: 443
