@@ -107,6 +107,7 @@ services:
       - ${MOUNT_POINT_DATA}/godoxy/logs:/app/logs
       - ${MOUNT_POINT_DATA}/godoxy/error_pages:/app/error_pages:ro
       - ${MOUNT_POINT_DATA}/godoxy/data:/app/data
+      - ${MOUNT_POINT_DATA}/godoxy/cache:/app/.cache
 
       # To use autocert, certs will be stored in "./certs".
       # You can also use a docker volume to store it
