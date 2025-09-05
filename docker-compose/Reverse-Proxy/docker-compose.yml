@@ -117,9 +117,10 @@ services:
       # remove "./certs:/app/certs" and uncomment below to use existing certificate
       # - /path/to/certs/cert.crt:/app/certs/cert.crt
       # - /path/to/certs/priv.key:/app/certs/priv.key
-    # dns:
-    #   - 1.1.1.1
-    #   - 1.1.1.2
+    dns:
+      - 1.1.1.1
+      - 1.1.1.2
+      - ${DNS_ADDRESS}
     labels:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
