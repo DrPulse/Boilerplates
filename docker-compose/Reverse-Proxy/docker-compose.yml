@@ -120,7 +120,6 @@ services:
     dns:
       - 1.1.1.1
       - 1.1.1.2
-      - ${DNS_ADDRESS}
     labels:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
