@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "packageRules": [
     {
@@ -11,17 +11,23 @@
       "matchPackageNames": [
         "ghcr.io/browserless/chromium"
       ],
-      "matchPaths": [
+      "matchFileNames": [
         "docker-compose/Tools/docker-compose.yml"
       ],
       "enabled": false
     },
     {
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
       "automerge": true
     }
   ],
   "prHourlyLimit": 0,
   "ignoreTests": true,
-  "ignorePaths": ["**/Ansible/**", "**/cookiecutter/**"]
+  "ignorePaths": [
+    "**/Ansible/**",
+    "**/cookiecutter/**"
+  ]
 }
