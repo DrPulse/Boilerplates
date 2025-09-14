@@ -143,6 +143,7 @@ services:
     ports:
       - 7778:7778/udp
       - 7778:7778/tcp
+      - 8889:8888/tcp
     volumes:
         - ${MOUNT_POINT_GAMES}/satisfactory/${SATIS_SERV_02}/config:/config
     environment:
