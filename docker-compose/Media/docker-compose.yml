@@ -316,7 +316,7 @@ services:
       - proxy.aliases=calibreweb
       - proxy.calibreweb.port=8083
       - proxy.network=calibre
-      - proxy.idle_timeout=30m
+      # - proxy.idle_timeout=30m
 
 
 # Media requesters
@@ -352,7 +352,7 @@ services:
       # - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
       # GODOXY
       - proxy.jellyseerr.port=5055
-      - proxy.idle_timeout=30m
+      # - proxy.idle_timeout=30m
 
   # ombi:
   #   image: linuxserver/ombi:4.43.5
@@ -421,7 +421,7 @@ services:
       # - traefik.http.services.overseerr.loadbalancer.server.port=5055
       # GODOXY
       - proxy.overseerr.port=5055
-      - proxy.idle_timeout=30m
+      # - proxy.idle_timeout=30m
 
   calibre-web-automated-book-downloader:
     image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.2.1
@@ -457,7 +457,7 @@ services:
       # GODOXY
       - proxy.aliases=calibre-download
       - proxy.calibre-download.port=8084
-      - proxy.idle_timeout=30m
+      # - proxy.idle_timeout=30m
 
   cloudflarebypassforscraping:
     image: ghcr.io/sarperavci/cloudflarebypassforscraping:latest

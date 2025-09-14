@@ -177,7 +177,7 @@ services:
       - proxy.aliases=paperless
       - proxy.paperless.port=8000
       - proxy.network=paperless
-      - proxy.idle_timeout=30m
+      # - proxy.idle_timeout=30m
 
   paperless-cache:
     image: docker.io/library/redis:8
