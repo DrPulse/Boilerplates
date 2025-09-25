@@ -27,7 +27,7 @@ services:
 
 
   dumbterm:
-    image: dumbwareio/dumbterm:1.1.1
+    image: dumbwareio/dumbterm:1.2.0
     container_name: dumbterm
     restart: always
     # networks:
