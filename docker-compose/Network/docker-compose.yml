@@ -2,7 +2,7 @@ services:
 
   adguardhome:
     container_name: adguardhome
-    image: adguard/adguardhome:v0.107.66
+    image: adguard/adguardhome:v0.107.67
     restart: always
     networks:
       qnet-static-eth1:
