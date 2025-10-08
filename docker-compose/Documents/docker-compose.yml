@@ -190,7 +190,7 @@ services:
     labels:
       - proxy.exclude=true
   syncthing:
-    image: syncthing/syncthing:1.30
+    image: syncthing/syncthing:2.0
     container_name: syncthing
     hostname: syncthing
     restart: always
