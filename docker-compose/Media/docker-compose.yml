@@ -154,7 +154,7 @@ services:
       - proxy.bazarr.port=6767
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.4.1
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.2
     container_name: flaresolverr
     restart: always
     # networks:
