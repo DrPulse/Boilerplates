@@ -184,8 +184,8 @@ services:
     command: server /data
     # networks:
     #   - proxy
-    ports:
-      - "9000:9000"
+    # ports:
+    #   - "9000:9000"
     volumes:
       - "${MOUNT_POINT_DATA}/reactive-resume/minio:/data"
     environment:
