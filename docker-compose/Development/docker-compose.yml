@@ -1,7 +1,7 @@
 services:
 
   code-server:
-    image: lscr.io/linuxserver/code-server:4.104.2
+    image: lscr.io/linuxserver/code-server:4.104.3
     container_name: code-server
     restart: unless-stopped
     # networks:
@@ -49,7 +49,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
   semaphore-server:
-    image: semaphoreui/semaphore:v2.16.31
+    image: semaphoreui/semaphore:v2.16.34
     container_name: semaphore
     restart: unless-stopped
     # networks:
