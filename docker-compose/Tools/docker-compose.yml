@@ -208,6 +208,8 @@ services:
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    dns:
+      - ${DNS_ADDRESS}
     environment:
       TIMEOUT: 10000
       CONCURRENT: 10
@@ -223,8 +225,6 @@ services:
     #   - proxy
     # ports:
     #  - "3000:3000"
-    dns:
-      - ${DNS_ADDRESS}
     depends_on:
       - reactive-postgres
       - reactive-minio
