@@ -223,6 +223,8 @@ services:
     #   - proxy
     # ports:
     #  - "3000:3000"
+    dns:
+      - ${DNS_ADDRESS}
     depends_on:
       - reactive-postgres
       - reactive-minio
