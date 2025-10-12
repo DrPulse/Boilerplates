@@ -136,7 +136,7 @@ services:
       - proxy.pairdrop.port=3000
 
   stirling-pdf:
-    image: frooodle/s-pdf:1.3.2
+    image: frooodle/s-pdf:1.4.0
     container_name: stirling-pdf
     # ports:
     #   - '8080:8080'
@@ -267,7 +267,7 @@ services:
       # - proxy.idle_timeout=1h
 
   wallos:
-    image: bellamy/wallos:4.3.0
+    image: bellamy/wallos:4.4.0
     container_name: wallos
     restart: unless-stopped
     # networks:
