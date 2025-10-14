@@ -155,6 +155,7 @@ services:
         - SERVERGAMEPORT=7778
         - SERVERMESSAGINGPORT=8889
         - TIMEOUT=${SATIS_SERV_02_TIMEOUT}
+        - DEBUG=${SATIS_SERV_02_DEBUG}
     deploy:
       resources:
         limits:
