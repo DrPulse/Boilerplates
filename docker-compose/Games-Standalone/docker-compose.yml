@@ -154,6 +154,7 @@ services:
         - STEAMBETA=false
         - SERVERGAMEPORT=7778
         - SERVERMESSAGINGPORT=8889
+        - TIMEOUT=${SATIS_SERV_02_TIMEOUT}
     deploy:
       resources:
         limits:
