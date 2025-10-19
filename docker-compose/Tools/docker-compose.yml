@@ -218,7 +218,7 @@ services:
       PRE_REQUEST_HEALTH_CHECK: "true"
 
   reactive-app:
-    image: amruthpillai/reactive-resume:v4.5.0
+    image: amruthpillai/reactive-resume:v4.5.2
     container_name: reactive-resume
     restart: unless-stopped
     # networks:
