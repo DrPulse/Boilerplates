@@ -235,7 +235,7 @@ services:
       - proxy.speedtest.port=80
 
   uptime-kuma:
-    image: louislam/uptime-kuma:1.23.16
+    image: louislam/uptime-kuma:1.23.17
     container_name: uptime-kuma
     restart: always
     # networks:
