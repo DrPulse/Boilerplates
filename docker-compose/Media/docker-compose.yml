@@ -177,7 +177,7 @@ services:
       - proxy.flaresolverr.port=8191
 
   prowlarr:
-    image: linuxserver/prowlarr:2.0.5
+    image: linuxserver/prowlarr:2.1.5
     container_name: prowlarr
     restart: always
     # networks:
