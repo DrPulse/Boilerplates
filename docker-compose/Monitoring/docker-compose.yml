@@ -33,7 +33,7 @@ services:
       - proxy.beszel.port=8090
 
   beszel-agent:
-    image: henrygd/beszel-agent:0.15.0
+    image: henrygd/beszel-agent:0.15.2
     container_name: beszel-agent
     restart: always
     network_mode: host
