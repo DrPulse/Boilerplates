@@ -2,7 +2,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: linuxserver/jellyfin:10.11.1
+    image: linuxserver/jellyfin:10.11.2
     container_name: jellyfin
     restart: always
     profiles:
