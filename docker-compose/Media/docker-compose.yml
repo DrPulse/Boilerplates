@@ -244,7 +244,7 @@ services:
       - proxy.radarr.port=7878
 
   sonarr:
-    image: linuxserver/sonarr:4.0.15
+    image: linuxserver/sonarr:4.0.16
     container_name: sonarr
     restart: always
     hostname: sonarr
