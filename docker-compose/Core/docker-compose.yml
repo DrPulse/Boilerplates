@@ -67,7 +67,7 @@ services:
   ferretdb:
     # Recommended: Pin to a specific version
     # https://github.com/FerretDB/FerretDB/pkgs/container/ferretdb
-    image: ghcr.io/ferretdb/ferretdb:2.5.0
+    image: ghcr.io/ferretdb/ferretdb:2.7.0
     restart: unless-stopped
     depends_on:
       - postgres
