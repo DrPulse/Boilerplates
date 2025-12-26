@@ -207,7 +207,7 @@ services:
 
   speedtest:
     container_name: speedtest
-    image: lscr.io/linuxserver/speedtest-tracker:1.13.3
+    image: lscr.io/linuxserver/speedtest-tracker:1.13.4
     restart: unless-stopped
     # networks:
     #   - proxy
