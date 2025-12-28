@@ -159,6 +159,8 @@ services:
     restart: always
     # networks:
     #   - proxy
+    dns:
+      - $DNS_ADDRESS
     environment:
       - TZ=${TZ}
     labels:
