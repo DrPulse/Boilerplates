@@ -86,7 +86,6 @@ services:
     restart: unless-stopped
     networks:
       - wings0
-      - cloudflare-net
     ports:
       #- 8443:443
       - 2022:2022 # SFTP
@@ -126,9 +125,6 @@ services:
 
 
 networks:
-  cloudflare-net:
-    name: cloudflare-net
-    external: true
   pterodactyl:
     name: pterodactyl
   wings0:
