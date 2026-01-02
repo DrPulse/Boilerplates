@@ -141,8 +141,8 @@ services:
     # ports:
     #   - '8080:8080'
     restart: unless-stopped
-    # networks:
-    #   - proxy
+    networks:
+      - cloudflare-net
     environment:
       # Core Settings
       - SECURITY_ENABLELOGIN=true            # Enable user authentication
@@ -163,7 +163,7 @@ services:
     labels:
       # DOCKFLARE
       - dockflare.enable=true
-      - dockflare.hostname=stirling-pdf.pulselabs.me
+      - dockflare.hostname=pdf.pulselabs.me
       - dockflare.service=http://stirling-pdf:8080
       # HOMEPAGE
       - homepage.group=Tools
@@ -318,6 +318,7 @@ services:
 #   focalboard-data:
 
 
-# networks:
-#   proxy:
-#     external: true
+networks:
+  cloudflare-net:
+    name: cloudflare-net
+    external: true
