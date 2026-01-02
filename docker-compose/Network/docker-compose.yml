@@ -193,11 +193,17 @@ services:
   #     homepage.widget.url: http://$LOCAL_DNS_ADDRESS
   #     homepage.widget.key: $PIHOLE_API_KEY
 
-
+volumes:
+  dockflare_redis:
 
 networks:
   qnet-static-eth1:
     external: true
   cloudflare-net:
     name: cloudflare-net
+  dockflare-internal:
+    name: dockflare-internal
+  wings0:
+    external: true
+
 
