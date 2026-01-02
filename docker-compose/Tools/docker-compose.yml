@@ -136,7 +136,7 @@ services:
       - proxy.pairdrop.port=3000
 
   stirling-pdf:
-    image: stirlingtools/stirling-pdf:2.1.0
+    image: stirlingtools/stirling-pdf:2.1.5
     container_name: stirling-pdf
     # ports:
     #   - '8080:8080'
