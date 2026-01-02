@@ -67,9 +67,36 @@ jobs:
                   print(f"Error fetching PR details: {response.text}")
                   return ""
 
-          # Simpler service name extraction as suggested
-          # Format: Update {image_name} to {version}
-          service_name = pr_title.split('/')[1].split(' ')[0]
+          # Extract service name from PR title with fallback handling
+          # Renovate PR title formats can vary:
+          # - "Update docker/image-name to v1.2.3"
+          # - "Update actions/checkout action to v5"
+          # - "Update dependency package-name to v1.2.3"
+          # - "Lock file maintenance"
+          service_name = "Unknown"
+
+          try:
+              if '/' in pr_title:
+                  # Format with slash: "Update docker/image-name to ..."
+                  service_name = pr_title.split('/')[1].split(' ')[0]
+              elif pr_title.lower().startswith('update '):
+                  # Format without slash: "Update package-name to ..."
+                  # Extract the part between "Update " and " to " or " action"
+                  title_lower = pr_title.lower()
+                  if ' to ' in title_lower:
+                      service_name = pr_title.split(' ')[1].split(' ')[0]
+                  elif ' action' in title_lower:
+                      service_name = pr_title.split(' ')[1]
+              elif 'lock file' in pr_title.lower():
+                  service_name = "Lock Files"
+              else:
+                  # Fallback: use first meaningful word after common prefixes
+                  words = pr_title.split()
+                  if len(words) > 1:
+                      service_name = words[1]
+          except (IndexError, AttributeError) as e:
+              print(f"Warning: Could not parse service name from title '{pr_title}': {e}")
+              service_name = pr_title[:50]  # Use first 50 chars of title as fallback
 
           # Initialize version variables
           old_version = ""
