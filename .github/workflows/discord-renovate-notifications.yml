@@ -5,163 +5,146 @@ on:
         types: [opened, closed]
 
 jobs:
-    notify_discord:
-        # Only run for Renovate PRs
-        if: contains(github.head_ref, 'renovate') || startsWith(github.head_ref, 'renovate/') || contains(github.actor, 'renovate')
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v5
+  notify_discord:
+    # Only run for Renovate PRs
+    if: contains(github.head_ref, 'renovate') || startsWith(github.head_ref, 'renovate/') || contains(github.actor, 'renovate')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
-            - name: Set up Python
-              uses: actions/setup-python@v6
-              with:
-                  python-version: "3.14"
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
 
-            - name: Install dependencies
-              run: |
-                  python -m pip install --upgrade pip
-                  pip install requests
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-            - name: Send Discord Notification
-              env:
-                  DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-                  PR_TITLE: ${{ github.event.pull_request.title }}
-                  PR_URL: ${{ github.event.pull_request.html_url }}
-                  PR_STATE: ${{ github.event.pull_request.state }}
-                  PR_MERGED: ${{ github.event.pull_request.merged }}
-                  PR_ACTION: ${{ github.event.action }}
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  REPO_OWNER: ${{ github.repository_owner }}
-                  REPO_NAME: ${{ github.event.repository.name }}
-                  PR_NUMBER: ${{ github.event.pull_request.number }}
-              run: |
-                  import os
-                  import re
-                  import requests
-                  import json
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_STATE: ${{ github.event.pull_request.state }}
+          PR_MERGED: ${{ github.event.pull_request.merged }}
+          PR_ACTION: ${{ github.event.action }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          import os
+          import re
+          import requests
+          import json
 
-                  # Get PR details from environment variables
-                  pr_title = os.environ['PR_TITLE']
-                  pr_url = os.environ['PR_URL']
-                  pr_state = os.environ['PR_STATE']
-                  pr_merged = os.environ['PR_MERGED'].lower() == 'true'
-                  action = os.environ['PR_ACTION']
+          # Get PR details from environment variables
+          pr_title = os.environ['PR_TITLE']
+          pr_url = os.environ['PR_URL']
+          pr_state = os.environ['PR_STATE']
+          pr_merged = os.environ['PR_MERGED'].lower() == 'true'
+          action = os.environ['PR_ACTION']
 
-                  # GitHub API details for fetching PR content
-                  github_token = os.environ['GITHUB_TOKEN']
-                  repo_owner = os.environ['REPO_OWNER']
-                  repo_name = os.environ['REPO_NAME']
-                  pr_number = os.environ['PR_NUMBER']
+          # GitHub API details for fetching PR content
+          github_token = os.environ['GITHUB_TOKEN']
+          repo_owner = os.environ['REPO_OWNER']
+          repo_name = os.environ['REPO_NAME']
+          pr_number = os.environ['PR_NUMBER']
 
-                  # Function to get PR description and comments
-                  def get_pr_details():
-                      # Fetch PR description
-                      pr_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls/{pr_number}"
-                      headers = {"Authorization": f"token {github_token}"}
-                      response = requests.get(pr_url, headers=headers)
+          # Function to get PR description and comments
+          def get_pr_details():
+              # Fetch PR description
+              pr_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/pulls/{pr_number}"
+              headers = {"Authorization": f"token {github_token}"}
+              response = requests.get(pr_url, headers=headers)
 
-                      if response.ok:
-                          return response.json().get('body', '')
-                      else:
-                          print(f"Error fetching PR details: {response.text}")
-                          return ""
+              if response.ok:
+                  return response.json().get('body', '')
+              else:
+                  print(f"Error fetching PR details: {response.text}")
+                  return ""
 
-                  # Simpler service name extraction as suggested
-                  # Format: Update {image_name} to {version}
-                  service_name = pr_title.split('/')[1].split(' ')[0]
+          # Simpler service name extraction as suggested
+          # Format: Update {image_name} to {version}
+          service_name = pr_title.split('/')[1].split(' ')[0]
 
-                  # Initialize version variables
-                  old_version = ""
-                  new_version = ""
+          # Initialize version variables
+          old_version = ""
+          new_version = ""
 
-                  # Get PR body to extract version info and release notes
-                  pr_body = get_pr_details()
+          # Get PR body to extract version info and release notes
+          pr_body = get_pr_details()
 
-                  # Extract version info from PR body table
-                  if pr_body:
-                      # Look for the version change table in PR body
-                      table_match = re.search(r"\|\s*\[.*?\]\(.*?\)\s*\|\s*\w+\s*\|\s*`(.*?)`\s*->\s*`(.*?)`\s*\|", pr_body)
-                      if table_match:
-                          old_version = table_match.group(1)
-                          new_version = table_match.group(2)
+          # Extract version info from PR body table
+          if pr_body:
+              # Look for the version change table in PR body
+              table_match = re.search(r"\|\s*\[.*?\]\(.*?\)\s*\|\s*\w+\s*\|\s*`(.*?)`\s*->\s*`(.*?)`\s*\|", pr_body)
+              if table_match:
+                  old_version = table_match.group(1)
+                  new_version = table_match.group(2)
 
-                  # If we couldn't extract versions from PR body, try from title
-                  if not new_version:
-                      version_match = re.search(r"to [v]?(\d+[\.\d]*\w*)", pr_title)
-                      if version_match:
-                          new_version = version_match.group(1)
+          # If we couldn't extract versions from PR body, try from title
+          if not new_version:
+              version_match = re.search(r"to [v]?(\d+[\.\d]*\w*)", pr_title)
+              if version_match:
+                  new_version = version_match.group(1)
 
-                  # Check if this is a major version update
-                  is_major_update = False
-                  if old_version and new_version:
-                      # Extract major version numbers
-                      old_major = old_version.split('.')[0].lstrip('v')
-                      new_major = new_version.split('.')[0].lstrip('v')
-                      try:
-                          if int(new_major) > int(old_major):
-                              is_major_update = True
-                      except ValueError:
-                          pass  # If versions can't be parsed as integers, skip major detection
+          # Determine emoji and color based on PR state
+          emoji = ""
+          color = 0
+          status_text = ""
 
-                  # Determine emoji and color based on PR state
-                  emoji = ""
-                  color = 0
-                  status_text = ""
+          if action == "opened":
+              emoji = "🆕"
+              status_text = "New update available"
+              color = 3447003  # Blue
+          elif pr_merged:
+              emoji = "✅"
+              status_text = "Update merged"
+              color = 5763719  # Green
+          elif action == "closed" and not pr_merged:
+              emoji = "❌"
+              status_text = "Update rejected"
+              color = 15548997  # Red
 
-                  if action == "opened":
-                      if is_major_update:
-                          emoji = "⚠️"
-                          status_text = "⚡ MAJOR update available"
-                          color = 16753920  # Orange
-                      else:
-                          emoji = "🆕"
-                          status_text = "New update available"
-                          color = 3447003  # Blue
-                  elif pr_merged:
-                      emoji = "✅"
-                      status_text = "Update merged"
-                      color = 5763719  # Green
-                  elif action == "closed" and not pr_merged:
-                      emoji = "❌"
-                      status_text = "Update rejected"
-                      color = 15548997  # Red
+          # Create a Discord embed
+          embed = {
+              "title": f"{emoji} {status_text}: {service_name}",
+              "description": f"**PR**: [{pr_title}]({pr_url})",
+              "color": color,
+              "fields": []
+          }
 
-                  # Create a Discord embed
-                  embed = {
-                      "title": f"{emoji} {status_text}: {service_name}",
-                      "description": f"**PR**: [{pr_title}]({pr_url})",
-                      "color": color,
-                      "fields": []
-                  }
+          # Add version information
+          version_field = ""
+          if old_version and new_version:
+              version_field = f"`{old_version}` → `{new_version}`"
+          elif new_version:
+              version_field = f"`{new_version}`"
 
-                  # Add version information
-                  version_field = ""
-                  if old_version and new_version:
-                      version_field = f"`{old_version}` → `{new_version}`"
-                  elif new_version:
-                      version_field = f"`{new_version}`"
+          if version_field:
+              embed["fields"].append({
+                  "name": "Version Update",
+                  "value": version_field,
+                  "inline": False
+              })
 
-                  if version_field:
-                      embed["fields"].append({
-                          "name": "Version Update",
-                          "value": version_field,
-                          "inline": False
-                      })
+          # Send to Discord
+          webhook_url = os.environ['DISCORD_WEBHOOK_URL']
+          payload = {"embeds": [embed]}
 
-                  # Send to Discord
-                  webhook_url = os.environ['DISCORD_WEBHOOK_URL']
-                  payload = {"embeds": [embed]}
+          response = requests.post(
+              webhook_url,
+              data=json.dumps(payload),
+              headers={"Content-Type": "application/json"}
+          )
 
-                  response = requests.post(
-                      webhook_url,
-                      data=json.dumps(payload),
-                      headers={"Content-Type": "application/json"}
-                  )
-
-                  if not response.ok:
-                      print(f"Error sending Discord notification: {response.text}")
-                      exit(1)
-                  else:
-                      print("Discord notification sent successfully!")
-              shell: python
+          if not response.ok:
+              print(f"Error sending Discord notification: {response.text}")
+              exit(1)
+          else:
+              print("Discord notification sent successfully!")
+        shell: python
