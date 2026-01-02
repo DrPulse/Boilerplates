@@ -46,7 +46,7 @@ services:
 
 
   dockflare-docker-socket-proxy:
-    image: tecnativa/docker-socket-proxy:v0.4.1
+    image: tecnativa/docker-socket-proxy:v0.4.2
     container_name: dockflare-docker-socket-proxy
     restart: unless-stopped
     ports:
