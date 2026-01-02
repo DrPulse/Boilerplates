@@ -136,7 +136,7 @@ services:
       - proxy.pairdrop.port=3000
 
   stirling-pdf:
-    image: frooodle/s-pdf:1.6.0
+    image: stirlingtools/stirling-pdf:2.1.0
     container_name: stirling-pdf
     # ports:
     #   - '8080:8080'
@@ -144,11 +144,27 @@ services:
     # networks:
     #   - proxy
     environment:
-      - DOCKER_ENABLE_SECURITY=false
+      # Core Settings
+      - SECURITY_ENABLELOGIN=true            # Enable user authentication
+      # Language & Localization
+      - LANGS=${LANGS}
+      # System Configuration
+      - SYSTEM_DEFAULTLOCALE=${DEFAULT_LANGS}
+      - SYSTEM_GOOGLEVISIBILITY=false        # Hide from search engines
+      - SYSTEM_ROOTURIPATH=/                 # Base URL path
+      - SYSTEM_CONNECTIONTIMEOUTMINUTES=5    # Connection timeout
+      - SYSTEM_MAXFILESIZE=2000              # Max file size in MB
     volumes:
-      - "${MOUNT_POINT_DATA}/stirlingpdf/trainingData:/usr/share/tesseract-ocr/5/tessdata #Required for extra OCR languages"
-      - "${MOUNT_POINT_DATA}/stirlingpdf/extraConfigs:/configs"
+      - ${MOUNT_POINT_DATA}/stirlingpdf/tessdata:/usr/share/tessdata    # OCR language files
+      - ${MOUNT_POINT_DATA}/stirlingpdf/configs:/configs                 # Settings & database
+      - ${MOUNT_POINT_DATA}/stirlingpdf/logs:/logs                       # Application logs
+      - ${MOUNT_POINT_DATA}/stirlingpdf/customFiles:/customFiles:rw      # Custom branding files
+      - ${MOUNT_POINT_DATA}/stirlingpdf/pipeline:/pipeline
     labels:
+      # DOCKFLARE
+      - dockflare.enable=true
+      - dockflare.hostname=stirling-pdf.pulselabs.me
+      - dockflare.service=http://stirling-pdf:8080
       # HOMEPAGE
       - homepage.group=Tools
       - homepage.name=stirling-pdf
