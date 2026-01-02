@@ -106,7 +106,6 @@ services:
       # - traefik.http.services.it-tools.loadbalancer.server.port=80
       # GODOXY
       - proxy.it-tools.port=80
-      - proxy.idle_timeout=5m
 
   omni-tools:
     image: iib0011/omni-tools:latest
