@@ -258,7 +258,6 @@ services:
     #   - $DNS_ADDRESS
     volumes:
       - ${MOUNT_POINT_DATA}/uptime-kuma:/app/data
-      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       # HOMEPAGE
       - homepage.group=Monitoring & Alerting
