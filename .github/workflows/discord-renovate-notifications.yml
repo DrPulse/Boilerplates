@@ -92,15 +92,32 @@ jobs:
               if version_match:
                   new_version = version_match.group(1)
 
+          # Check if this is a major version update
+          is_major_update = False
+          if old_version and new_version:
+              # Extract major version numbers
+              old_major = old_version.split('.')[0].lstrip('v')
+              new_major = new_version.split('.')[0].lstrip('v')
+              try:
+                  if int(new_major) > int(old_major):
+                      is_major_update = True
+              except ValueError:
+                  pass  # If versions can't be parsed as integers, skip major detection
+
           # Determine emoji and color based on PR state
           emoji = ""
           color = 0
           status_text = ""
 
           if action == "opened":
-              emoji = "🆕"
-              status_text = "New update available"
-              color = 3447003  # Blue
+              if is_major_update:
+                  emoji = "⚠️"
+                  status_text = "⚡ MAJOR update available"
+                  color = 16753920  # Orange
+              else:
+                  emoji = "🆕"
+                  status_text = "New update available"
+                  color = 3447003  # Blue
           elif pr_merged:
               emoji = "✅"
               status_text = "Update merged"
