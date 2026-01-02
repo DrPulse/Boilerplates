@@ -108,6 +108,29 @@ services:
       - proxy.it-tools.port=80
       - proxy.idle_timeout=5m
 
+  omni-tools:
+    image: iib0011/omni-tools:latest
+    container_name: omni-tools
+    restart: unless-stopped
+    networks:
+      - cloudflare-net
+    #ports:
+    #  - "8065:80"
+    labels:
+      # DOCFKLARE
+      dockflare.enable: true
+      dockflare.hostname: omni.pulselabs.me
+      dockflare.service: http://omni-tools:80
+      # HOMEPAGE
+      homepage.group: Tools
+      homepage.name: OmniTools
+      homepage.icon: omni-tools.png
+      homepage.description: Useful general variety of tools to simplify everyday tasks
+      homepage.href: https://omni.${DOMAIN_NAME}
+      # GODOXY
+      proxy.aliases: omni
+      godoxy.omni.port: 80
+
   pairdrop:
     image: lscr.io/linuxserver/pairdrop:1.11.2
     container_name: pairdrop
