@@ -1,5 +1,32 @@
 services:
 
+  bentopdf:
+    image: bentopdf/bentopdf:latest
+    container_name: bentopdf
+    restart: always
+    # ports:
+    #   - '3000:8080'
+    networks:
+      - cloudflare-net
+    labels:
+      # DOCKFLARE
+      - dockflare.enable=true
+      - dockflare.hostname=pdf.pulselabs.me
+      - dockflare.service=http://bentopdf:8080
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=bentopdf
+      - homepage.icon=bentopdf
+      - homepage.description=PDF Toolbox
+      - homepage.href=https://bentopdf.${DOMAIN_NAME}
+      # TRAEFIK
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.bentopdf.rule=Host(`bentopdf.${DOMAIN_NAME}`)
+      # - traefik.http.services.bentopdf.loadbalancer.server.port=8080
+      # GODOXY
+      - proxy.bentopdf.port=8080
+
   dumbassets:
     image: dumbwareio/dumbassets:1.0.11
     container_name: dumbassets
@@ -157,50 +184,6 @@ services:
       # GODOXY
       - proxy.pairdrop.port=3000
 
-  stirling-pdf:
-    image: stirlingtools/stirling-pdf:2.1.5
-    container_name: stirling-pdf
-    # ports:
-    #   - '8080:8080'
-    restart: unless-stopped
-    networks:
-      - cloudflare-net
-    environment:
-      # Core Settings
-      - SECURITY_ENABLELOGIN=true            # Enable user authentication
-      # Language & Localization
-      - LANGS=${LANGS}
-      # System Configuration
-      - SYSTEM_DEFAULTLOCALE=${DEFAULT_LANGS}
-      - SYSTEM_GOOGLEVISIBILITY=false        # Hide from search engines
-      - SYSTEM_ROOTURIPATH=/                 # Base URL path
-      - SYSTEM_CONNECTIONTIMEOUTMINUTES=5    # Connection timeout
-      - SYSTEM_MAXFILESIZE=2000              # Max file size in MB
-    volumes:
-      - ${MOUNT_POINT_DATA}/stirlingpdf/tessdata:/usr/share/tessdata    # OCR language files
-      - ${MOUNT_POINT_DATA}/stirlingpdf/configs:/configs                 # Settings & database
-      - ${MOUNT_POINT_DATA}/stirlingpdf/logs:/logs                       # Application logs
-      - ${MOUNT_POINT_DATA}/stirlingpdf/customFiles:/customFiles:rw      # Custom branding files
-      - ${MOUNT_POINT_DATA}/stirlingpdf/pipeline:/pipeline
-    labels:
-      # DOCKFLARE
-      - dockflare.enable=true
-      - dockflare.hostname=pdf.pulselabs.me
-      - dockflare.service=http://stirling-pdf:8080
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=stirling-pdf
-      - homepage.icon=mdi-file-pdf-box
-      - homepage.description=PDF Toolbox
-      - homepage.href=https://stirling-pdf.${DOMAIN_NAME}
-      # TRAEFIK
-      # - traefik.enable=true
-      # - traefik.docker.network=proxy
-      # - traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.${DOMAIN_NAME}`)
-      # - traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
-      # GODOXY
-      - proxy.stirling-pdf.port=8080
-      # - proxy.idle_timeout=5m
 
   reactive-postgres:
     image: postgres:16-alpine
