@@ -180,15 +180,24 @@ jobs:
           webhook_url = os.environ['DISCORD_WEBHOOK_URL']
           payload = {"embeds": [embed]}
 
+          print(f"Sending Discord notification for: {service_name}")
+          print(f"Status: {status_text}")
+          print(f"Payload: {json.dumps(payload, indent=2)}")
+
           response = requests.post(
               webhook_url,
               data=json.dumps(payload),
               headers={"Content-Type": "application/json"}
           )
 
-          if not response.ok:
-              print(f"Error sending Discord notification: {response.text}")
-              exit(1)
+          print(f"Discord API response status: {response.status_code}")
+          print(f"Discord API response body: {response.text}")
+          
+          if response.ok:
+              print("✅ Discord notification sent successfully!")
           else:
-              print("Discord notification sent successfully!")
+              print(f"❌ Error sending Discord notification:")
+              print(f"   Status code: {response.status_code}")
+              print(f"   Response: {response.text}")
+              exit(1)
         shell: python
