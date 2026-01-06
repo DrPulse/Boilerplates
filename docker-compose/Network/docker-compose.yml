@@ -124,7 +124,7 @@ services:
       - dockflare-internal
 
   tailscale:
-    image: tailscale/tailscale:v1.92.4
+    image: tailscale/tailscale:v1.92.5
     container_name: tailscale
     restart: always
     hostname: nas-tailscale
