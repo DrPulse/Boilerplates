@@ -1,0 +1,111 @@
+name: Discord Renovate Notifications (Modular)
+
+on:
+  pull_request:
+    types: [opened, closed]
+
+jobs:
+  notify_discord:
+    # Only run for Renovate PRs
+    if: contains(github.head_ref, 'renovate') || startsWith(github.head_ref, 'renovate/') || contains(github.actor, 'renovate')
+    runs-on: ubuntu-latest
+
+    steps:
+      # ============================================
+      # Phase 1: Data Extraction
+      # ============================================
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Fetch PR body
+        id: pr_data
+        run: |
+          echo "Fetching PR body from GitHub API..."
+          PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body')
+
+          # Write to output using multiline format
+          echo "pr_body<<EOF" >> $GITHUB_OUTPUT
+          echo "$PR_BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ============================================
+      # Phase 2: Version Analysis
+      # ============================================
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Parse Renovate PR details
+        id: parse
+        run: python .github/scripts/parse-renovate-pr.py
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ steps.pr_data.outputs.pr_body }}
+
+      # ============================================
+      # Phase 3: Presentation Logic
+      # ============================================
+      - name: Determine notification style
+        id: style
+        run: |
+          ACTION="${{ github.event.action }}"
+          UPDATE_TYPE="${{ steps.parse.outputs.update_type }}"
+          MERGED="${{ github.event.pull_request.merged }}"
+
+          # Default values
+          EMOJI=""
+          COLOR="0"
+          STATUS_TEXT=""
+
+          if [ "$ACTION" = "opened" ]; then
+            if [ "$UPDATE_TYPE" = "major" ]; then
+              EMOJI="⚠️"
+              STATUS_TEXT="⚡ MAJOR update available"
+              COLOR="16753920"  # Orange
+            else
+              EMOJI="🆕"
+              STATUS_TEXT="New update available"
+              COLOR="3447003"  # Blue
+            fi
+          elif [ "$MERGED" = "true" ]; then
+            EMOJI="✅"
+            STATUS_TEXT="Update merged"
+            COLOR="5763719"  # Green
+          elif [ "$ACTION" = "closed" ]; then
+            EMOJI="❌"
+            STATUS_TEXT="Update rejected"
+            COLOR="15548997"  # Red
+          fi
+
+          # Output to GitHub Actions
+          echo "emoji=$EMOJI" >> $GITHUB_OUTPUT
+          echo "status_text=$STATUS_TEXT" >> $GITHUB_OUTPUT
+          echo "color=$COLOR" >> $GITHUB_OUTPUT
+
+          echo "Notification style: $STATUS_TEXT (color: $COLOR)"
+
+      # ============================================
+      # Phase 4: Delivery
+      # ============================================
+      - name: Send Discord notification
+        uses: sarisia/actions-status-discord@v1
+        if: steps.style.outputs.status_text != ''
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          title: "${{ steps.style.outputs.emoji }} ${{ steps.style.outputs.status_text }}: ${{ steps.parse.outputs.service_name }}"
+          description: "**PR**: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})"
+          color: ${{ steps.style.outputs.color }}
+          username: "Renovate Bot"
+
+      - name: Add version field to Discord notification
+        uses: sarisia/actions-status-discord@v1
+        if: steps.parse.outputs.version_display != ''
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          nodetail: true
+          description: |
+            **Version Update**
+            ${{ steps.parse.outputs.version_display }}
