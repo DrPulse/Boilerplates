@@ -100,7 +100,6 @@ jobs:
           title: "${{ steps.style.outputs.emoji }} ${{ steps.style.outputs.status_text }}: ${{ steps.parse.outputs.service_name }}"
           description: |
             **PR**: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
-
             **Version Update**
             ${{ steps.parse.outputs.version_display }}
           color: ${{ steps.style.outputs.color }}
