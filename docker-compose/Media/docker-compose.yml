@@ -333,6 +333,8 @@ services:
     #   - proxy
     # ports:
     #   - 5055:5055
+    dns:
+      - $DNS_ADDRESS
     environment:
       TZ: ${TZ}
     volumes:
