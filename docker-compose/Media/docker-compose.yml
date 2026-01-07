@@ -474,7 +474,7 @@ services:
 
 # Media server invitation
   wizarr:
-    image: ghcr.io/wizarrrr/wizarr:v2025.10.8
+    image: ghcr.io/wizarrrr/wizarr:v2025.12.0
     container_name: wizarr
     restart: unless-stopped
     #  ports:
