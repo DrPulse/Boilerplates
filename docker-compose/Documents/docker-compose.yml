@@ -224,7 +224,7 @@ services:
       - proxy.syncthing.port=8384
 
   wikijs:
-    image: lscr.io/linuxserver/wikijs:2.5.310
+    image: lscr.io/linuxserver/wikijs:2.5.311
     container_name: wikijs
     restart: unless-stopped
     # networks:
