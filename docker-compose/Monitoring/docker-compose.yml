@@ -1,7 +1,7 @@
 services:
 
   beszel:
-    image: henrygd/beszel:0.17.0
+    image: henrygd/beszel:0.18.2
     container_name: beszel
     restart: always
     # networks:
@@ -34,7 +34,7 @@ services:
       - proxy.beszel.port=8090
 
   beszel-agent:
-    image: henrygd/beszel-agent:0.17.0
+    image: henrygd/beszel-agent:0.18.2
     container_name: beszel-agent
     restart: always
     network_mode: host
@@ -216,7 +216,7 @@ services:
 
   speedtest:
     container_name: speedtest
-    image: lscr.io/linuxserver/speedtest-tracker:1.13.4
+    image: lscr.io/linuxserver/speedtest-tracker:1.13.5
     restart: unless-stopped
     # networks:
     #   - proxy
