@@ -22,8 +22,28 @@ def extract_service_name(pr_title: str) -> str:
     """
     try:
         if "/" in pr_title:
-            # Format with slash: "Update docker/image-name to ..."
-            return pr_title.split("/")[1].split(" ")[0]
+            # Extract the part before " to " or " Docker" or " action"
+            package_part = (
+                pr_title.split(" to ")[0].split(" Docker")[0].split(" action")[0]
+            )
+
+            # Remove "Update " prefix if present
+            if package_part.lower().startswith("update "):
+                package_part = package_part[7:].strip()
+
+            # Split by "/" to handle different formats
+            parts = package_part.split("/")
+
+            # If 3+ parts, likely a container registry: registry.io/owner/repo
+            # Use the last part (repo name)
+            if len(parts) >= 3:
+                return parts[-1]
+            # If 2 parts, use the second part (repo name or image name)
+            elif len(parts) == 2:
+                return parts[1]
+            # Single part (shouldn't happen with "/" check, but fallback)
+            else:
+                return parts[0]
         elif pr_title.lower().startswith("update "):
             # Format without slash: "Update package-name to ..."
             title_lower = pr_title.lower()
