@@ -427,50 +427,42 @@ services:
       - proxy.overseerr.port=5055
       # - proxy.idle_timeout=30m
 
-  calibre-web-automated-book-downloader:
-    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:v1.0.0
-    container_name: calibre-web-automated-book-downloader
+  shelfmark:
+    image: ghcr.io/calibrain/shelfmark:v1.0.0
+    container_name: shelfmark
     restart: unless-stopped
     networks:
       # - proxy
       - calibre
     # ports:
     #   - 8084:8084
-    depends_on:
-      - cloudflarebypassforscraping
     environment:
-      FLASK_PORT: 8084
-      FLASK_DEBUG: false
-      CLOUDFLARE_PROXY_URL: http://cloudflarebypass:8000
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
       INGEST_DIR: /cwa-book-ingest
-      BOOK_LANGUAGE: fr
     volumes:
-      - ${MOUNT_POINT_DATA}/calibre/ingest:/cwa-book-ingest
+      - ${MOUNT_POINT_DATA}/shelfmark/books:/books # Book destination directory
+      - ${MOUNT_POINT_DATA}/shelfmark/config:/config # App configuration
+      - ${MOUNT_POINT_DATA}/calibre/ingest:/cwa-book-ingest # cwa ingestion folder
+      - ${MOUNT_POINT_COMMON}/multimedia:/data # Download client mount - path must match your torrent/usenet client's volume exactly
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
-      - homepage.name=calibre-download
-      - homepage.icon=calibre.png
-      - homepage.href=https://calibre-download.${DOMAIN_NAME}
+      - homepage.name=shelfmark
+      - homepage.icon=calibre-web-automated-book-downloader.png
+      - homepage.href=https://shelfmark.${DOMAIN_NAME}
       - homepage.description=Book requester for calibre web
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
-      # - traefik.http.routers.calibre-download.rule=Host(`calibre-download.${DOMAIN_NAME}`)
-      # - traefik.http.services.calibre-download.loadbalancer.server.port=8084
+      # - traefik.http.routers.shelfmark.rule=Host(`shelfmark.${DOMAIN_NAME}`)
+      # - traefik.http.services.shelfmark.loadbalancer.server.port=8084
       # GODOXY
-      - proxy.aliases=calibre-download
-      - proxy.calibre-download.port=8084
+      - proxy.aliases=shelfmark
+      - proxy.shelfmark-download.port=8084
       # - proxy.idle_timeout=30m
 
-  cloudflarebypassforscraping:
-    image: ghcr.io/sarperavci/cloudflarebypassforscraping:latest
-    container_name: cloudflarebypass
-    restart: always
-    networks:
-      - calibre
-    labels:
-      - proxy.exclude=true
 
 # Media server invitation
   wizarr:
