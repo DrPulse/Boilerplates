@@ -358,38 +358,6 @@ services:
       - proxy.jellyseerr.port=5055
       # - proxy.idle_timeout=30m
 
-  # ombi:
-  #   image: linuxserver/ombi:4.43.5
-  #   container_name: ombi
-  #   restart: unless-stopped
-  # #   networks:
-  # #     - proxy
-  #   #ports:
-  #   #  - 3579:3579
-  #   environment:
-  #     TZ: ${TZ}
-  #     PUID: ${PUID}
-  #     PGID: ${PGID}
-  #     #- BASE_URL=/ombi #optional
-  #   volumes:
-  #     - ${MOUNT_POINT_DATA}/ombi:/config
-  #   labels:
-  #     # HOMEPAGE
-  #     - homepage.group=Media Requesters
-  #     - homepage.name=ombi
-  #     - homepage.icon=ombi.png
-  #     - homepage.href=https://ombi.${DOMAIN_NAME}
-  #     - homepage.description=Media requester for Plex/Emby
-  #     - homepage.widget.type=ombi
-  #     - homepage.widget.url=https://ombi.${DOMAIN_NAME}
-  #     - homepage.widget.key=${OMBI_API_KEY}
-  #     # TRAEFIK
-  # #     - traefik.enable=true
-  # #     - traefik.docker.network=proxy
-  # #     - traefik.http.routers.ombi.rule=Host(`ombi.${DOMAIN_NAME}`)
-  # #     - traefik.http.services.ombi.loadbalancer.server.port=3579
-        # GODOXY
-  #      - proxy.ombi.port=3579
 
   overseerr:
     image: linuxserver/overseerr:1.34.0
