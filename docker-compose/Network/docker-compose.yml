@@ -135,8 +135,9 @@ services:
       - /dev/net/tun:/dev/net/tun
     # Ports exposed on HOST (Godoxy will connect here)
     ports:
-      - 8112:8112        # deluge WebUI
-      - 9696:9696        # prowlarr
+      - 8112:8112 # deluge
+      - 9696:9696 # prowlarr
+      - 8191:8191 # Flaresolverr
       # - 6881:6881        # Inbound torrent traffic
       # - 6881:6881/udp    # Inbound torrent traffic
     environment:

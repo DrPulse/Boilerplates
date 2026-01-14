@@ -158,10 +158,9 @@ services:
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
     container_name: flaresolverr
     restart: always
+    network_mode: "container:gluetun"
     # networks:
     #   - proxy
-    dns:
-      - $DNS_ADDRESS
     environment:
       - TZ=${TZ}
     labels:
