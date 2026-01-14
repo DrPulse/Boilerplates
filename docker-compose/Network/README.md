@@ -2,7 +2,7 @@
 
 This stack needs some tweaking, because I use a mcvlan network, to run adguard or pihole on the same host than a NAS or similar appliance.
 
-- LOCAL_DNS_ADDRESS is the ip address you want to set for the local DNS.
+- DNS_ADDRESS is the ip address you want to set for the local DNS.
 - SERVER_ADDRESS is the ip address of the machine pihole is deployed on.
 
 For the network address attribution, replace the interface by what you have. Or moreve it if a mcvlan is not needed in your serup.

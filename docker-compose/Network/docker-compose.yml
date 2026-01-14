@@ -6,7 +6,7 @@ services:
     restart: always
     networks:
       qnet-static-eth1:
-        ipv4_address: ${LOCAL_DNS_ADDRESS}
+        ipv4_address: ${DNS_ADDRESS}
     ports:
       - 3000:80
       - 53:53/tcp
@@ -189,14 +189,14 @@ services:
   #   environment:
   #     TZ: $TZ
   #     WEBPASSWORD: $PIHOLE_PASSWORD
-  #     FTLCONF_LOCAL_IPV4: $LOCAL_DNS_ADDRESS
+  #     FTLCONF_LOCAL_IPV4: $DNS_ADDRESS
   #     VIRTUAL_HOST: $SERVER_ADDRESS
   #     PIHOLE_DNS_: "1.1.1.1;1.0.0.1;9.9.9.9;9.9.9.11;149.112.112.112;149.112.112.11"  # Cloud Flare, Quad9
   #     PIHOLE_UID: 0
   #     PIHOLE_GID: 100
   #   networks:
   #     interface-xxx:
-  #       ipv4_address: $LOCAL_DNS_ADDRESS
+  #       ipv4_address: $DNS_ADDRESS
   #   volumes:
   #     - $MOUNT_POINT_DATA/pihole:/etc/pihole
   #     - $MOUNT_POINT_DATA/pihole/dnsmasq:/etc/dnsmasq.d
@@ -215,7 +215,7 @@ services:
   #     homepage.href: http://pihole.$DOMAIN_NAME/admin
   #     homepage.description: Ad blocker, local DNS, DHCP server
   #     homepage.widget.type: pihole
-  #     homepage.widget.url: http://$LOCAL_DNS_ADDRESS
+  #     homepage.widget.url: http://$DNS_ADDRESS
   #     homepage.widget.key: $PIHOLE_API_KEY
 
 volumes:
@@ -230,5 +230,3 @@ networks:
     name: dockflare-internal
   wings0:
     external: true
-
-
