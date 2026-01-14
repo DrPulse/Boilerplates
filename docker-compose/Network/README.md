@@ -17,6 +17,10 @@ Go to the web ui, complete the wizerd setup, and add the local DNS settings with
 
 Subdomains must be written one by one, have fun :D
 
+## Gluetun
+
+Retrieves the necessary credentials from your VPN provider to configure the VPN connection.
+
 ## Tailscale
 
 Don't forget to go to [admin panel](https://login.tailscale.com/admin/machines) and activate the subnet routes in the route settings of the machine.

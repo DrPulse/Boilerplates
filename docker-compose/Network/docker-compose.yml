@@ -123,6 +123,28 @@ services:
     networks:
       - dockflare-internal
 
+  gluetun:
+    image: qmcgaw/gluetun:v3.35.0
+    container_name: gluetun
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    # Ports exposed on HOST (Godoxy will connect here)
+    ports:
+      - 8112:8112        # deluge WebUI
+      # - 6881:6881        # Inbound torrent traffic
+      # - 6881:6881/udp    # Inbound torrent traffic
+    environment:
+      # ProtonVPN WireGuard
+      - VPN_SERVICE_PROVIDER=protonvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+    volumes:
+      - ${MOUNT_POINT_DATA}/gluetun/config:/gluetun
+
   tailscale:
     image: tailscale/tailscale:v1.92.5
     container_name: tailscale
