@@ -129,6 +129,8 @@ services:
     restart: always
     dns:
       - $DNS_ADDRESS
+    networks:
+      - media_network
     cap_add:
       - NET_ADMIN
     devices:
@@ -233,4 +235,6 @@ networks:
   dockflare-internal:
     name: dockflare-internal
   wings0:
+    external: true
+  media_network:
     external: true

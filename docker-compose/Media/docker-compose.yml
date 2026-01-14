@@ -158,8 +158,8 @@ services:
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
     container_name: flaresolverr
     restart: always
-    network_mode: "container:gluetun"
-    # networks:
+    networks:
+      - media_network
     #   - proxy
     environment:
       - TZ=${TZ}
@@ -215,7 +215,8 @@ services:
     container_name: radarr
     image: linuxserver/radarr:6.0.4
     restart: always
-    # networks:
+    networks:
+      - media_network
     #   - proxy
     #ports:
     #  - 7878:7878
@@ -249,7 +250,8 @@ services:
     container_name: sonarr
     restart: always
     hostname: sonarr
-    # networks:
+    networks:
+      - media_network
     #   - proxy
     #ports:
     #  - 8989:8989
@@ -483,3 +485,5 @@ networks:
   # proxy:
   #   external: true
   calibre:
+  media_network:
+    external: true
