@@ -88,6 +88,7 @@ services:
     container_name: deluge
     image: linuxserver/deluge:2.2.0
     restart: always
+    network_mode: "container:gluetun"
     # networks:
     #   - proxy
     # ports:
@@ -182,12 +183,11 @@ services:
     image: linuxserver/prowlarr:2.3.0
     container_name: prowlarr
     restart: always
+    network_mode: "container:gluetun"
     # networks:
     #   - proxy
     #ports:
     #  - 9696:9696
-    dns:
-      - $DNS_ADDRESS
     environment:
       TZ: ${TZ}
       PUID: ${PUID}

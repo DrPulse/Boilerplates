@@ -127,6 +127,8 @@ services:
     image: qmcgaw/gluetun:v3.35.0
     container_name: gluetun
     restart: always
+    dns:
+      - $DNS_ADDRESS
     cap_add:
       - NET_ADMIN
     devices:
@@ -134,6 +136,7 @@ services:
     # Ports exposed on HOST (Godoxy will connect here)
     ports:
       - 8112:8112        # deluge WebUI
+      - 9696:9696        # prowlarr
       # - 6881:6881        # Inbound torrent traffic
       # - 6881:6881/udp    # Inbound torrent traffic
     environment:
