@@ -331,8 +331,8 @@ services:
     profiles:
       - jellyfin
       - full
-    networks:
-      - media_network
+    # networks:
+    #   - media_network
     #   - proxy
     # ports:
     #   - 5055:5055
