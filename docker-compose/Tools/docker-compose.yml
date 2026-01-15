@@ -28,7 +28,7 @@ services:
       - proxy.bentopdf.port=8080
 
   dumbassets:
-    image: dumbwareio/dumbassets:1.0.11
+    image: dumbwareio/dumbassets:1.0.0
     container_name: dumbassets
     restart: unless-stopped
     # networks:
