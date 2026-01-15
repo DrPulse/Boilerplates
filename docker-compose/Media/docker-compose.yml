@@ -125,7 +125,8 @@ services:
     image: linuxserver/bazarr:1.5.4
     container_name: bazarr
     restart: always
-    # networks:
+    networks:
+      - media_network
     #   - proxy
     #ports:
     #  - 6767:6767
@@ -367,7 +368,8 @@ services:
     profiles:
       - plex
       - full
-    # networks:
+    networks:
+      - media_network
     #   - proxy
     # ports:
     #  - 5055:5055
