@@ -11,6 +11,7 @@ services:
       - socket-proxy-rw
     environment:
       DOCKER_SOCK: tcp://socket-proxy-rw:2375
+      AUTOHEAL_ONLY_MONITOR_RUNNING: true
 
   socket-proxy-ro:
     image: ghcr.io/tecnativa/docker-socket-proxy:v0.4.2
