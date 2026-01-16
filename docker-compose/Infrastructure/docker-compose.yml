@@ -1,0 +1,55 @@
+services:
+
+
+  autoheal:
+    image: willfarrell/autoheal:latest
+    container_name: autoheal
+    restart: always
+    networks:
+      - socket_rw_net
+    depends_on:
+      - socket-proxy-rw
+    environment:
+      DOCKER_SOCK: tcp://socket-proxy-rw:2375
+
+  socket-proxy-ro:
+    image: ghcr.io/tecnativa/docker-socket-proxy:v0.4.2
+    container_name: socket-proxy-ro
+    restart: always
+    environment:
+      - CONTAINERS=1 # Allow access to viewing containers
+      - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
+      - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+      - POST=0 # Disallow any POST operations (effectively read-only)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+    networks:
+      - socket_ro_net
+
+  socket-proxy-rw:
+    image: tecnativa/docker-socket-proxy:v0.4.2
+    container_name: socket-proxy-rw
+    restart: always
+    environment:
+      #- DOCKER_HOST=unix:///var/run/docker.sock
+      - CONTAINERS=1
+      - EVENTS=1
+      - NETWORKS=1
+      - IMAGES=1
+      - POST=1
+      - PING=1
+      - INFO=1
+      - EXEC=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - socket_rw_net
+      - dockflare-internal
+
+networks:
+  dockflare-internal:
+    name: dockflare-internal
+  socket_ro_net:
+    external: true
+  socket_rw_net:
+    external: true
