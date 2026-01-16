@@ -1,25 +1,12 @@
 # name: dashboards
 services:
 
-  dockerproxy:
-    image: ghcr.io/tecnativa/docker-socket-proxy:v0.4.2
-    container_name: dockerproxy
-    restart: always
-    ports:
-      - 127.0.0.1:${DOCKER_PROXY_PORT-2375}:2375
-    environment:
-      - CONTAINERS=1 # Allow access to viewing containers
-      - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
-      - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
-      - POST=0 # Disallow any POST operations (effectively read-only)
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
-
   homepage:
     image: ghcr.io/gethomepage/homepage:v1.8.0
     container_name: homepage
     restart: always
-    # networks:
+    networks:
+      - socket_ro_net
     #   - proxy
     #ports:
     #  - 3000:3000
@@ -74,6 +61,8 @@ services:
   #     proxy.port: 8080
 
 
-# networks:
+networks:
+  socket_ro_net:
+    external: true
 #   proxy:
 #     external: true

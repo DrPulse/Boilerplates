@@ -45,27 +45,6 @@ services:
       proxy.network: qnet-static-eth1
 
 
-  dockflare-docker-socket-proxy:
-    image: tecnativa/docker-socket-proxy:v0.4.2
-    container_name: dockflare-docker-socket-proxy
-    restart: unless-stopped
-    ports:
-      - 127.0.0.1:${DOCKER_PROXY_PORT-2375}:2375
-    environment:
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - CONTAINERS=1
-      - EVENTS=1
-      - NETWORKS=1
-      - IMAGES=1
-      - POST=1
-      - PING=1
-      - INFO=1
-      - EXEC=1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - dockflare-internal
-
   dockflare-init:
     image: alpine:3.23
     command: ["sh", "-c", "chown -R ${DOCKFLARE_UID:-65532}:${DOCKFLARE_GID:-65532} /app/data"]
@@ -85,10 +64,8 @@ services:
       - ${MOUNT_POINT_DATA}/dockflare:/app/data
     environment:
       - REDIS_URL=redis://dockflare-redis:6379/0
-      - DOCKER_HOST=tcp://dockflare-docker-socket-proxy:2375
+      - DOCKER_HOST=tcp://socket-proxy-rw:2375
     depends_on:
-      dockflare-docker-socket-proxy:
-        condition: service_started
       dockflare-init:
         condition: service_completed_successfully
       dockflare-redis:
@@ -153,6 +130,40 @@ services:
     labels:
       # GODOXY
       proxy.gluetun.port: 8000
+
+  socket-proxy-ro:
+    image: ghcr.io/tecnativa/docker-socket-proxy:v0.4.2
+    container_name: socket-proxy-ro
+    restart: always
+    environment:
+      - CONTAINERS=1 # Allow access to viewing containers
+      - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
+      - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+      - POST=0 # Disallow any POST operations (effectively read-only)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+    networks:
+      - socket_ro_net
+
+  socket-proxy-rw:
+    image: tecnativa/docker-socket-proxy:v0.4.2
+    container_name: socket-proxy-rw
+    restart: always
+    environment:
+      #- DOCKER_HOST=unix:///var/run/docker.sock
+      - CONTAINERS=1
+      - EVENTS=1
+      - NETWORKS=1
+      - IMAGES=1
+      - POST=1
+      - PING=1
+      - INFO=1
+      - EXEC=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - socket_rw_net
+      - dockflare-internal
 
   tailscale:
     image: tailscale/tailscale:v1.92.5
@@ -237,4 +248,8 @@ networks:
   wings0:
     external: true
   media_network:
+    external: true
+  socket_ro_net:
+    external: true
+  socket_rw_net:
     external: true
