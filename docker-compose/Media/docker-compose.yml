@@ -103,6 +103,11 @@ services:
       - ${MOUNT_POINT_DATA}/deluge:/config
       - ${MOUNT_POINT_COMMON}/multimedia/torrents:/data/torrents
       - ${MOUNT_POINT_ISO}/ISOs:/data/torrents/iso
+    healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
+      test: "curl -sf https://example.com  || exit 1"
+      interval: 5m
+      timeout: 10s
+      retries: 1
     labels:
       # HOMEPAGE
       - homepage.group=Documents & Files
@@ -119,6 +124,8 @@ services:
       # - traefik.http.services.deluge.loadbalancer.server.port=8112
       # GODOXY
       - proxy.deluge.port=8112
+      # AUTOHEAL
+      - autoheal=true
 
 # Media Managers
   bazarr:
@@ -194,6 +201,11 @@ services:
       PGID: ${PGID}
     volumes:
       - ${MOUNT_POINT_DATA}/prowlarr:/config
+    healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
+      test: "curl -sf https://example.com  || exit 1"
+      interval: 5m
+      timeout: 10s
+      retries: 1
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
@@ -211,6 +223,8 @@ services:
       # - traefik.http.services.prowlarr.loadbalancer.server.port=9696
       # GODOXY
       - proxy.prowlarr.port=9696
+      # AUTOHEAL
+      - autoheal=true
 
   radarr:
     container_name: radarr
