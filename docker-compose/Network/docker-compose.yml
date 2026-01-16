@@ -71,6 +71,7 @@ services:
       dockflare-redis:
         condition: service_started
     networks:
+      - socket_rw_net
       - cloudflare-net
       - dockflare-internal
       - wings0  # docker network for pterodactyl
