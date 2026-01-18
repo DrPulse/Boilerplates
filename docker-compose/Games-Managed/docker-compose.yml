@@ -94,8 +94,8 @@ services:
     environment:
       TZ: ${TZ}
       APP_TIMEZONE: Europe/London
-      WINGS_UID: ${PUID}
-      WINGS_GID: ${PGID}
+      #WINGS_UID: ${PUID}
+      #WINGS_GID: ${PGID}
       WINGS_USERNAME: pterodactyl
     volumes:
       # Docker socket & logs (needed for Wings to manage other containers)
