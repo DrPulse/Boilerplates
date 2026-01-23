@@ -144,10 +144,10 @@ services:
       TS_AUTH_KEY: ${TS_AUTH_KEY}
       TS_ROUTES: ${NETWORK_ADDRESS}/24
       TS_USERSPACE: false
+      TS_EXTRA_ARGS: --snat-subnet-routes=true --accept-dns=true
     volumes:
       - ${MOUNT_POINT_DATA}/tailscale:/var/lib # State data will be stored in this directory
       - /dev/net/tun:/dev/net/tun # Required for tailscale to work
-      - /var/lib:/var/lib
     cap_add: # Required for tailscale to work
       - net_admin
       - sys_module
