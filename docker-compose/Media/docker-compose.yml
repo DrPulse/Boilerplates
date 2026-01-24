@@ -50,7 +50,7 @@ services:
     # networks:
     #   - proxy
     # ports:
-      # - 32400:32400      # WebUI
+      - 32400:32400      # WebUI
       # #- 1900:1900/udp    # UDP DLNA access
       # - 32469:32469      # TCP DLNA access
       # #- 5353:5353/udp    # Bonjour/Avahi discovery
