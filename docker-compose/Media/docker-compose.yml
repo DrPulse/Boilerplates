@@ -413,7 +413,7 @@ services:
       # - proxy.idle_timeout=30m
 
   shelfmark:
-    image: ghcr.io/calibrain/shelfmark:v1.0.1
+    image: ghcr.io/calibrain/shelfmark:v1.0.2
     container_name: shelfmark
     restart: unless-stopped
     networks:
