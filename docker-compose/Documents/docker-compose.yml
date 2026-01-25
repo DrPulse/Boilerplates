@@ -153,6 +153,7 @@ services:
       PAPERLESS_ADMIN_USER: ${ADMIN_USER}
       PAPERLESS_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       PAPERLESS_URL: "https://paperless.${DOMAIN_NAME}"
+      PAPERLESS_CONSUMER_POLLING: 30
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/data:/usr/src/paperless/data
       - ${MOUNT_POINT_DATA}/paperless/media:/usr/src/paperless/media
