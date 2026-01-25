@@ -129,6 +129,8 @@ services:
     volumes:
       - ${MOUNT_POINT_DATA}/gluetun/config:/gluetun
     labels:
+      # AUTOHEAL
+      autoheal: true
       # GODOXY
       proxy.gluetun.port: 8000
 
