@@ -61,7 +61,7 @@ services:
       # - proxy.idle_timeout=15m
 
   lubelogger:
-    image: ghcr.io/hargata/lubelogger:v1.5.7
+    image: ghcr.io/hargata/lubelogger:v1.5.8
     container_name: lubelogger
     restart: unless-stopped
     volumes:
