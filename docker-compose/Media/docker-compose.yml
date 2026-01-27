@@ -190,9 +190,8 @@ services:
     image: linuxserver/prowlarr:2.3.0
     container_name: prowlarr
     restart: always
-    network_mode: "container:gluetun"
-    # networks:
-    #   - proxy
+    networks:
+      - media_network
     #ports:
     #  - 9696:9696
     environment:
@@ -201,11 +200,6 @@ services:
       PGID: ${PGID}
     volumes:
       - ${MOUNT_POINT_DATA}/prowlarr:/config
-    healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
-      test: "curl -sf https://example.com  || exit 1"
-      interval: 1m
-      timeout: 10s
-      retries: 1
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
