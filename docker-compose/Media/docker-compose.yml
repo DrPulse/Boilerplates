@@ -194,6 +194,8 @@ services:
       - media_network
     #ports:
     #  - 9696:9696
+    dns:
+      - $DNS_ADDRESS
     environment:
       TZ: ${TZ}
       PUID: ${PUID}
