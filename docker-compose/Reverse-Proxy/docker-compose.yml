@@ -87,7 +87,7 @@ services:
       #     - 192.168.0.0/16
       #     - 172.16.0.0/12
   app:
-    image: ghcr.io/yusing/godoxy:v0.25.0
+    image: ghcr.io/yusing/godoxy:v0.25.1
     container_name: godoxy-proxy
     restart: always
     network_mode: host # do not change this
