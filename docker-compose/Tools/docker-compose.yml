@@ -1,7 +1,7 @@
 services:
 
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:v1.15.4
+    image: ghcr.io/alam00000/bentopdf:1.16.1
     container_name: bentopdf
     restart: always
     # ports:
