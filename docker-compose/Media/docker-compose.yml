@@ -175,8 +175,8 @@ services:
     environment:
       - PORT=11011
       #- BASE_PATH=
-      - PUID= ${PUID}
-      - PGID= ${PGID}
+      - PUID=${PUID}
+      - PGID=${PGID}
       - UMASK=022
     # Health check configuration
     healthcheck:
