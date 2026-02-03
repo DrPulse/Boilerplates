@@ -296,7 +296,7 @@ services:
     #ports:
     #  - '8080:8080'
     volumes:
-      - ${MOUNT_POINT_DATA}/termix:/app/data
+      - termix:/app/data
     labels:
       # HOMEPAGE
       - homepage.group=Tools
@@ -345,3 +345,6 @@ networks:
   cloudflare-net:
     name: cloudflare-net
     external: true
+
+volumes:
+  termix:
