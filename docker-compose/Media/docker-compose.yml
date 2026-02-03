@@ -129,7 +129,7 @@ services:
 
 # Media Managers
   bazarr:
-    image: linuxserver/bazarr:1.5.4
+    image: linuxserver/bazarr:1.5.5
     container_name: bazarr
     restart: always
     networks:
@@ -396,8 +396,8 @@ services:
       - full
     # networks:
     #   - proxy
-    # ports:
-    #   - 5055:5055
+    ports:
+      - 5055:5055
     dns:
       - $DNS_ADDRESS
     environment:
