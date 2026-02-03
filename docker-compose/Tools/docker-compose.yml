@@ -290,7 +290,7 @@ services:
       # - proxy.idle_timeout=1h
 
   termix:
-    image: ghcr.io/lukegus/termix:1.9.0
+    image: ghcr.io/lukegus/termix:release-1.9.0
     container_name: termix
     restart: always
     #ports:
