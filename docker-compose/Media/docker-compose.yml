@@ -188,8 +188,8 @@ services:
     labels:
       # HOMEPAGE
       - homepage.group=Media Management
-      - homepage.name=cleanuparr
-      - homepage.icon=cleanuparr.png
+      - homepage.name=Cleanuparr
+      - homepage.icon=cleanuperr.png
       - homepage.href=https://cleanuparr.${DOMAIN_NAME}
       - homepage.description=Automatic cleanup tool for download queue
       # GODOXY
