@@ -295,7 +295,7 @@ services:
     restart: always
     #ports:
     #  - '8080:8080'
-    user: ${PUID}:${ADMINISTRATORS_GID}
+    user: ${TERMIX_PUID}:${TERMIX_GID}
     volumes:
       - termix:/app/data
     labels:
