@@ -289,6 +289,24 @@ services:
       - proxy.reactive-resume.port=3000
       # - proxy.idle_timeout=1h
 
+  termix:
+    image: ghcr.io/lukegus/termix:release-1.9.0
+    container_name: termix
+    restart: always
+    #ports:
+    #  - '8080:8080'
+    volumes:
+      - ${MOUNT_POINT_DATA}/termix:/app/data
+    labels:
+      # HOMEPAGE
+      - homepage.group=Tools
+      - homepage.name=termix
+      - homepage.icon=termix.png
+      - homepage.description=Terminal emulator
+      - homepage.href=https://termix.${DOMAIN_NAME}
+      # GODOXY
+      - godoxy.termix.port=8080
+
   wallos:
     image: bellamy/wallos:4.6.0
     container_name: wallos
