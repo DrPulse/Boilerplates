@@ -60,6 +60,8 @@ services:
     environment:
       - UPLOAD_LOCATION=${UPLOAD_LOCATION}
       - DB_HOSTNAME=immich-database
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOSTNAME=immich-redis
     #ports:
     #  - '2283:2283'
     depends_on:
