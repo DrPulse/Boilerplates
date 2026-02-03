@@ -11,9 +11,9 @@
       "matchPackageNames": [
         "ghcr.io/browserless/chromium"
       ],
-      "matchFileNames": [
-        "docker-compose/Tools/docker-compose.yml"
-      ],
+      // "matchFileNames": [
+      //   "docker-compose/Tools/docker-compose.yml"
+      // ],
       "enabled": false
     },
     {
