@@ -75,10 +75,10 @@ services:
       - homepage.group=Documents & Files
       - homepage.name=Immich
       - homepage.icon=immich.png
-      - homepage.href=http://immich.${DOMAIN_NAME}
+      - homepage.href=https://immich.${DOMAIN_NAME}
       - homepage.description=Photo and Video Management System
       - homepage.widget.type=immich
-      - homepage.widget.url=http://immich.${DOMAIN_NAME}
+      - homepage.widget.url=https://immich.${DOMAIN_NAME}
       - homepage.widget.key=${IMMICH_API_KEY}
       - homepage.widget.version=2
       # GODOXY
