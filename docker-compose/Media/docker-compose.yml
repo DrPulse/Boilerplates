@@ -146,7 +146,7 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
-      - homepage.group=Media Requesters
+      - homepage.group=Media Management
       - homepage.name=bazarr
       - homepage.icon=bazarr.png
       - homepage.href=https://bazarr.${DOMAIN_NAME}
@@ -161,6 +161,39 @@ services:
       # - traefik.http.services.bazarr.loadbalancer.server.port=6767
       # GODOXY
       - proxy.bazarr.port=6767
+
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:2.5.0
+    container_name: cleanuparr
+    restart: unless-stopped
+    #ports:
+    #  - "11011:11011"
+    volumes:
+      - ${MOUNT_POINT_DATA}/cleanuparr:/config
+      # Mount your downloads directory if needed
+      - ${MOUNT_POINT_COMMON}/multimedia/torrents:/data/torrents
+    environment:
+      - PORT=11011
+      #- BASE_PATH=
+      - PUID= ${PUID}
+      - PGID= ${PGID}
+      - UMASK=022
+    # Health check configuration
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
+      interval: 30s        # Check every 30 seconds
+      timeout: 10s         # Allow up to 10 seconds for response
+      start_period: 30s    # Wait 30 seconds before first check
+      retries: 3           # Mark unhealthy after 3 consecutive failures
+    labels:
+      # HOMEPAGE
+      - homepage.group=Media Management
+      - homepage.name=cleanuparr
+      - homepage.icon=cleanuparr.png
+      - homepage.href=https://cleanuparr.${DOMAIN_NAME}
+      - homepage.description=Automatic cleanup tool for download queue
+      # GODOXY
+      - proxy.cleanuparr.port=11011
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
@@ -185,6 +218,26 @@ services:
       # - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
       # GODOXY
       - proxy.flaresolverr.port=8191
+
+  huntarr:
+    image: ghcr.io/plexguide/huntarr:9.1.7
+    container_name: huntarr
+    restart: unless-stopped
+    #networks:
+    #  - media_network
+    #ports:
+    #  - "9705:9705"
+    volumes:
+      - ${MOUNT_POINT_DATA}/huntarr:/config
+    labels:
+      # HOMEPAGE
+      - homepage.group=Media Management
+      - homepage.name=Huntarr
+      - homepage.icon=huntarr.png
+      - homepage.href=https://huntarr.${DOMAIN_NAME}
+      - homepage.description=Automated search tool for missing media
+      # GODOXY
+      - proxy.huntarr.port=9705
 
   prowlarr:
     image: linuxserver/prowlarr:2.3.0
