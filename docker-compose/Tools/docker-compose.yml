@@ -135,7 +135,7 @@ services:
       - proxy.it-tools.port=80
 
   omni-tools:
-    image: iib0011/omni-tools:v0.6.0
+    image: iib0011/omni-tools:0.6.0
     container_name: omni-tools
     restart: unless-stopped
     networks:
