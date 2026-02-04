@@ -24,64 +24,64 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
 ## Services
 
 - [Core](Core)
-  - Dockerproxy
-  - Portainer
-  - Watchtower
-- [Dashboards](Dashboard)
-  - Dashy  
+  - Komodo
+- [Dashboard](Dashboard)
   - Homepage
 - [Development](Development)
   - Code-server
   - Semaphore
 - [Documents](Documents)
-  - Drawio
-  - Excalidraw
-  - Nextcloud
-  - Onlyoffice
-  - Paperless
-  - Wikijs
-- [Games](Games)
-  - Minecraft server
+  - Immich
+  - Paperless-NGX
+  - Syncthing
+  - Wiki.js
+- [Games-Managed](Games-Managed)
+  - Pterodactyl
+- [Games-Standalone](Games-Standalone)
+  - Satisfactory
+- [Home](Home)
+  - Home Assistant
+  - Homebox
+  - LubeLogger
+- [Infrastructure](Infrastructure)
+  - Autoheal
+  - Docker Socket Proxy
 - [Media](Media)
   - Bazarr
+  - Calibre-web-automated
+  - Cleanuparr
   - Deluge
-  - Flaresolverr
-  - Flemarr
+  - FlareSolverr
+  - Huntarr
   - Jellyfin
   - Jellyseerr
-  - Ombi
   - Overseerr
   - Plex
   - Prowlarr
   - Radarr
-  - Requestrr
+  - Shelfmark
   - Sonarr
   - Wizarr
 - [Monitoring](Monitoring)
+  - Beszel
   - Dozzle
-  - Netdata
   - Nutify
-  - Scrutiny
-  - Speedtest
-  - Uptime-kuma
+  - Speedtest Tracker
+  - Uptime Kuma
 - [Network](Network)
-  - Pihole
+  - AdGuard Home
+  - DockFlare
+  - Gluetun
   - Tailscale
-- [Reverse proxy](ReverseProxy)
-  - Traefik
+- [Reverse-Proxy](Reverse-Proxy)
+  - Godoxy
 - [Tools](Tools)
-  - Blaze
-  - Dumbasset
-  - Dumbterm
-  - Focalboard
-  - Homebox
-  - It-tools
-  - Mealie
-  - Pairdrop
-  - Stirling pdf
+  - BentoPDF
+  - DumbAssets
+  - DumbTerm
+  - IT-Tools
+  - Omni-Tools
+  - PairDrop
+  - Reactive Resume
+  - Termix
   - Wallos
-
-## Coming Soon
-
-- Crowdsec
-- Organize
