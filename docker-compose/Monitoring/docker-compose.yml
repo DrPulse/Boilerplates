@@ -184,7 +184,7 @@ services:
       - SYS_RAWIO
       - SYS_ADMIN
     volumes:
-      - ${MOUNT_POINT_DATA}/scrutiny:/config
+      - ${MOUNT_POINT_DATA}/scrutiny:/opt/scrutiny/config
       - ${MOUNT_POINT_DATA}/scrutiny/influxdb:/opt/scrutiny/influxdb
       - /run/udev:/run/udev:ro
     devices:
