@@ -1,0 +1,17 @@
+version: 1
+
+host:
+  id: ""
+
+devices:
+  - device: /dev/sda
+    type: sat
+  - device: /dev/sdb
+    type: sat
+  - device: /dev/sdc
+    type: sat
+  - device: /dev/sdd
+    type: sat
+
+commands:
+  metrics_smart_args: '--all --json'

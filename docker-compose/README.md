@@ -66,6 +66,7 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Beszel
   - Dozzle
   - Nutify
+  - Scrutiny
   - Speedtest Tracker
   - Uptime Kuma
 - [Network](Network)
