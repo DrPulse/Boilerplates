@@ -220,7 +220,7 @@ services:
       - proxy.flaresolverr.port=8191
 
   huntarr:
-    image: ghcr.io/plexguide/huntarr:9.1.12
+    image: ghcr.io/plexguide/huntarr:9.2.1
     container_name: huntarr
     restart: unless-stopped
     #networks:
@@ -462,7 +462,7 @@ services:
       # - proxy.idle_timeout=30m
 
   shelfmark:
-    image: ghcr.io/calibrain/shelfmark:v1.0.3
+    image: ghcr.io/calibrain/shelfmark:v1.0.4
     container_name: shelfmark
     restart: unless-stopped
     networks:
