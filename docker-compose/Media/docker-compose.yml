@@ -189,7 +189,7 @@ services:
       # HOMEPAGE
       - homepage.group=Media Management
       - homepage.name=Cleanuparr
-      - homepage.icon=cleanuperr.png
+      - homepage.icon=cleanuparr.png
       - homepage.href=https://cleanuparr.${DOMAIN_NAME}
       - homepage.description=Automatic cleanup tool for download queue
       # GODOXY
