@@ -220,7 +220,7 @@ services:
       - proxy.flaresolverr.port=8191
 
   huntarr:
-    image: ghcr.io/plexguide/huntarr:9.2.2
+    image: ghcr.io/plexguide/huntarr:9.2.3
     container_name: huntarr
     restart: unless-stopped
     #networks:
