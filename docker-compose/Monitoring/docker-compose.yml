@@ -55,6 +55,7 @@ services:
       LISTEN: 45876
       KEY: ${BESZEL_SSH_KEY}
       SMART_DEVICES: /dev/sda:sat,/dev/sdb:sat,/dev/sdc:sat,/dev/sdd:sat
+      HUB_URL: "https://beszel.${DOMAIN_NAME}"
       #FILESYSTEM: ${BESZEL_FILESYSTEM} # set to the correct filesystem for disk I/O stats
       #EXTRA_FILESYSTEMS: ${BESZEL_EXTRA_FILESYSTEM}
 
