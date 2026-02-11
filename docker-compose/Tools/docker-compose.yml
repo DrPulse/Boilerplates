@@ -308,7 +308,7 @@ services:
       - godoxy.termix.port=8080
 
   wallos:
-    image: bellamy/wallos:4.6.0
+    image: bellamy/wallos:4.6.1
     container_name: wallos
     restart: unless-stopped
     # networks:
