@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:12.1.2
+    image: mariadb:12.2.2
     container_name: pterodactyl_mariadb
     restart: unless-stopped
     command: --default-authentication-plugin=mysql_native_password
