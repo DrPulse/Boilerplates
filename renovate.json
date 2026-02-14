@@ -11,9 +11,6 @@
       "matchPackageNames": [
         "ghcr.io/browserless/chromium"
       ],
-      // "matchFileNames": [
-      //   "docker-compose/Tools/docker-compose.yml"
-      // ],
       "enabled": false
     },
     {
@@ -31,6 +28,14 @@
         "patch",
         "minor"
       ],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "linuxserver/deluge",
+        "lscr.io/linuxserver/deluge"
+      ],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?:-r(?<build>\\d+))?-ls(?<revision>\\d+)$",
       "automerge": true
     }
   ],
