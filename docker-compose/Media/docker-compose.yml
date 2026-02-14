@@ -86,7 +86,7 @@ services:
 # Download Client
   deluge:
     container_name: deluge
-    image: linuxserver/deluge:2.2.0-r2-ls364
+    image: linuxserver/deluge:2.2.0-r1-ls364
     restart: always
     network_mode: "container:gluetun"
     # networks:
