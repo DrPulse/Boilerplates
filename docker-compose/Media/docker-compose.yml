@@ -104,7 +104,7 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia/torrents:/data/torrents
       - ${MOUNT_POINT_ISO}/ISOs:/data/torrents/iso
     healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
-      test: "curl -sf https://example.com  || exit 1"
+      test: "curl -sfk https://example.com  || exit 1"
       interval: 1m
       timeout: 10s
       retries: 1
