@@ -1,7 +1,7 @@
 services:
 
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:2.1.0
+    image: ghcr.io/alam00000/bentopdf:2.2.1
     container_name: bentopdf
     restart: always
     # ports:
@@ -290,7 +290,7 @@ services:
       # - proxy.idle_timeout=1h
 
   termix:
-    image: ghcr.io/lukegus/termix:release-1.11.0
+    image: ghcr.io/lukegus/termix:release-1.11.1
     container_name: termix
     restart: always
     #ports:
@@ -308,7 +308,7 @@ services:
       - godoxy.termix.port=8080
 
   wallos:
-    image: bellamy/wallos:4.6.0
+    image: bellamy/wallos:4.6.1
     container_name: wallos
     restart: unless-stopped
     # networks:
