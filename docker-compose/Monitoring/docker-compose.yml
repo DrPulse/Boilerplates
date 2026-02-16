@@ -174,7 +174,7 @@ services:
       - proxy.nutify.port=5050
 
   scrutiny:
-    image: ghcr.io/starosdev/scrutiny:1.25-omnibus
+    image: ghcr.io/starosdev/scrutiny:1.26-omnibus
     container_name: scrutiny
     restart: always
     #   networks:
