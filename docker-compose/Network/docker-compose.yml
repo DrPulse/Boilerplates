@@ -8,12 +8,15 @@ services:
       qnet-static-eth1:
         ipv4_address: ${DNS_ADDRESS}
     ports:
-      - 3000:80
-      - 53:53/tcp
-      - 53:53/udp
+      - 3000:80/tcp    # Dashboard (HTTP)
+      - 53:53/tcp      # Standard DNS
+      - 53:53/udp      # Standard DNS
+      - 853:853/tcp    # DNS-over-TLS (Required for Android Private DNS)
+      - 853:853/udp    # Optional but recommended
     volumes:
       - ${MOUNT_POINT_DATA}/adguard/workdir:/opt/adguardhome/work
       - ${MOUNT_POINT_DATA}/adguard/conf:/opt/adguardhome/conf
+      - ${MOUNT_POINT_DATA}/godoxy/certs:/opt/adguardhome/ssl:ro
     labels:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
