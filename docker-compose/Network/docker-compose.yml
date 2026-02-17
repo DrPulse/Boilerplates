@@ -212,10 +212,8 @@ networks:
   qnet-static-eth1:
     external: true
   cloudflare-net:
-    name: cloudflare-net
     external: true
   dockflare-internal:
-    name: dockflare-internal
     external: true
   wings0:
     external: true
