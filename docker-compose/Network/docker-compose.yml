@@ -5,9 +5,8 @@ services:
     image: adguard/adguardhome:v0.107.71
     restart: always
     networks:
-      macvlan-static-eth1:
+      qnet-static-eth1:
         ipv4_address: ${DNS_ADDRESS}
-        ipv6_address: ${DNS_ADDRESS_IPV6}
     ports:
       - 3000:80
       - 53:53/tcp
@@ -210,9 +209,7 @@ volumes:
   dockflare_redis:
 
 networks:
-  # qnet-static-eth1:
-  #   external: true
-  macvlan-static-eth1:
+  qnet-static-eth1:
     external: true
   cloudflare-net:
     external: true
