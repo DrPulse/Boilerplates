@@ -387,79 +387,111 @@ services:
 
 
 # Media requesters
-  jellyseerr:
-    image: fallenbagel/jellyseerr:2.7.3
-    container_name: jellyseerr
-    restart: unless-stopped
-    profiles:
-      - jellyfin
-      - full
-    # networks:
-    #   - proxy
-    ports:
-      - 5055:5055
-    dns:
-      - $DNS_ADDRESS
-    environment:
-      TZ: ${TZ}
-    volumes:
-      - ${MOUNT_POINT_DATA}/jellyseerr:/app/config
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Requesters
-      - homepage.name=jellyseerr
-      - homepage.icon=jellyseerr.png
-      - homepage.href=https://jellyseerr.${DOMAIN_NAME}
-      - homepage.description=Media requester for Plex/Jellyfin/Emby
-      - homepage.widget.type=jellyseerr
-      - homepage.widget.url=https://jellyseerr.${DOMAIN_NAME}
-      - homepage.widget.key=${JELLYSEERR_API_KEY}
-      # TRAEFIK
-      # - traefik.enable=true
-      # - traefik.docker.network=proxy
-      # - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.${DOMAIN_NAME}`)
-      # - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
-      # GODOXY
-      - proxy.jellyseerr.port=5055
-      # - proxy.idle_timeout=30m
+  # jellyseerr:
+  #   image: fallenbagel/jellyseerr:2.7.3
+  #   container_name: jellyseerr
+  #   restart: unless-stopped
+  #   profiles:
+  #     - jellyfin
+  #     - full
+  #   # networks:
+  #   #   - proxy
+  #   ports:
+  #     - 5055:5055
+  #   dns:
+  #     - $DNS_ADDRESS
+  #   environment:
+  #     TZ: ${TZ}
+  #   volumes:
+  #     - ${MOUNT_POINT_DATA}/jellyseerr:/app/config
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Media Requesters
+  #     - homepage.name=jellyseerr
+  #     - homepage.icon=jellyseerr.png
+  #     - homepage.href=https://jellyseerr.${DOMAIN_NAME}
+  #     - homepage.description=Media requester for Plex/Jellyfin/Emby
+  #     - homepage.widget.type=jellyseerr
+  #     - homepage.widget.url=https://jellyseerr.${DOMAIN_NAME}
+  #     - homepage.widget.key=${JELLYSEERR_API_KEY}
+  #     # TRAEFIK
+  #     # - traefik.enable=true
+  #     # - traefik.docker.network=proxy
+  #     # - traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.${DOMAIN_NAME}`)
+  #     # - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
+  #     # GODOXY
+  #     - proxy.jellyseerr.port=5055
+  #     # - proxy.idle_timeout=30m
 
 
-  overseerr:
-    image: linuxserver/overseerr:1.35.0
-    container_name: overseerr
+  # overseerr:
+  #   image: linuxserver/overseerr:1.35.0
+  #   container_name: overseerr
+  #   restart: unless-stopped
+  #   profiles:
+  #     - plex
+  #     - full
+  #   networks:
+  #     - media_network
+  #   #   - proxy
+  #   # ports:
+  #   #  - 5055:5055
+  #   environment:
+  #     PUID: ${PUID}
+  #     PGID: ${PGID}
+  #     TZ: ${TZ}
+  #   volumes:
+  #     - ${MOUNT_POINT_DATA}/overseerr:/config
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Media Requesters
+  #     - homepage.name=overseerr
+  #     - homepage.icon=overseerr.png
+  #     - homepage.href=https://overseerr.${DOMAIN_NAME}
+  #     - homepage.description=Media requester for plex
+  #     - homepage.widget.type=overseerr
+  #     - homepage.widget.url=https://overseerr.${DOMAIN_NAME}
+  #     - homepage.widget.key=${OVERSEER_API_KEY}
+  #     # TRAEFIK
+  #     # - traefik.enable=true
+  #     # - traefik.docker.network=proxy
+  #     # - traefik.http.routers.overseerr.rule=Host(`overseerr.${DOMAIN_NAME}`)
+  #     # - traefik.http.services.overseerr.loadbalancer.server.port=5055
+  #     # GODOXY
+  #     - proxy.overseerr.port=5055
+  #     # - proxy.idle_timeout=30m
+
+  seerr:
+    image: ghcr.io/seerr-team/seerr:v3.0.0
+    container_name: seerr
     restart: unless-stopped
-    profiles:
-      - plex
-      - full
+    init: true
     networks:
       - media_network
-    #   - proxy
-    # ports:
+    dns:
+      - $DNS_ADDRESS
+    #ports:
     #  - 5055:5055
-    environment:
-      PUID: ${PUID}
-      PGID: ${PGID}
-      TZ: ${TZ}
     volumes:
-      - ${MOUNT_POINT_DATA}/overseerr:/config
+      - ${MOUNT_POINT_DATA}/seer/config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
     labels:
       # HOMEPAGE
       - homepage.group=Media Requesters
-      - homepage.name=overseerr
-      - homepage.icon=overseerr.png
-      - homepage.href=https://overseerr.${DOMAIN_NAME}
-      - homepage.description=Media requester for plex
-      - homepage.widget.type=overseerr
-      - homepage.widget.url=https://overseerr.${DOMAIN_NAME}
-      - homepage.widget.key=${OVERSEER_API_KEY}
-      # TRAEFIK
-      # - traefik.enable=true
-      # - traefik.docker.network=proxy
-      # - traefik.http.routers.overseerr.rule=Host(`overseerr.${DOMAIN_NAME}`)
-      # - traefik.http.services.overseerr.loadbalancer.server.port=5055
+      - homepage.name=Seerr
+      - homepage.icon=seerr.png
+      - homepage.href=https://seerr.${DOMAIN_NAME}
+      - homepage.description=Media requester
+      - homepage.widget.type=jellyseerr
+      - homepage.widget.url=https:/seerr.${DOMAIN_NAME}
+      - homepage.widget.key=${SEER_API_KEY}
       # GODOXY
-      - proxy.overseerr.port=5055
-      # - proxy.idle_timeout=30m
+      - proxy.seerr.port=5055
 
   shelfmark:
     image: ghcr.io/calibrain/shelfmark:v1.1.2
