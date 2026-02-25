@@ -219,25 +219,25 @@ services:
       # GODOXY
       - proxy.flaresolverr.port=8191
 
-  huntarr:
-    image: ghcr.io/plexguide/huntarr:9.4.1
-    container_name: huntarr
-    restart: unless-stopped
-    #networks:
-    #  - media_network
-    #ports:
-    #  - "9705:9705"
-    volumes:
-      - ${MOUNT_POINT_DATA}/huntarr:/config
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=Huntarr
-      - homepage.icon=huntarr.png
-      - homepage.href=https://huntarr.${DOMAIN_NAME}
-      - homepage.description=Automated search tool for missing media
-      # GODOXY
-      - proxy.huntarr.port=9705
+  # huntarr:
+  #   image: ghcr.io/plexguide/huntarr:9.4.1
+  #   container_name: huntarr
+  #   restart: unless-stopped
+  #   #networks:
+  #   #  - media_network
+  #   #ports:
+  #   #  - "9705:9705"
+  #   volumes:
+  #     - ${MOUNT_POINT_DATA}/huntarr:/config
+  #   labels:
+  #     # HOMEPAGE
+  #     - homepage.group=Media Management
+  #     - homepage.name=Huntarr
+  #     - homepage.icon=huntarr.png
+  #     - homepage.href=https://huntarr.${DOMAIN_NAME}
+  #     - homepage.description=Automated search tool for missing media
+  #     # GODOXY
+  #     - proxy.huntarr.port=9705
 
   prowlarr:
     image: linuxserver/prowlarr:2.3.0
