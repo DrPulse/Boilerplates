@@ -5,8 +5,9 @@ services:
     image: adguard/adguardhome:v0.107.72
     restart: always
     networks:
-      qnet-static-eth1:
+      macvlan-eth1:
         ipv4_address: ${DNS_ADDRESS}
+        ipv6_address: ${DNS_ADDRESS_V6}
     ports:
       - 3000:80/tcp    # Dashboard (HTTP)
       - 53:53/tcp      # Standard DNS
@@ -45,7 +46,7 @@ services:
       # - "traefik.http.services.adguardhome.loadbalancer.server.port=80"
       # GODOXY
       proxy.adguardhome.port: 80
-      proxy.network: qnet-static-eth1
+      proxy.network: macvlan-eth1
 
 
   dockflare-init:
@@ -212,7 +213,7 @@ volumes:
   dockflare_redis:
 
 networks:
-  qnet-static-eth1:
+  macvlan-eth1:
     external: true
   cloudflare-net:
     external: true
