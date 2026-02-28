@@ -462,7 +462,7 @@ services:
   #     # - proxy.idle_timeout=30m
 
   seerr:
-    image: ghcr.io/seerr-team/seerr:v3.0.1
+    image: ghcr.io/seerr-team/seerr:v3.1.0
     container_name: seerr
     restart: unless-stopped
     init: true
