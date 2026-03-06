@@ -166,6 +166,8 @@ services:
     image: ghcr.io/cleanuparr/cleanuparr:2.7.7
     container_name: cleanuparr
     restart: unless-stopped
+    networks:
+      - media_network
     #ports:
     #  - "11011:11011"
     volumes:
