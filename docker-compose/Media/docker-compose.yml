@@ -417,7 +417,7 @@ services:
       - homepage.description=Media requester
       - homepage.widget.type=jellyseerr
       - homepage.widget.url=https:/seerr.${DOMAIN_NAME}
-      - homepage.widget.key=${SEER_API_KEY}
+      - homepage.widget.key=${SEERR_API_KEY}
       # GODOXY
       - proxy.seerr.port=5055
 
