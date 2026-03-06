@@ -180,6 +180,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - UMASK=022
+    dns:
+      - $DNS_ADDRESS
     # Health check configuration
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
