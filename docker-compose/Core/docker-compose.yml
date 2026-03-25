@@ -52,7 +52,7 @@ services:
     # Recommended: Pin to a specific version
     # https://github.com/FerretDB/documentdb/pkgs/container/postgres-documentdb
     image: ghcr.io/ferretdb/postgres-documentdb:16-0.105.0-ferretdb-2.4.0
-    restart: unless-stopped
+    restart: always
     # ports:
     #   - 5432:5432
     volumes:
@@ -68,7 +68,7 @@ services:
     # Recommended: Pin to a specific version
     # https://github.com/FerretDB/FerretDB/pkgs/container/ferretdb
     image: ghcr.io/ferretdb/ferretdb:2.7.0
-    restart: unless-stopped
+    restart: always
     depends_on:
       - postgres
     # ports:
@@ -82,7 +82,7 @@ services:
 
   core:
     image: ghcr.io/moghtech/komodo-core:2.0.0
-    restart: unless-stopped
+    restart: always
     depends_on:
       - ferretdb
     ports:
@@ -123,7 +123,7 @@ services:
     image: ghcr.io/moghtech/komodo-periphery:2.0.0
     labels:
       komodo.skip: # Prevent Komodo from stopping with StopAllContainers
-    restart: unless-stopped
+    restart: always
     ports:
       - 8120:8120
     volumes:
