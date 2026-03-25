@@ -130,6 +130,8 @@ services:
     ports:
       - 8120:8120
     volumes:
+      ## Attach the Core / Periphery communication keys
+      - keys:/config/keys
       ## Mount external docker socket
       - /var/run/docker.sock:/var/run/docker.sock
       ## Allow Periphery to see processes outside of container
@@ -147,7 +149,8 @@ volumes:
   postgres-data:
   # FerretDB
   ferretdb-state:
-
+  # Core / Periphery
+  keys:
 # networks:
 #   proxy:
 #     external: true
