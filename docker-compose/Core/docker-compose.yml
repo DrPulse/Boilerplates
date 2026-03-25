@@ -83,6 +83,7 @@ services:
   core:
     image: ghcr.io/moghtech/komodo-core:2.0.0
     restart: always
+    init: true
     depends_on:
       - ferretdb
     ports:
@@ -94,6 +95,8 @@ services:
     volumes:
       ## Store dated backups of the database - https://komo.do/docs/setup/backup
       - ${MOUNT_POINT_DATA}/komodo/backups:/backups
+      ## Attach the Core / Periphery communication keys
+      - ${MOUNT_POINT_DATA}/komodo/keys:/config/keys
       ## Store sync files on server
       # - /path/to/syncs:/syncs
       ## Optionally mount a custom core.config.toml
