@@ -65,7 +65,7 @@ services:
     container_name: lubelogger
     restart: unless-stopped
     volumes:
-      - ${MOUNT_POINT_DATA}/lubelogger/app:/App
+      - ${MOUNT_POINT_DATA}/lubelogger/app:/App/data
       - ${MOUNT_POINT_DATA}/lubelogger/keys:/root/.aspnet/DataProtection-Keys
     #ports:
     #  - 8080:8080
