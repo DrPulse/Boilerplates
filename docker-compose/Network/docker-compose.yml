@@ -8,6 +8,8 @@ services:
       macvlan-eth1:
         ipv4_address: ${DNS_ADDRESS}
         ipv6_address: ${DNS_ADDRESS_V6}
+      # For default docker dns capabilities
+      bridge:
     ports:
       - 3000:80/tcp    # Dashboard (HTTP)
       - 53:53/tcp      # Standard DNS
@@ -224,4 +226,6 @@ networks:
   media_network:
     external: true
   socket_rw_net:
+    external: true
+  bridge:
     external: true
