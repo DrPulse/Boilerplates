@@ -123,7 +123,7 @@ services:
       proxy.komodo.port: 9120
 
   periphery:
-    image: ghcr.io/moghtech/komodo-periphery:2.0.0
+    image: ghcr.io/moghtech/komodo-periphery:2.1.0
     labels:
       komodo.skip: # Prevent Komodo from stopping with StopAllContainers
     restart: always
