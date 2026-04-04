@@ -244,7 +244,7 @@ services:
   #     - proxy.huntarr.port=9705
 
   prowlarr:
-    image: linuxserver/prowlarr:2.3.0
+    image: linuxserver/prowlarr:2.3.5
     container_name: prowlarr
     restart: always
     networks:
