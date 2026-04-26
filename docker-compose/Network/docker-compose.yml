@@ -59,7 +59,7 @@ services:
     restart: "no"
 
   dockflare:
-    image: alplat/dockflare:v3.1.0
+    image: alplat/dockflare:v3.1.1
     container_name: dockflare_v3
     restart: unless-stopped
     # ports:
