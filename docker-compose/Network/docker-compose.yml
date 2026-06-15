@@ -2,7 +2,7 @@ services:
 
   adguardhome:
     container_name: adguardhome
-    image: adguard/adguardhome:v0.107.76
+    image: adguard/adguardhome:v0.107.77
     restart: always
     networks:
       macvlan-eth1:
