@@ -81,7 +81,7 @@ services:
       proxy.network: pterodactyl
 
   wings:
-    image: ghcr.io/pterodactyl/wings:v1.12.3
+    image: ghcr.io/pterodactyl/wings:v1.13.0
     container_name: pterodactyl_wings
     restart: unless-stopped
     networks:
