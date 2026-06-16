@@ -50,7 +50,7 @@ services:
 
 
   dockflare-init:
-    image: alpine:3.23
+    image: alpine:3.24
     command: ["sh", "-c", "chown -R ${DOCKFLARE_UID:-65532}:${DOCKFLARE_GID:-65532} /app/data"]
     volumes:
       - ${MOUNT_POINT_DATA}/dockflare:/app/data
