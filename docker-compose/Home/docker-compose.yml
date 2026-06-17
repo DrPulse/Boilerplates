@@ -2,7 +2,7 @@ services:
 
 
   homeassistant:
-    image: homeassistant/home-assistant:2026.5
+    image: homeassistant/home-assistant:2026.6
     container_name: homeassistant
     restart: unless-stopped
     # networks:
