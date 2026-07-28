@@ -14,7 +14,7 @@ services:
       AUTOHEAL_ONLY_MONITOR_RUNNING: true
 
   socket-proxy-ro:
-    image: ghcr.io/tecnativa/docker-socket-proxy:v0.4.2
+    image: ghcr.io/tecnativa/docker-socket-proxy:v0.5.0
     container_name: socket-proxy-ro
     restart: always
     environment:
