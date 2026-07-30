@@ -15,7 +15,7 @@ jobs:
       # Phase 1: Data Extraction
       # ============================================
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Fetch PR body
         id: pr_data
