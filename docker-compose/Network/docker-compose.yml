@@ -106,7 +106,7 @@ services:
       - dockflare-internal
 
   gluetun:
-    image: qmcgaw/gluetun:v3.41.1
+    image: qmcgaw/gluetun:v3.41.3
     container_name: gluetun
     restart: always
     dns:
