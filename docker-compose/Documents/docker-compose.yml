@@ -224,11 +224,11 @@ services:
     #   - 8010:8000
     environment:
       PAPERLESS_REDIS: "redis://paperless-cache:6379"
+      PAPERLESS_DBENGINE: sqlite
       USERMAP_UID: ${PUID}
       USERMAP_GID: ${PGID}
       PAPERLESS_ADMIN_USER: ${ADMIN_USER}
       PAPERLESS_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-      PAPERLESS_URL: "https://paperless.${DOMAIN_NAME}"
       # PAPERLESS_CONSUMER_POLLING: 30
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/data:/usr/src/paperless/data
@@ -257,7 +257,7 @@ services:
       # - proxy.idle_timeout=30m
 
   paperless-cache:
-    image: docker.io/library/redis:8
+    image: docker.io/valkey/valkey:9-alpine
     restart: unless-stopped
     container_name: paperless-cache
     networks:
