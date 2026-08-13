@@ -229,6 +229,7 @@ services:
       USERMAP_GID: ${PGID}
       PAPERLESS_ADMIN_USER: ${ADMIN_USER}
       PAPERLESS_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
       # PAPERLESS_CONSUMER_POLLING: 30
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/data:/usr/src/paperless/data
