@@ -269,7 +269,8 @@ services:
       # PORT: 3000
       # NODE_ENV: production
       # # -- URLs --
-      # PUBLIC_URL: https://reactive-resume.${DOMAIN_NAME}
+
+      APP_URL: https://reactive-resume.${DOMAIN_NAME}
       # STORAGE_URL: https://reactive-minio.${DOMAIN_NAME}/default
       # # -- Printer (Chrome) --
       # CHROME_TOKEN: chrome_token
