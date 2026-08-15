@@ -252,6 +252,7 @@ services:
     #   - proxy
     # ports:
     #  - "3000:3000"
+    user: ${PUID}:${PGID}
     depends_on:
       reactive-postgres:
         condition: service_healthy
