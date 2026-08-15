@@ -186,66 +186,60 @@ services:
 
 
   reactive-postgres:
-    image: postgres:18
+    image: postgres:16-alpine
     container_name: reactive-resume-postgres
     restart: unless-stopped
     # networks:
     #   - proxy
     volumes:
-      - "${MOUNT_POINT_DATA}/reactive-resume/postgres:/var/lib/postgresql"
+      - "${MOUNT_POINT_DATA}/reactive-resume/postgres:/var/lib/postgresql/data"
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
 
-
-  # reactive-minio:
-  #   image: minio/minio:RELEASE.2025-07-18T21-56-31Z-cpuv1
-  #   container_name: reactive-resume-minio
-  #   restart: unless-stopped
-  #   command: server /data
-  #   # networks:
-  #   #   - proxy
-  #   # ports:
-  #   #   - "9000:9000"
-  #   volumes:
-  #     - "${MOUNT_POINT_DATA}/reactive-resume/minio:/data"
-  #   environment:
-  #     MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-  #     MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-  #   labels:
-  #     # TRAEFIK
-  #     # - traefik.enable=true
-  #     # - traefik.docker.network=proxy
-  #     # - traefik.http.routers.reactive-minio.rule=Host(`reactive-minio.${DOMAIN_NAME}`)
-  #     # - traefik.http.services.reactive-minio.loadbalancer.server.port=9000
-  #     # GODOXY
-  #     - proxy.aliases=reactive-minio
-  #     - proxy.reactive-minio.port=9000
+  reactive-minio:
+    image: minio/minio:RELEASE.2025-07-18T21-56-31Z-cpuv1
+    container_name: reactive-resume-minio
+    restart: unless-stopped
+    command: server /data
+    # networks:
+    #   - proxy
+    # ports:
+    #   - "9000:9000"
+    volumes:
+      - "${MOUNT_POINT_DATA}/reactive-resume/minio:/data"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    labels:
+      # TRAEFIK
+      # - traefik.enable=true
+      # - traefik.docker.network=proxy
+      # - traefik.http.routers.reactive-minio.rule=Host(`reactive-minio.${DOMAIN_NAME}`)
+      # - traefik.http.services.reactive-minio.loadbalancer.server.port=9000
+      # GODOXY
+      - proxy.aliases=reactive-minio
+      - proxy.reactive-minio.port=9000
 
   # Chrome Browser (for printing and previews)
-  # reactive-chrome:
-  #   image: ghcr.io/browserless/chromium:v2.18.0 # Upgrading to newer versions causes issues
-  #   container_name: reactive-resume-chrome
-  #   restart: unless-stopped
-  #   extra_hosts:
-  #     - "host.docker.internal:host-gateway"
-  #   dns:
-  #     - ${DNS_ADDRESS}
-  #   environment:
-  #     TIMEOUT: 10000
-  #     CONCURRENT: 10
-  #     TOKEN: chrome_token
-  #     EXIT_ON_HEALTH_FAILURE: "true"
-  #     PRE_REQUEST_HEALTH_CHECK: "true"
+  reactive-chrome:
+    image: ghcr.io/browserless/chromium:v2.18.0 # Upgrading to newer versions causes issues
+    container_name: reactive-resume-chrome
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    dns:
+      - ${DNS_ADDRESS}
+    environment:
+      TIMEOUT: 10000
+      CONCURRENT: 10
+      TOKEN: chrome_token
+      EXIT_ON_HEALTH_FAILURE: "true"
+      PRE_REQUEST_HEALTH_CHECK: "true"
 
   reactive-app:
-    image: amruthpillai/reactive-resume:v5.2.6
+    image: amruthpillai/reactive-resume:v4.5.6
     container_name: reactive-resume
     restart: unless-stopped
     # networks:
@@ -253,47 +247,31 @@ services:
     # ports:
     #  - "3000:3000"
     depends_on:
-      reactive-postgres:
-        condition: service_healthy
-
-      # - reactive-minio
-      # - reactive-chrome
+      - reactive-postgres
+      - reactive-minio
+      - reactive-chrome
     environment:
+      PORT: 3000
+      NODE_ENV: production
+      # -- URLs --
+      PUBLIC_URL: https://reactive-resume.${DOMAIN_NAME}
+      STORAGE_URL: https://reactive-minio.${DOMAIN_NAME}/default
+      # -- Printer (Chrome) --
+      CHROME_TOKEN: chrome_token
+      CHROME_URL: ws://reactive-chrome:3000
       # -- Database (Postgres) --
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@reactive-postgres:5432/postgres
-      # --- Authentication ---
-      # Generated using `openssl rand -hex 32`
-      AUTH_SECRET: ${REACTIVE_RESUME_AUTH_SECRET}
-
-
-      # PORT: 3000
-      # NODE_ENV: production
-      # # -- URLs --
-
-      APP_URL: https://reactive-resume.${DOMAIN_NAME}
-      # STORAGE_URL: https://reactive-minio.${DOMAIN_NAME}/default
-      # # -- Printer (Chrome) --
-      # CHROME_TOKEN: chrome_token
-      # CHROME_URL: ws://reactive-chrome:3000
-
-      # # -- Auth --
-      # ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-      # REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
-      # # -- Storage (Minio) --
-      # STORAGE_ENDPOINT: reactive-minio
-      # STORAGE_PORT: 9000
-      # STORAGE_BUCKET: default
-      # STORAGE_ACCESS_KEY: ${MINIO_ROOT_USER}
-      # STORAGE_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
-      # STORAGE_USE_SSL: "false"
-      # STORAGE_SKIP_BUCKET_CHECK: "false"
-    volumes:
-      - "${MOUNT_POINT_DATA}/reactive-resume/app_data:/app/data"
-    healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then((r) => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1));"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      # -- Auth --
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
+      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+      # -- Storage (Minio) --
+      STORAGE_ENDPOINT: reactive-minio
+      STORAGE_PORT: 9000
+      STORAGE_BUCKET: default
+      STORAGE_ACCESS_KEY: ${MINIO_ROOT_USER}
+      STORAGE_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      STORAGE_USE_SSL: "false"
+      STORAGE_SKIP_BUCKET_CHECK: "false"
     labels:
       # HOMEPAGE
       - homepage.group=Tools
