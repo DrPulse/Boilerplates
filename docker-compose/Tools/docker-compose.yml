@@ -189,7 +189,8 @@ services:
     image: postgres:18-alpine
     container_name: reactive-resume-postgres
     restart: unless-stopped
-    # networks:
+    networks:
+      - reactive_data_network
     #   - proxy
     volumes:
       - "${MOUNT_POINT_DATA}/reactive-resume/postgres:/var/lib/postgresql"
@@ -244,11 +245,33 @@ services:
   #     EXIT_ON_HEALTH_FAILURE: "true"
   #     PRE_REQUEST_HEALTH_CHECK: "true"
 
+  reactive-redis:
+    image: redis:8.10.0
+    container_name: reactive-resume-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    networks:
+      - reactive_data_network
+    # Not exposed on the host by default. Redis can contain agent stream data
+    # including user chat content; keep it internal to the Docker network.
+    # Uncomment the ports block below if you need host access for tooling.
+    # ports:
+    #   - "127.0.0.1:6379:6379"
+    volumes:
+      - reactive_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      start_period: 5s
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   reactive-app:
     image: amruthpillai/reactive-resume:v5.2.6
     container_name: reactive-resume
     restart: unless-stopped
-    # networks:
+    networks:
+      - reactive_data_network
     #   - proxy
     # ports:
     #  - "3000:3000"
@@ -266,6 +289,8 @@ services:
       # Generated using `openssl rand -hex 32`
       AUTH_SECRET: ${REACTIVE_RESUME_AUTH_SECRET}
 
+      REDIS_URL: redis://reactive-redis:6379
+      ENCRYPTION_SECRET: ${REACTIVE_RESUME_ENCRYPTION_SECRET}
 
       # PORT: 3000
       # NODE_ENV: production
@@ -368,6 +393,8 @@ networks:
   cloudflare-net:
     name: cloudflare-net
     external: true
+  reactive_data_network:
 
 volumes:
+  reactive_redis_data:
   termix:
