@@ -148,9 +148,10 @@ services:
     privileged: true
     environment:
       TS_AUTH_KEY: ${TS_AUTH_KEY}
+      TS_ACCEPT_DNS: true
       TS_ROUTES: ${NETWORK_ADDRESS}/24
-      TS_USERSPACE: true #false
-      #TS_EXTRA_ARGS: --snat-subnet-routes=true --accept-dns=true
+      TS_USERSPACE: false # true
+      TS_EXTRA_ARGS: --snat-subnet-routes=true #--accept-routes=true
     volumes:
       - ${MOUNT_POINT_DATA}/tailscale:/var/lib # State data will be stored in this directory
       - /dev/net/tun:/dev/net/tun # Required for tailscale to work
