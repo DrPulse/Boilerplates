@@ -148,7 +148,7 @@ services:
     privileged: true
     environment:
       TS_AUTH_KEY: ${TS_AUTH_KEY}
-      TS_ACCEPT_DNS: true
+      #TS_ACCEPT_DNS: true
       TS_ROUTES: ${NETWORK_ADDRESS}/24
       TS_USERSPACE: false # true
       TS_EXTRA_ARGS: --snat-subnet-routes=true #--accept-routes=true
