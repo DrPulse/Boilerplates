@@ -246,7 +246,7 @@ services:
   #     PRE_REQUEST_HEALTH_CHECK: "true"
 
   reactive-redis:
-    image: redis:8.10.0
+    image: redis:8.10.1
     container_name: reactive-resume-redis
     restart: unless-stopped
     command: redis-server --appendonly yes
