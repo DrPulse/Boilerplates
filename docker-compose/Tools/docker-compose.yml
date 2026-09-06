@@ -267,7 +267,7 @@ services:
       retries: 3
 
   reactive-app:
-    image: amruthpillai/reactive-resume:v5.2.9
+    image: amruthpillai/reactive-resume:v5.3.0
     container_name: reactive-resume
     restart: unless-stopped
     networks:
