@@ -89,7 +89,7 @@ services:
       # HOMEPAGE
       homepage.group: Networking
       homepage.name: DockFlare
-      homepage.icon: dockflare.png
+      homepage.icon: sh-dockflare.png
       homepage.href: https://dockflare.${DOMAIN_NAME}
       homepage.description: Automatic Cloudflare tunnel through labels
       # GODOXY
