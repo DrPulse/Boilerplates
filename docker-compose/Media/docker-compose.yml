@@ -22,8 +22,7 @@ services:
       PGID: ${PGID}
       JELLYFIN_PublishedServerUrl: https://jellyfin.${DOMAIN_NAME}
     volumes:
-      - ${MOUNT_POINT_DATA}/jellyfin/config:/config
-      - ${MOUNT_POINT_DATA}/jellyfin/cache:/cache
+      - ${MOUNT_POINT_DATA}/jellyfin:/config
       - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
