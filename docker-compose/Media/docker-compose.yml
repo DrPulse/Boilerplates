@@ -202,7 +202,7 @@ services:
       - proxy.cleanuparr.port=11011
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.5.0
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
     container_name: flaresolverr
     restart: always
     networks:
