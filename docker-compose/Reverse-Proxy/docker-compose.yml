@@ -55,32 +55,32 @@ services:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
 
-  frontend:
-    image: ghcr.io/yusing/godoxy-frontend:v0.28.1
-    container_name: godoxy-frontend
-    restart: always
-    network_mode: host # do not change this
-    env_file: .env
-    user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
-    read_only: true
-    tmpfs:
-      - /tmp:rw
-      - /app/node_modules/.cache:rw
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - all
-    depends_on:
-      - app
-    environment:
-      HOSTNAME: 127.0.0.1
-      PORT: ${GODOXY_FRONTEND_PORT:-3000}
-    labels:
+  # frontend:
+    # image: ghcr.io/yusing/godoxy-frontend:v0.28.1
+    # container_name: godoxy-frontend
+    # restart: always
+    # network_mode: host # do not change this
+    # env_file: .env
+    # user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
+    # read_only: true
+    # tmpfs:
+      # - /tmp:rw
+      # - /app/node_modules/.cache:rw
+    # security_opt:
+      # - no-new-privileges:true
+    # cap_drop:
+      # - all
+    # depends_on:
+      # - app
+    # environment:
+      # HOSTNAME: 127.0.0.1
+      # PORT: ${GODOXY_FRONTEND_PORT:-3000}
+    # labels:
       # KOMODO
-      komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
+      # komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
       # GODOXY
-      proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
-      proxy.#1.port: ${GODOXY_FRONTEND_PORT:-3000}
+      # proxy.aliases: ${GODOXY_FRONTEND_ALIASES:-godoxy}
+      # proxy.#1.port: ${GODOXY_FRONTEND_PORT:-3000}
       # proxy.#1.middlewares.cidr_whitelist: |
       #   status: 403
       #   message: IP not allowed
