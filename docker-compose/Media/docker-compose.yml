@@ -2,7 +2,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: linuxserver/jellyfin:12.1
+    image: jellyfin/jellyfin:12.1
     container_name: jellyfin
     restart: always
     profiles:
@@ -10,7 +10,7 @@ services:
       - full
     # networks:
     #   - proxy
-    #user: ${PUID}:${PGID}
+    user: ${PUID}:${PGID}
     ports:
       - 7359:7359/udp  # Optional - Allows clients to discover Jellyfin on the local network.
     #  - 8920:8920      # Optional - Https webUI (you need to set up your own certificate)
@@ -18,8 +18,6 @@ services:
       - 8096:8096
     environment:
       TZ: ${TZ}
-      PUID: ${PUID}
-      PGID: ${PGID}
       JELLYFIN_PublishedServerUrl: https://jellyfin.${DOMAIN_NAME}
     volumes:
       - ${MOUNT_POINT_DATA}/jellyfin:/config
