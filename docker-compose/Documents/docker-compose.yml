@@ -50,6 +50,9 @@ services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:v3.2.2
+    networks:
+      - cloudflare-net
+      - immich-internal
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
@@ -84,6 +87,10 @@ services:
       # GODOXY
       - proxy.aliases=immich
       - proxy.immich.port=2283
+      # DOCKFLARE
+      - dockflare.enable=true
+      - dockflare.hostname=immich.pulselabs.me
+      - dockflare.service=http://immich-server:8080
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -93,6 +100,8 @@ services:
     # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
     #   file: hwaccel.ml.yml
     #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    networks:
+      - immich-internal
     volumes:
       - model-cache:/cache
     restart: always
@@ -102,6 +111,8 @@ services:
   immich-redis:
     container_name: immich_redis
     image: docker.io/valkey/valkey:9@sha256:3acc0687f2a2e1091fae6450d7842dd658c941338cf0a873ddd9e14b9e4ea4dd
+    networks:
+      - immich-internal
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
@@ -109,6 +120,8 @@ services:
   immich-database:
     container_name: immich_postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    networks:
+      - immich-internal
     environment:
       DB_DATA_LOCATION: ${DB_DATA_LOCATION}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -344,6 +357,10 @@ networks:
   #   external: true
   paperless:
   nextcloud:
-
+  cloudflare-net:
+    name: cloudflare-net
+    external: true
+  immich-internal:
+  
 volumes:
   model-cache:
