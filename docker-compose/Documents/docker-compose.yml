@@ -90,7 +90,7 @@ services:
       # DOCKFLARE
       - dockflare.enable=true
       - dockflare.hostname=immich.pulselabs.me
-      - dockflare.service=http://immich-server:8080
+      - dockflare.service=http://immich-server:2283
 
   immich-machine-learning:
     container_name: immich_machine_learning
