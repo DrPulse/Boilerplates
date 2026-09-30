@@ -88,7 +88,7 @@ services:
       - proxy.aliases=immich
       - proxy.immich.port=2283
       # DOCKFLARE
-      - dockflare.enable=true
+      - dockflare.enable=false
       - dockflare.hostname=immich.pulselabs.me
       - dockflare.service=http://immich-server:2283
 
