@@ -2,7 +2,7 @@ services:
 
 # Media servers
   jellyfin:
-    image: jellyfin/jellyfin:12.1
+    image: jellyfin/jellyfin:12.2
     container_name: jellyfin
     restart: always
     profiles:
