@@ -127,7 +127,7 @@ services:
   # #     - traefik.http.services.netdata.loadbalancer.server.port=19999
 
   nutify:
-    image: dartsteven/nutify:amd64-0.1.6
+    image: dartsteven/nutify:amd64-0.1.7
     container_name: nutify
     restart: always
     networks:
