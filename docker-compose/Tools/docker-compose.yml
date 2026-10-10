@@ -113,7 +113,7 @@ services:
 
   it-tools:
     container_name: it-tools
-    image: corentinth/it-tools:2024.5.13-a0bc346
+    image: corentinth/it-tools:2024.10.22-7ca5933
     restart: unless-stopped
     #ports:
     #  - 8080:80
