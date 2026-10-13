@@ -30,36 +30,6 @@ services:
       - proxy.homeassistant.port=8123
       # - proxy.idle_timeout=1h
 
-  homebox:
-    image: ghcr.io/hay-kot/homebox:v0.10.3
-    container_name: homebox
-    restart: unless-stopped
-    # networks:
-    #   - proxy
-    #ports:
-    #  - 3100:7745
-    environment:
-      HBOX_LOG_LEVEL: info
-      HBOX_LOG_FORMAT: text
-      HBOX_WEB_MAX_UPLOAD_SIZE: 10
-    volumes:
-      - ${MOUNT_POINT_DATA}/homebox:/data/
-    labels:
-      # HOMEPAGE
-      - homepage.group=Home
-      - homepage.name=Homebox
-      - homepage.icon=homebox.png
-      - homepage.href=https://homebox.${DOMAIN_NAME}
-      - homepage.description=Inventory and organization tool for home users
-      # TRAEFIK
-      # - traefik.enable=true
-      # - traefik.docker.network=proxy
-      # - traefik.http.routers.homebox.rule=Host(`homebox.${DOMAIN_NAME}`)
-      # - traefik.http.services.homebox.loadbalancer.server.port=7745
-      # GODOXY
-      - proxy.homebox.port=7745
-      # - proxy.idle_timeout=15m
-
   lubelogger:
     image: ghcr.io/hargata/lubelogger:v1.7.3
     container_name: lubelogger

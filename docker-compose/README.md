@@ -41,7 +41,6 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Satisfactory
 - [Home](Home)
   - Home Assistant
-  - Homebox
   - LubeLogger
 - [Infrastructure](Infrastructure)
   - Autoheal
