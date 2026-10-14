@@ -229,7 +229,8 @@ services:
     container_name: paperless-server
     restart: unless-stopped
     depends_on:
-      - paperless-cache
+      - paperless-cache:
+        condition: service_healthy
     networks:
       # - proxy
       - paperless
@@ -279,6 +280,12 @@ services:
       - paperless
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/cache:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
     labels:
       - proxy.exclude=true
   syncthing:
