@@ -78,7 +78,6 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - DumbAssets
   - IT-Tools
   - Omni-Tools
-  - PairDrop
   - Reactive Resume
   - Termix
   - Wallos
