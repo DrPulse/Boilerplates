@@ -190,7 +190,7 @@ services:
   #     - proxy.network=nextcloud
 
   notesx-server:
-    image: ghcr.io/note-sx/server:v1.6.0
+    image: ghcr.io/note-sx/server:v1.5.1
     container_name: notesx-server
     restart: unless-stopped
     networks:
