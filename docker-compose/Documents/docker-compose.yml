@@ -189,7 +189,6 @@ services:
   #     - proxy.nextcloud.port=80
   #     - proxy.network=nextcloud
 
-  services:
   notesx-server:
     image: ghcr.io/note-sx/server:v1.6.0
     container_name: notesx-server
