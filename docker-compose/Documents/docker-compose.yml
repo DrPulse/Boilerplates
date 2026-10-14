@@ -189,6 +189,43 @@ services:
   #     - proxy.nextcloud.port=80
   #     - proxy.network=nextcloud
 
+  services:
+  notesx-server:
+    image: ghcr.io/note-sx/server:v1.6.0
+    container_name: notesx-server
+    restart: unless-stopped
+    networks:
+      - cloudflare-net
+    #ports:
+    #  - 3005:3000
+    environment:
+      BASE_WEB_URL: "https://share-note.${DOMAIN_NAME}"
+      HASH_SALT: ${NOTESX_HASH_SALT}
+      MAXIMUM_UPLOAD_SIZE_MB: 100
+    volumes:
+      - ${MOUNT_POINT_DATA}/notesx/db:/notesx/db:Z
+      - ${MOUNT_POINT_DATA}/notesx/userfiles:/notesx/userfiles:Z
+    labels:
+      # DOCKFLARE
+      dockflare.enable: true
+      dockflare.hostname: share-note.${DOMAIN_NAME}
+      dockflare.service: http://notesx-server:3000
+      # HOMEPAGE
+      homepage.group: Documents & Files
+      homepage.name: Share Note
+      homepage.icon: obsidian.png
+      homepage.description: Backend server for Share Note Obsidian plugin to share publicly notes.
+      homepage.href: https://share-note.${DOMAIN_NAME}
+      # GODOXY
+      proxy.aliases: share-note
+      proxy.share-note.port: 3000
+    healthcheck:
+      test: (wget -qO - http://localhost:3000/v1/ping | grep -q ok) || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
+
   # onlyoffice:
   #   container_name: onlyoffice
   #   image: onlyoffice/documentserver:8.1.3

@@ -32,6 +32,7 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Semaphore
 - [Documents](Documents)
   - Immich
+  - NotesX
   - Paperless-NGX
   - Syncthing
   - Wiki.js
