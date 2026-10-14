@@ -201,6 +201,7 @@ services:
       BASE_WEB_URL: "https://share-note.${DOMAIN_NAME}"
       HASH_SALT: ${NOTESX_HASH_SALT}
       MAXIMUM_UPLOAD_SIZE_MB: 100
+    read_only: true
     volumes:
       - ${MOUNT_POINT_DATA}/notesx/db:/notesx/db:Z
       - ${MOUNT_POINT_DATA}/notesx/userfiles:/notesx/userfiles:Z
