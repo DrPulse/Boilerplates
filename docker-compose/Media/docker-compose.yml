@@ -387,7 +387,7 @@ services:
       - proxy.aliases=calibreweb
       - proxy.calibreweb.port=8083
       - proxy.network=calibre
-      # - proxy.idle_timeout=30m
+      - proxy.idle_timeout=30m
 
 
 # Media requester
@@ -457,7 +457,7 @@ services:
       # GODOXY
       - proxy.aliases=shelfmark
       - proxy.shelfmark-download.port=8084
-      # - proxy.idle_timeout=30m
+      - proxy.idle_timeout=30m
 
 
 # Media server invitation

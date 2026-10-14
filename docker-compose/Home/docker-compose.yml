@@ -28,7 +28,7 @@ services:
       # GODOXY
       - proxy.aliases=homeassistant
       - proxy.homeassistant.port=8123
-      # - proxy.idle_timeout=1h
+      - proxy.idle_timeout=1h
 
   lubelogger:
     image: ghcr.io/hargata/lubelogger:v1.7.3
@@ -60,7 +60,7 @@ services:
       # - traefik.http.services.lubelogger.loadbalancer.server.port=8080
       # GODOXY
       - proxy.lubelogger.port=8080
-      # - proxy.idle_timeout=15m
+      - proxy.idle_timeout=15m
 
   # mealie:
   #   container_name: mealie
