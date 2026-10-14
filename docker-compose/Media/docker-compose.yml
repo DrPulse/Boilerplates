@@ -490,6 +490,7 @@ services:
   #     - traefik.http.services.wizarr.loadbalancer.server.port=5690
       # GODOXY
       - proxy.wizarr.port=5690
+      - proxy.idle_timeout=5m
 
 # arr* configurator
   # flemmarr:
