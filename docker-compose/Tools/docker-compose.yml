@@ -50,66 +50,7 @@ services:
       # - traefik.http.services.dumbassets.loadbalancer.server.port=3000
       # GODOXY
       - proxy.dumbassets.port=3000
-      # - proxy.idle_timeout=5m
-
-
-  dumbterm:
-    image: dumbwareio/dumbterm:1.2.0
-    container_name: dumbterm
-    restart: always
-    # networks:
-    #   - proxy
-    # ports:
-    #   - 3000:3000
-    volumes:
-      - "${MOUNT_POINT_DATA}/dumbterm/config:/root/.config"
-      - "${MOUNT_POINT_DATA}/dumbterm/data:/root/data"
-    environment:
-      TZ: Europe/Paris
-      SITE_TITLE: DumbTerm
-      DUMBTERM_PIN: ${DUMBTERM_PIN}
-      BASE_URL: https://dumbterm.${DOMAIN_NAME}
-      ENABLE_STARSHIP: true
-      LOCKOUT_TIME: 15 # Minutes
-      MAX_SESSION_AGE: 24 # Hours
-      # (OPTIONAL) - List of allowed origins for CORS
-      ALLOWED_ORIGINS: "*"
-    labels:
-      # HOMEPAGE
-      - homepage.group=Tools
-      - homepage.name=dumbterm
-      - homepage.icon=dumbterm.png
-      - homepage.href=https://dumbterm.${DOMAIN_NAME}
-      # TRAEFIK
-      # - traefik.enable=true
-      # - traefik.docker.network=proxy
-      # - traefik.http.routers.dumbterm.rule=Host(`dumbterm.${DOMAIN_NAME}`)
-      # - traefik.http.services.dumbterm.loadbalancer.server.port=3000
-      # GODOXY
-      - proxy.dumbterm.port=3000
-
-
-  # focalboard:
-  #   image: mattermost/focalboard:7.11.4
-  #   container_name: focalboard
-  #   restart: unless-stopped
-  #   networks:
-  #     - proxy
-  #   #ports:
-  #   #  - 8084:8000
-  #   volumes:
-  #     - focalboard-data:/opt/focalboard/data
-  #   labels:
-  #     # HOMEPAGE
-  #     - homepage.group=Tools
-  #     - homepage.name=focalboard
-  #     - homepage.icon=focalboard.png
-  #     - homepage.href=https://focalboard.${DOMAIN_NAME}
-  #     # TRAEFIK
-  #     - traefik.enable=true
-  #     - traefik.docker.network=proxy
-  #     - traefik.http.routers.focalboard.rule=Host(`focalboard.${DOMAIN_NAME}`)
-  #     - traefik.http.services.focalboard.loadbalancer.server.port=8000
+      - proxy.idle_timeout=5m
 
   it-tools:
     container_name: it-tools
@@ -203,47 +144,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-
-
-  # reactive-minio:
-  #   image: minio/minio:RELEASE.2025-07-18T21-56-31Z-cpuv1
-  #   container_name: reactive-resume-minio
-  #   restart: unless-stopped
-  #   command: server /data
-  #   # networks:
-  #   #   - proxy
-  #   # ports:
-  #   #   - "9000:9000"
-  #   volumes:
-  #     - "${MOUNT_POINT_DATA}/reactive-resume/minio:/data"
-  #   environment:
-  #     MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-  #     MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-  #   labels:
-  #     # TRAEFIK
-  #     # - traefik.enable=true
-  #     # - traefik.docker.network=proxy
-  #     # - traefik.http.routers.reactive-minio.rule=Host(`reactive-minio.${DOMAIN_NAME}`)
-  #     # - traefik.http.services.reactive-minio.loadbalancer.server.port=9000
-  #     # GODOXY
-  #     - proxy.aliases=reactive-minio
-  #     - proxy.reactive-minio.port=9000
-
-  # Chrome Browser (for printing and previews)
-  # reactive-chrome:
-  #   image: ghcr.io/browserless/chromium:v2.18.0 # Upgrading to newer versions causes issues
-  #   container_name: reactive-resume-chrome
-  #   restart: unless-stopped
-  #   extra_hosts:
-  #     - "host.docker.internal:host-gateway"
-  #   dns:
-  #     - ${DNS_ADDRESS}
-  #   environment:
-  #     TIMEOUT: 10000
-  #     CONCURRENT: 10
-  #     TOKEN: chrome_token
-  #     EXIT_ON_HEALTH_FAILURE: "true"
-  #     PRE_REQUEST_HEALTH_CHECK: "true"
 
   reactive-redis:
     image: redis:8.10.0

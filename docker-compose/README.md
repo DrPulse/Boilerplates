@@ -51,10 +51,8 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Cleanuparr
   - Deluge
   - FlareSolverr
-  - Huntarr
   - Jellyfin
-  - Jellyseerr
-  - Overseerr
+  - Seerr
   - Plex
   - Prowlarr
   - Radarr
@@ -78,7 +76,6 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
 - [Tools](Tools)
   - BentoPDF
   - DumbAssets
-  - DumbTerm
   - IT-Tools
   - Omni-Tools
   - PairDrop
