@@ -54,7 +54,7 @@
         "linuxserver/deluge",
         "lscr.io/linuxserver/deluge"
       ],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?:-r(?<build>\\d+))?-ls(?<revision>\\d+)$",
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<build>\\d+)$",
       "automerge": true
     }
   ],
