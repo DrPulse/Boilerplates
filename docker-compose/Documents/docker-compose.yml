@@ -229,7 +229,7 @@ services:
     container_name: paperless-server
     restart: unless-stopped
     depends_on:
-      - paperless-cache:
+      paperless-cache:
         condition: service_healthy
     networks:
       # - proxy
