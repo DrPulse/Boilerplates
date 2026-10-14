@@ -504,6 +504,7 @@ services:
       - homepage.group=Media Management
       - homepage.name=iSponsorBlockTV
       - homepage.icon=isponsorblocktv.png
+      - homepage.description=Skips sponsored segments in YT TV
 
 # arr* configurator
   # flemmarr:
