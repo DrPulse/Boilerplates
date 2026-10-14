@@ -51,6 +51,7 @@ Homepage is my dashboard for now and the Automatic Service Discovery is used her
   - Cleanuparr
   - Deluge
   - FlareSolverr
+  - iSponsorBlockTV
   - Jellyfin
   - Seerr
   - Plex
