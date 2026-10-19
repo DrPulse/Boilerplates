@@ -212,7 +212,7 @@ services:
       - proxy.idle_timeout=1h
 
   termix:
-    image: 	ghcr.io/termix-ssh/termix:26.10.1
+    image: 	ghcr.io/termix-ssh/termix:26.10.2
     container_name: termix
     restart: always
     #ports:
