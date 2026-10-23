@@ -28,7 +28,7 @@ services:
       - ${MOUNT_POINT_DATA}/jellyfin/config:/config
       - ${MOUNT_POINT_DATA}/jellyfin/cache:/cache
       - ${MOUNT_POINT_DATA}/jellyfin/log:/log
-      - - ${MOUNT_POINT_DATA}/jellyfin/data:/data
+      - ${MOUNT_POINT_DATA}/jellyfin/data:/data
       - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
