@@ -412,7 +412,7 @@ services:
       - proxy.seerr.port=5055
 
   shelfmark:
-    image: ghcr.io/calibrain/shelfmark:v1.5.0
+    image: ghcr.io/calibrain/shelfmark:v1.5.1
     container_name: shelfmark
     restart: unless-stopped
     networks:
