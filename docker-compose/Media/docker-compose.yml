@@ -20,11 +20,15 @@ services:
     environment:
       TZ: ${TZ}
       JELLYFIN_PublishedServerUrl: https://jellyfin.${DOMAIN_NAME}
+      JELLYFIN_CONFIG_DIR: /config
+      JELLYFIN_DATA_DIR: /data
+      JELLYFIN_CACHE_DIR: /cache
+      JELLYFIN_LOG_DIR: /log
     volumes:
       - ${MOUNT_POINT_DATA}/jellyfin/config:/config
       - ${MOUNT_POINT_DATA}/jellyfin/cache:/cache
       - ${MOUNT_POINT_DATA}/jellyfin/log:/log
-      - ${MOUNT_POINT_DATA}/jellyfin/data:/data
+      - - ${MOUNT_POINT_DATA}/jellyfin/data:/data
       - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
@@ -408,7 +412,7 @@ services:
       - proxy.seerr.port=5055
 
   shelfmark:
-    image: ghcr.io/calibrain/shelfmark:v1.5.1
+    image: ghcr.io/calibrain/shelfmark:v1.5.0
     container_name: shelfmark
     restart: unless-stopped
     networks:
