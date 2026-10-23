@@ -228,26 +228,6 @@ services:
       # GODOXY
       - proxy.flaresolverr.port=8191
 
-  # huntarr:
-  #   image: ghcr.io/plexguide/huntarr:9.4.1
-  #   container_name: huntarr
-  #   restart: unless-stopped
-  #   #networks:
-  #   #  - media_network
-  #   #ports:
-  #   #  - "9705:9705"
-  #   volumes:
-  #     - ${MOUNT_POINT_DATA}/huntarr:/config
-  #   labels:
-  #     # HOMEPAGE
-  #     - homepage.group=Media Management
-  #     - homepage.name=Huntarr
-  #     - homepage.icon=huntarr.png
-  #     - homepage.href=https://huntarr.${DOMAIN_NAME}
-  #     - homepage.description=Automated search tool for missing media
-  #     # GODOXY
-  #     - proxy.huntarr.port=9705
-
   prowlarr:
     image: linuxserver/prowlarr:2.6.5
     container_name: prowlarr
@@ -510,22 +490,6 @@ services:
       - homepage.name=iSponsorBlockTV
       - homepage.icon=isponsorblocktv.png
       - homepage.description=Skips sponsored segments in YT TV
-
-# arr* configurator
-  # flemmarr:
-  #   image: pierremesure/flemmarr@sha256:55ab943c6b6ba9406f25ed626aa0fc441a7a6a0a00087b6d64ee40b85b582bf9
-  #   container_name: flemmarr
-  #   restart: unless-stopped
-  #   networks:
-  #     - proxy
-  #   volumes:
-  #     - ${MOUNT_POINT_DATA}/flemmarr:/config
-  #   labels:
-  #     # HOMEPAGE
-  #     - homepage.group=Media Management
-  #     - homepage.name=flemmarr
-  #     - homepage.icon=https://github.com/Flemmarr/Flemmarr/raw/master/logo.svg
-  #     - homepage.description=arr configurator
 
 
 networks:
