@@ -5,13 +5,13 @@ services:
     image: jellyfin/jellyfin:12.3
     container_name: jellyfin
     restart: always
+    user: ${PUID}:${PGID}
     profiles:
       - jellyfin
       - full
     networks:
       - media_network
     #   - proxy
-    user: ${PUID}:${PGID}
     ports:
       - 7359:7359/udp  # Optional - Allows clients to discover Jellyfin on the local network.
     #  - 8920:8920      # Optional - Https webUI (you need to set up your own certificate)
@@ -29,21 +29,21 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
-      - homepage.group=Media
-      - homepage.name=jellyfin
-      - homepage.icon=jellyfin.png
-      - homepage.href=https://jellyfin.${DOMAIN_NAME}
-      - homepage.description=Media server
-      - homepage.widget.type=jellyfin
-      - homepage.widget.url=https://jellyfin.${DOMAIN_NAME}
-      - homepage.widget.key=${JELLYFIN_API_KEY}
+      homepage.group: Media
+      homepage.name: jellyfin
+      homepage.icon: jellyfin.png
+      homepage.href: https://jellyfin.${DOMAIN_NAME}
+      homepage.description: Media server
+      homepage.widget.type: jellyfin
+      homepage.widget.url: https://jellyfin.${DOMAIN_NAME}
+      homepage.widget.key: ${JELLYFIN_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_NAME}`)
       # - traefik.http.services.jellyfin.loadbalancer.server.port=8096
       # GODOXY
-      - proxy.jellyfin.port=8096
+      proxy.jellyfin.port: 8096
 
   plex:
     image: linuxserver/plex:1.43.5
@@ -73,25 +73,25 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia/media/animes:/animes
     labels:
       # HOMEPAGE
-      - homepage.group=Media
-      - homepage.name=plex
-      - homepage.icon=plex.png
-      - homepage.href=https://plex.${DOMAIN_NAME}/web/index.html
-      - homepage.description=Media server
-      - homepage.widget.type=plex
-      - homepage.widget.url=https://plex.${DOMAIN_NAME}
-      - homepage.widget.key=${PLEX_API_KEY}
+      homepage.group: Media
+      homepage.name: plex
+      homepage.icon: plex.png
+      homepage.href: https://plex.${DOMAIN_NAME}/web/index.html
+      homepage.description: Media server
+      homepage.widget.type: plex
+      homepage.widget.url: https://plex.${DOMAIN_NAME}
+      homepage.widget.key: ${PLEX_API_KEY}
       # TRAEFIK
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.http.routers.plex.rule=Host(`plex.${DOMAIN_NAME}`)
-      - traefik.http.services.plex.loadbalancer.server.port=32400
+      traefik.enable: "true"
+      traefik.docker.network: proxy
+      traefik.http.routers.plex.rule: Host(`plex.${DOMAIN_NAME}`)
+      traefik.http.services.plex.loadbalancer.server.port: 32400
 
 
 # Download Client
   deluge:
-    container_name: deluge
     image: lscr.io/linuxserver/deluge:2.2.0-ls384
+    container_name: deluge
     restart: always
     network_mode: "container:gluetun"
     # networks:
@@ -108,29 +108,29 @@ services:
       - ${MOUNT_POINT_DATA}/deluge:/config
       - ${MOUNT_POINT_COMMON}/multimedia/torrents:/data/torrents
       - ${MOUNT_POINT_ISO}/ISOs:/data/torrents/iso
-    healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
-      test: "curl -sfk https://example.com  || exit 1"
-      interval: 1m
-      timeout: 10s
-      retries: 1
     labels:
       # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=deluge
-      - homepage.icon=deluge.png
-      - homepage.href=https://deluge.${DOMAIN_NAME}
-      - homepage.widget.type=deluge
-      - homepage.widget.url=https://deluge.${DOMAIN_NAME}
-      - homepage.widget.password=${DELUGE_PASSWORD}
+      homepage.group: Documents & Files
+      homepage.name: deluge
+      homepage.icon: deluge.png
+      homepage.href: https://deluge.${DOMAIN_NAME}
+      homepage.widget.type: deluge
+      homepage.widget.url: https://deluge.${DOMAIN_NAME}
+      homepage.widget.password: ${DELUGE_PASSWORD}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.deluge.rule=Host(`deluge.${DOMAIN_NAME}`)
       # - traefik.http.services.deluge.loadbalancer.server.port=8112
       # GODOXY
-      - proxy.deluge.port=8112
+      proxy.deluge.port: 8112
       # AUTOHEAL
-      - autoheal=true
+      autoheal: "true"
+    healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
+      test: "curl -sfk https://example.com  || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 1
 
 # Media Managers
   bazarr:
@@ -151,21 +151,21 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia/media:/data/media
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=bazarr
-      - homepage.icon=bazarr.png
-      - homepage.href=https://bazarr.${DOMAIN_NAME}
-      - homepage.description=Subtitles for films and shows
-      - homepage.widget.type=bazarr
-      - homepage.widget.url=https://bazarr.${DOMAIN_NAME}
-      - homepage.widget.key=${BAZARR_API_KEY}
+      homepage.group: Media Management
+      homepage.name: bazarr
+      homepage.icon: bazarr.png
+      homepage.href: https://bazarr.${DOMAIN_NAME}
+      homepage.description: Subtitles for films and shows
+      homepage.widget.type: bazarr
+      homepage.widget.url: https://bazarr.${DOMAIN_NAME}
+      homepage.widget.key: ${BAZARR_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.bazarr.rule=Host(`bazarr.${DOMAIN_NAME}`)
       # - traefik.http.services.bazarr.loadbalancer.server.port=6767
       # GODOXY
-      - proxy.bazarr.port=6767
+      proxy.bazarr.port: 6767
 
   cleanuparr:
     image: ghcr.io/cleanuparr/cleanuparr:2.10.12
@@ -173,20 +173,29 @@ services:
     restart: unless-stopped
     networks:
       - media_network
+    dns:
+      - $DNS_ADDRESS
     #ports:
     #  - "11011:11011"
+    environment:
+      PORT: 11011
+      #- BASE_PATH=
+      PUID: ${PUID}
+      PGID: ${PGID}
+      UMASK: "022"
     volumes:
       - ${MOUNT_POINT_DATA}/cleanuparr:/config
       # Mount your downloads directory if needed
       - ${MOUNT_POINT_COMMON}/multimedia/torrents:/data/torrents
-    environment:
-      - PORT=11011
-      #- BASE_PATH=
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=022
-    dns:
-      - $DNS_ADDRESS
+    labels:
+      # HOMEPAGE
+      homepage.group: Media Management
+      homepage.name: Cleanuparr
+      homepage.icon: cleanuparr.png
+      homepage.href: https://cleanuparr.${DOMAIN_NAME}
+      homepage.description: Automatic cleanup tool for download queue
+      # GODOXY
+      proxy.cleanuparr.port: 11011
     # Health check configuration
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
@@ -194,15 +203,6 @@ services:
       timeout: 10s         # Allow up to 10 seconds for response
       start_period: 30s    # Wait 30 seconds before first check
       retries: 3           # Mark unhealthy after 3 consecutive failures
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=Cleanuparr
-      - homepage.icon=cleanuparr.png
-      - homepage.href=https://cleanuparr.${DOMAIN_NAME}
-      - homepage.description=Automatic cleanup tool for download queue
-      # GODOXY
-      - proxy.cleanuparr.port=11011
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
@@ -212,21 +212,21 @@ services:
       - media_network
     #   - proxy
     environment:
-      - TZ=${TZ}
+      TZ: ${TZ}
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=Flaresolverr
-      - homepage.icon=cloudflare.png
-      - homepage.href=https://flaresolverr.${DOMAIN_NAME}
-      - homepage.description=Cloudflare Proxy server bypassser
+      homepage.group: Media Management
+      homepage.name: Flaresolverr
+      homepage.icon: cloudflare.png
+      homepage.href: https://flaresolverr.${DOMAIN_NAME}
+      homepage.description: Cloudflare Proxy server bypassser
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.flaresolverr.rule=Host(`flaresolverr.${DOMAIN_NAME}`)
       # - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
       # GODOXY
-      - proxy.flaresolverr.port=8191
+      proxy.flaresolverr.port: 8191
 
   prowlarr:
     image: linuxserver/prowlarr:2.6.5
@@ -234,10 +234,10 @@ services:
     restart: always
     networks:
       - media_network
-    #ports:
-    #  - 9696:9696
     dns:
       - $DNS_ADDRESS
+    #ports:
+    #  - 9696:9696
     environment:
       TZ: ${TZ}
       PUID: ${PUID}
@@ -246,27 +246,27 @@ services:
       - ${MOUNT_POINT_DATA}/prowlarr:/config
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=Prowlarr
-      - homepage.icon=prowlarr.png
-      - homepage.href=https://prowlarr.${DOMAIN_NAME}
-      - homepage.description=Indexer manager
-      - homepage.widget.type=prowlarr
-      - homepage.widget.url=https://prowlarr.${DOMAIN_NAME}
-      - homepage.widget.key=${PROWLARR_API_KEY}
+      homepage.group: Media Management
+      homepage.name: Prowlarr
+      homepage.icon: prowlarr.png
+      homepage.href: https://prowlarr.${DOMAIN_NAME}
+      homepage.description: Indexer manager
+      homepage.widget.type: prowlarr
+      homepage.widget.url: https://prowlarr.${DOMAIN_NAME}
+      homepage.widget.key: ${PROWLARR_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN_NAME}`)
       # - traefik.http.services.prowlarr.loadbalancer.server.port=9696
       # GODOXY
-      - proxy.prowlarr.port=9696
+      proxy.prowlarr.port: 9696
       # AUTOHEAL
-      - autoheal=true
+      autoheal: "true"
 
   radarr:
-    container_name: radarr
     image: linuxserver/radarr:6.4.4
+    container_name: radarr
     restart: always
     networks:
       - media_network
@@ -282,21 +282,21 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia:/data
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=radarr
-      - homepage.icon=radarr.png
-      - homepage.href=https://radarr.${DOMAIN_NAME}
-      - homepage.description=Films requester
-      - homepage.widget.type=radarr
-      - homepage.widget.url=https://radarr.${DOMAIN_NAME}
-      - homepage.widget.key=${RADARR_API_KEY}
+      homepage.group: Media Management
+      homepage.name: radarr
+      homepage.icon: radarr.png
+      homepage.href: https://radarr.${DOMAIN_NAME}
+      homepage.description: Films requester
+      homepage.widget.type: radarr
+      homepage.widget.url: https://radarr.${DOMAIN_NAME}
+      homepage.widget.key: ${RADARR_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN_NAME}`)
       # - traefik.http.services.radarr.loadbalancer.server.port=7878
       # GODOXY
-      - proxy.radarr.port=7878
+      proxy.radarr.port: 7878
 
   sonarr:
     image: linuxserver/sonarr:4.0.20
@@ -318,21 +318,21 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia:/data
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=sonarr
-      - homepage.icon=sonarr.png
-      - homepage.href=https://sonarr.${DOMAIN_NAME}
-      - homepage.description=Shows requester
-      - homepage.widget.type=sonarr
-      - homepage.widget.url=https://sonarr.${DOMAIN_NAME}
-      - homepage.widget.key=${SONARR_API_KEY}
+      homepage.group: Media Management
+      homepage.name: sonarr
+      homepage.icon: sonarr.png
+      homepage.href: https://sonarr.${DOMAIN_NAME}
+      homepage.description: Shows requester
+      homepage.widget.type: sonarr
+      homepage.widget.url: https://sonarr.${DOMAIN_NAME}
+      homepage.widget.key: ${SONARR_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN_NAME}`)
       # - traefik.http.services.sonarr.loadbalancer.server.port=8989
       # GODOXY
-      - proxy.sonarr.port=8989
+      proxy.sonarr.port: 8989
 
   calibre-web-automated:
     image: crocodilestick/calibre-web-automated:V3.1.2
@@ -344,35 +344,35 @@ services:
     # ports:
     #   - 8083:8083
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - DOCKER_MODS=lscr.io/linuxserver/mods:universal-calibre-v7.16.0
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      DOCKER_MODS: lscr.io/linuxserver/mods:universal-calibre-v7.16.0
     volumes:
       - ${MOUNT_POINT_DATA}/calibre/data:/config
       - ${MOUNT_POINT_DATA}/calibre/ingest:/cwa-book-ingest
       - ${MOUNT_POINT_DATA}/calibre/library:/calibre-library
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=calibre-web
-      - homepage.icon=calibre-web.png
-      - homepage.href=https://calibreweb.${DOMAIN_NAME}
-      - homepage.description=Book management
-      - homepage.widget.type=calibreweb
-      - homepage.widget.url=https://calibreweb.${DOMAIN_NAME}
-      - homepage.widget.username=${CALIBREWEB_USERNAME}
-      - homepage.widget.password=${CALIBREWEB_PASSWORD}
+      homepage.group: Media Management
+      homepage.name: calibre-web
+      homepage.icon: calibre-web.png
+      homepage.href: https://calibreweb.${DOMAIN_NAME}
+      homepage.description: Book management
+      homepage.widget.type: calibreweb
+      homepage.widget.url: https://calibreweb.${DOMAIN_NAME}
+      homepage.widget.username: ${CALIBREWEB_USERNAME}
+      homepage.widget.password: ${CALIBREWEB_PASSWORD}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.calibreweb.rule=Host(`calibreweb.${DOMAIN_NAME}`)
       # - traefik.http.services.calibreweb.loadbalancer.server.port=8083
       # GODOXY
-      - proxy.aliases=calibreweb
-      - proxy.calibreweb.port=8083
-      - proxy.network=calibre
-      - proxy.idle_timeout=30m
+      proxy.aliases: calibreweb
+      proxy.calibreweb.port: 8083
+      proxy.network: calibre
+      proxy.idle_timeout: 30m
 
 
 # Media requester
@@ -389,24 +389,24 @@ services:
     #  - 5055:5055
     volumes:
       - ${MOUNT_POINT_DATA}/seer/config:/app/config
+    labels:
+      # HOMEPAGE
+      homepage.group: Media Requesters
+      homepage.name: Seerr
+      homepage.icon: seerr.png
+      homepage.href: https://seerr.${DOMAIN_NAME}
+      homepage.description: Media requester
+      homepage.widget.type: jellyseerr
+      homepage.widget.url: https:/seerr.${DOMAIN_NAME}
+      homepage.widget.key: ${SEERR_API_KEY}
+      # GODOXY
+      proxy.seerr.port: 5055
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
       start_period: 20s
       timeout: 3s
       interval: 15s
       retries: 3
-    labels:
-      # HOMEPAGE
-      - homepage.group=Media Requesters
-      - homepage.name=Seerr
-      - homepage.icon=seerr.png
-      - homepage.href=https://seerr.${DOMAIN_NAME}
-      - homepage.description=Media requester
-      - homepage.widget.type=jellyseerr
-      - homepage.widget.url=https:/seerr.${DOMAIN_NAME}
-      - homepage.widget.key=${SEERR_API_KEY}
-      # GODOXY
-      - proxy.seerr.port=5055
 
   shelfmark:
     image: ghcr.io/calibrain/shelfmark:v1.5.0
@@ -429,20 +429,20 @@ services:
       - ${MOUNT_POINT_COMMON}/multimedia:/data # Download client mount - path must match your torrent/usenet client's volume exactly
     labels:
       # HOMEPAGE
-      - homepage.group=Media Requesters
-      - homepage.name=shelfmark
-      - homepage.icon=calibre-web-automated-book-downloader.png
-      - homepage.href=https://shelfmark.${DOMAIN_NAME}
-      - homepage.description=Book requester for calibre web
+      homepage.group: Media Requesters
+      homepage.name: shelfmark
+      homepage.icon: calibre-web-automated-book-downloader.png
+      homepage.href: https://shelfmark.${DOMAIN_NAME}
+      homepage.description: Book requester for calibre web
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.shelfmark.rule=Host(`shelfmark.${DOMAIN_NAME}`)
       # - traefik.http.services.shelfmark.loadbalancer.server.port=8084
       # GODOXY
-      - proxy.aliases=shelfmark
-      - proxy.shelfmark-download.port=8084
-      - proxy.idle_timeout=30m
+      proxy.aliases: shelfmark
+      proxy.shelfmark-download.port: 8084
+      proxy.idle_timeout: 30m
 
 
 # Media server invitation
@@ -450,32 +450,32 @@ services:
     image: ghcr.io/wizarrrr/wizarr:v2026.10.1
     container_name: wizarr
     restart: unless-stopped
-    #  ports:
-    #    - 5690:5690
     #  networks:
     #    - proxy
     dns:
       - $DNS_ADDRESS
+    #  ports:
+    #    - 5690:5690
     environment:
-      - DISABLE_BUILTIN_AUTH=false #Set to true ONLY if you are using another auth provider (Authelia, Authentik, etc)
-      - TZ=${TZ}
+      DISABLE_BUILTIN_AUTH: "false" #Set to true ONLY if you are using another auth provider (Authelia, Authentik, etc)
+      TZ: ${TZ}
     volumes:
       - ${MOUNT_POINT_DATA}/wizarr:/data
     labels:
       # HOMEPAGE
-      - homepage.group=Media Requesters
-      - homepage.name=wizarr
-      - homepage.icon=wizarr.png
-      - homepage.href=https://wizarr.${DOMAIN_NAME}
-      - homepage.description=Plex invitations
+      homepage.group: Media Requesters
+      homepage.name: wizarr
+      homepage.icon: wizarr.png
+      homepage.href: https://wizarr.${DOMAIN_NAME}
+      homepage.description: Plex invitations
       # TRAEFIK
   #     - traefik.enable=true
   #     - traefik.docker.network=proxy
   #     - traefik.http.routers.wizarr.rule=Host(`wizarr.${DOMAIN_NAME}`)
   #     - traefik.http.services.wizarr.loadbalancer.server.port=5690
       # GODOXY
-      - proxy.wizarr.port=5690
-      - proxy.idle_timeout=5m
+      proxy.wizarr.port: 5690
+      proxy.idle_timeout: 5m
 
   iSponsorBlockTV:
     image: ghcr.io/dmunozv04/isponsorblocktv:v2.11.0
@@ -486,10 +486,10 @@ services:
       - ${MOUNT_POINT_DATA}/sponsorblock:/app/data
     labels:
       # HOMEPAGE
-      - homepage.group=Media Management
-      - homepage.name=iSponsorBlockTV
-      - homepage.icon=isponsorblocktv.png
-      - homepage.description=Skips sponsored segments in YT TV
+      homepage.group: Media Management
+      homepage.name: iSponsorBlockTV
+      homepage.icon: isponsorblocktv.png
+      homepage.description: Skips sponsored segments in YT TV
 
 
 networks:

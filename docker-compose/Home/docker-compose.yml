@@ -16,51 +16,51 @@ services:
       - /etc/localtime:/etc/localtime:ro
     labels:
       # HOMEPAGE
-      - homepage.group=Home
-      - homepage.name=homeassistant
-      - homepage.icon=home-assistant.png
-      - homepage.href=https://homeassistant.${DOMAIN_NAME}
+      homepage.group: Home
+      homepage.name: homeassistant
+      homepage.icon: home-assistant.png
+      homepage.href: https://homeassistant.${DOMAIN_NAME}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.homeassistant.rule=Host(`homeassistant.${DOMAIN_NAME}`)
       # - traefik.http.services.homeassistant.loadbalancer.server.port=8123
       # GODOXY
-      - proxy.aliases=homeassistant
-      - proxy.homeassistant.port=8123
-      - proxy.idle_timeout=1h
+      proxy.aliases: homeassistant
+      proxy.homeassistant.port: 8123
+      proxy.idle_timeout: 1h
 
   lubelogger:
     image: ghcr.io/hargata/lubelogger:v1.7.4
     container_name: lubelogger
     restart: unless-stopped
-    volumes:
-      - ${MOUNT_POINT_DATA}/lubelogger/app:/App/data
-      - ${MOUNT_POINT_DATA}/lubelogger/keys:/root/.aspnet/DataProtection-Keys
     #ports:
     #  - 8080:8080
     # networks:
     #   - proxy
+    volumes:
+      - ${MOUNT_POINT_DATA}/lubelogger/app:/App/data
+      - ${MOUNT_POINT_DATA}/lubelogger/keys:/root/.aspnet/DataProtection-Keys
     labels:
       # HOMEPAGE
-      - homepage.group=Home
-      - homepage.name=LubeLogger
-      - homepage.icon=lubelogger.png
-      - homepage.href=https://lubelogger.${DOMAIN_NAME}
-      - homepage.description=Car stuff tracker
-      - homepage.widget.type=lubelogger
-      - homepage.widget.url=https://lubelogger.${DOMAIN_NAME}
-      - homepage.widget.username=$LUBELOGGER_USERNAME
-      - homepage.widget.password=$LUBELOGGER_PASSWORD
-      - homepage.widget.vehicleID=1
+      homepage.group: Home
+      homepage.name: LubeLogger
+      homepage.icon: lubelogger.png
+      homepage.href: https://lubelogger.${DOMAIN_NAME}
+      homepage.description: Car stuff tracker
+      homepage.widget.type: lubelogger
+      homepage.widget.url: https://lubelogger.${DOMAIN_NAME}
+      homepage.widget.username: $LUBELOGGER_USERNAME
+      homepage.widget.password: $LUBELOGGER_PASSWORD
+      homepage.widget.vehicleID: 1
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.lubelogger.rule=Host(`lubelogger.${DOMAIN_NAME}`)
       # - traefik.http.services.lubelogger.loadbalancer.server.port=8080
       # GODOXY
-      - proxy.lubelogger.port=8080
-      - proxy.idle_timeout=15m
+      proxy.lubelogger.port: 8080
+      proxy.idle_timeout: 15m
 
   # mealie:
   #   container_name: mealie

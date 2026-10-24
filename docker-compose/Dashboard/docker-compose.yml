@@ -8,10 +8,10 @@ services:
     networks:
       - socket_ro_net
     #   - proxy
-    #ports:
-    #  - 3000:3000
     dns:
       - $DNS_ADDRESS
+    #ports:
+    #  - 3000:3000
     environment:
       PUID: $PUID
       PGID: $PGID

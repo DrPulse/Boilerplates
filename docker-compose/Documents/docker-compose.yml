@@ -48,78 +48,79 @@ services:
   #     - proxy.excalidraw.port=80
 
   immich-server:
-    container_name: immich_server
     image: ghcr.io/immich-app/immich-server:v3.3.5
-    networks:
-      - cloudflare-net
-      - immich-internal
+    container_name: immich_server
+    restart: always
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    depends_on:
+      - immich-redis
+      - immich-database
+    networks:
+      - cloudflare-net
+      - immich-internal
+    #ports:
+    #  - '2283:2283'
+    environment:
+      UPLOAD_LOCATION: ${UPLOAD_LOCATION}
+      DB_HOSTNAME: immich-database
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOSTNAME: immich-redis
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${MOUNT_POINT_DATA}/immich/data:/data
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - UPLOAD_LOCATION=${UPLOAD_LOCATION}
-      - DB_HOSTNAME=immich-database
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REDIS_HOSTNAME=immich-redis
-    #ports:
-    #  - '2283:2283'
-    depends_on:
-      - immich-redis
-      - immich-database
-    restart: always
-    healthcheck:
-      disable: false
     labels:
       # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=Immich
-      - homepage.icon=immich.png
-      - homepage.href=https://immich.${DOMAIN_NAME}
-      - homepage.description=Photo and Video Management System
-      - homepage.widget.type=immich
-      - homepage.widget.url=https://immich.${DOMAIN_NAME}
-      - homepage.widget.key=${IMMICH_API_KEY}
-      - homepage.widget.version=2
+      homepage.group: Documents & Files
+      homepage.name: Immich
+      homepage.icon: immich.png
+      homepage.href: https://immich.${DOMAIN_NAME}
+      homepage.description: Photo and Video Management System
+      homepage.widget.type: immich
+      homepage.widget.url: https://immich.${DOMAIN_NAME}
+      homepage.widget.key: ${IMMICH_API_KEY}
+      homepage.widget.version: 2
       # GODOXY
-      - proxy.aliases=immich
-      - proxy.immich.port=2283
+      proxy.aliases: immich
+      proxy.immich.port: 2283
       # DOCKFLARE
-      - dockflare.enable=false
-      - dockflare.hostname=immich.pulselabs.me
-      - dockflare.service=http://immich-server:2283
+      dockflare.enable: "false"
+      dockflare.hostname: immich.pulselabs.me
+      dockflare.service: http://immich-server:2283
+    healthcheck:
+      disable: false
 
   immich-machine-learning:
-    container_name: immich_machine_learning
     # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
     # Example tag: ${IMMICH_VERSION:-release}-cuda
     image: ghcr.io/immich-app/immich-machine-learning:v3.3.5
+    container_name: immich_machine_learning
     # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
     #   file: hwaccel.ml.yml
     #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    restart: always
     networks:
       - immich-internal
     volumes:
       - model-cache:/cache
-    restart: always
     healthcheck:
       disable: false
 
   immich-redis:
-    container_name: immich_redis
     image: docker.io/valkey/valkey:9@sha256:3acc0687f2a2e1091fae6450d7842dd658c941338cf0a873ddd9e14b9e4ea4dd
+    container_name: immich_redis
+    restart: always
     networks:
       - immich-internal
     healthcheck:
       test: redis-cli ping || exit 1
-    restart: always
 
   immich-database:
-    container_name: immich_postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    container_name: immich_postgres
+    restart: always
     networks:
       - immich-internal
     environment:
@@ -130,11 +131,10 @@ services:
       POSTGRES_INITDB_ARGS: '--data-checksums'
       # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
       # DB_STORAGE_TYPE: 'HDD'
+    shm_size: 128mb
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${MOUNT_POINT_DATA}/immich/db:/var/lib/postgresql/data
-    shm_size: 128mb
-    restart: always
 
   # nextcloud-db:
   #   image: mariadb:10.11
@@ -290,41 +290,41 @@ services:
       - ${PAPERLESS_PATH_CONSUME}/consume:/usr/src/paperless/consume
     labels:
       # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=paperless
-      - homepage.icon=paperless.png
-      - homepage.href=https://paperless.${DOMAIN_NAME}
-      - homepage.description=Document Management System
-      - homepage.widget.type=paperlessngx
-      - homepage.widget.url=https://paperless.${DOMAIN_NAME}
-      - homepage.widget.key=${PAPERLESS_API_KEY}
+      homepage.group: Documents & Files
+      homepage.name: paperless
+      homepage.icon: paperless.png
+      homepage.href: https://paperless.${DOMAIN_NAME}
+      homepage.description: Document Management System
+      homepage.widget.type: paperlessngx
+      homepage.widget.url: https://paperless.${DOMAIN_NAME}
+      homepage.widget.key: ${PAPERLESS_API_KEY}
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN_NAME}`)
       # - traefik.http.services.paperless.loadbalancer.server.port=8000
       # GODOXY
-      - proxy.aliases=paperless
-      - proxy.paperless.port=8000
-      - proxy.network=paperless
-      - proxy.idle_timeout=30m
+      proxy.aliases: paperless
+      proxy.paperless.port: 8000
+      proxy.network: paperless
+      proxy.idle_timeout: 30m
 
   paperless-cache:
     image: docker.io/valkey/valkey:9-alpine
-    restart: unless-stopped
     container_name: paperless-cache
+    restart: unless-stopped
     networks:
       - paperless
     volumes:
       - ${MOUNT_POINT_DATA}/paperless/cache:/data
+    labels:
+      proxy.exclude: "true"
     healthcheck:
       test: ["CMD", "valkey-cli", "ping"]
       interval: 10s
       timeout: 3s
       retries: 5
       start_period: 5s
-    labels:
-      - proxy.exclude=true
   syncthing:
     image: syncthing/syncthing:2.1
     container_name: syncthing
@@ -338,26 +338,26 @@ services:
       # - 22000:22000/udp # listening udp
       # - 21027:21027/udp # protocol discovery
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
     volumes:
       - ${MOUNT_POINT_DATA}/syncthing/data:/var/syncthing
       - ${MOUNT_POINT_GAMES}:/var/syncthing/games
     labels:
       # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=Syncthing
-      - homepage.icon=syncthing.png
-      - homepage.href=https://syncthing.${DOMAIN_NAME}
-      - homepage.description=Syncing file tool accross devices
+      homepage.group: Documents & Files
+      homepage.name: Syncthing
+      homepage.icon: syncthing.png
+      homepage.href: https://syncthing.${DOMAIN_NAME}
+      homepage.description: Syncing file tool accross devices
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.syncthing.rule=Host(`syncthing.${DOMAIN_NAME}`)
       # - traefik.http.services.syncthing.loadbalancer.server.port=8384
+      proxy.syncthing.port: 8384
     # GODOXY
-      - proxy.syncthing.port=8384
 
   wikijs:
     image: lscr.io/linuxserver/wikijs:2.5.317
@@ -382,19 +382,19 @@ services:
       - ${MOUNT_POINT_DATA}/wikijs:/data
     labels:
       # HOMEPAGE
-      - homepage.group=Documents & Files
-      - homepage.name=Wiki.js
-      - homepage.icon=wikijs.png
-      - homepage.href=https://wikijs.${DOMAIN_NAME}
-      - homepage.description=Wiki
+      homepage.group: Documents & Files
+      homepage.name: Wiki.js
+      homepage.icon: wikijs.png
+      homepage.href: https://wikijs.${DOMAIN_NAME}
+      homepage.description: Wiki
       # TRAEFIK
       # - traefik.enable=true
       # - traefik.docker.network=proxy
       # - traefik.http.routers.wikijs.rule=Host(`wikijs.${DOMAIN_NAME}`)
       # - traefik.http.services.wikijs.loadbalancer.server.port=3000
       # GODOXY
-      - proxy.wikijs.port=3000
-      - proxy.idle_timeout=15m
+      proxy.wikijs.port: 3000
+      proxy.idle_timeout: 15m
 
 networks:
   # proxy:
@@ -405,6 +405,6 @@ networks:
     name: cloudflare-net
     external: true
   immich-internal:
-  
+
 volumes:
   model-cache:

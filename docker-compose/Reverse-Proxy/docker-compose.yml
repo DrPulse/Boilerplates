@@ -32,25 +32,25 @@ services:
   #       - host.docker.internal:172.17.0.1
 
   socket-proxy:
-    container_name: socket-proxy
     image: ghcr.io/yusing/socket-proxy:latest
+    container_name: socket-proxy
     restart: always
-    environment:
-      - ALLOW_START=1
-      - ALLOW_STOP=1
-      - ALLOW_RESTARTS=1
-      - CONTAINERS=1
-      - EVENTS=1
-      - INFO=1
-      - PING=1
-      - POST=1
-      - VERSION=1
-    volumes:
-      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-    tmpfs:
-      - /run
     ports:
       - ${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}:2375
+    environment:
+      ALLOW_START: 1
+      ALLOW_STOP: 1
+      ALLOW_RESTARTS: 1
+      CONTAINERS: 1
+      EVENTS: 1
+      INFO: 1
+      PING: 1
+      POST: 1
+      VERSION: 1
+    tmpfs:
+      - /run
+    volumes:
+      - ${DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
     labels:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
@@ -59,36 +59,34 @@ services:
     image: ghcr.io/yusing/godoxy:v0.32.3
     container_name: godoxy-proxy
     restart: always
-    network_mode: host # do not change this
-    env_file: .env
     user: ${GODOXY_UID:-1000}:${GODOXY_GID:-1000}
+    env_file: .env
     depends_on:
       socket-proxy:
         condition: service_started
+    cap_add:
+      - NET_BIND_SERVICE
     security_opt:
       - no-new-privileges:true
     cap_drop:
       - all
-    cap_add:
-      - NET_BIND_SERVICE
+    network_mode: host # do not change this
+    dns:
+      - 1.1.1.1
+      - 1.1.1.2
     environment:
-      - DOCKER_HOST=tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
+      DOCKER_HOST: tcp://${SOCKET_PROXY_LISTEN_ADDR:-127.0.0.1:2375}
     volumes:
       - ${MOUNT_POINT_DATA}/godoxy/config:/app/config
       - ${MOUNT_POINT_DATA}/godoxy/logs:/app/logs
       - ${MOUNT_POINT_DATA}/godoxy/error_pages:/app/error_pages:ro
       - ${MOUNT_POINT_DATA}/godoxy/data:/app/data
-
       # To use autocert, certs will be stored in "./certs".
       # You can also use a docker volume to store it
       - ${MOUNT_POINT_DATA}/godoxy/certs:/app/certs
-
       # remove "./certs:/app/certs" and uncomment below to use existing certificate
       # - /path/to/certs/cert.crt:/app/certs/cert.crt
       # - /path/to/certs/priv.key:/app/certs/priv.key
-    dns:
-      - 1.1.1.1
-      - 1.1.1.2
     labels:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers

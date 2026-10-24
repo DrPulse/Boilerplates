@@ -8,12 +8,12 @@ services:
     restart: always
     # ports:
     #   - 5432:5432
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${KOMODO_DB_USERNAME}
       POSTGRES_PASSWORD: ${KOMODO_DB_PASSWORD}
       POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     labels:
       komodo.skip: # Prevent Komodo from stopping with StopAllContainers
 
@@ -26,10 +26,10 @@ services:
       - postgres
     # ports:
     #   - 27017:27017
-    volumes:
-      - ferretdb-state:/state
     environment:
       FERRETDB_POSTGRESQL_URL: postgres://${KOMODO_DB_USERNAME}:${KOMODO_DB_PASSWORD}@postgres:5432/postgres
+    volumes:
+      - ferretdb-state:/state
     labels:
       komodo.skip: # Prevent Komodo from stopping with StopAllContainers
 
@@ -77,8 +77,6 @@ services:
 
   periphery:
     image: ghcr.io/moghtech/komodo-periphery:2.3.4
-    labels:
-      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
     restart: always
     ports:
       - 8120:8120
@@ -96,6 +94,8 @@ services:
       - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
       ## Optionally mount a custom core.config.toml
       # - /path/to/periphery.config.toml:/config/config.toml
+    labels:
+      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
 
 volumes:
   # Postgres
