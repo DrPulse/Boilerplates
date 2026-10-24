@@ -1,8 +1,8 @@
 services:
 
   adguardhome:
-    container_name: adguardhome
     image: adguard/adguardhome:v0.107.79
+    container_name: adguardhome
     restart: always
     networks:
       macvlan-eth1:
@@ -52,23 +52,16 @@ services:
   dockflare-init:
     image: alpine:3.24
     command: ["sh", "-c", "chown -R ${DOCKFLARE_UID:-65532}:${DOCKFLARE_GID:-65532} /app/data"]
-    volumes:
-      - ${MOUNT_POINT_DATA}/dockflare:/app/data
+    restart: "no"
     networks:
       - dockflare-internal
-    restart: "no"
+    volumes:
+      - ${MOUNT_POINT_DATA}/dockflare:/app/data
 
   dockflare:
     image: alplat/dockflare:v3.1.6
     container_name: dockflare_v3
     restart: unless-stopped
-    # ports:
-    #   - "5000:5000"
-    volumes:
-      - ${MOUNT_POINT_DATA}/dockflare:/app/data
-    environment:
-      - REDIS_URL=redis://dockflare-redis:6379/0
-      - DOCKER_HOST=tcp://socket-proxy-rw:2375
     depends_on:
       dockflare-init:
         condition: service_completed_successfully
@@ -79,6 +72,13 @@ services:
       - cloudflare-net
       - dockflare-internal
       - wings0  # docker network for pterodactyl
+    # ports:
+    #   - "5000:5000"
+    environment:
+      REDIS_URL: redis://dockflare-redis:6379/0
+      DOCKER_HOST: tcp://socket-proxy-rw:2375
+    volumes:
+      - ${MOUNT_POINT_DATA}/dockflare:/app/data
     labels:
       # DOCKFLARE
       # Optional labels to expose DockFlare itself via DockFlare
@@ -100,21 +100,21 @@ services:
     container_name: dockflare-redis
     restart: unless-stopped
     command: ["redis-server", "--save", "", "--appendonly", "no"]
-    volumes:
-      - dockflare_redis:/data
     networks:
       - dockflare-internal
+    volumes:
+      - dockflare_redis:/data
 
   gluetun:
     image: qmcgaw/gluetun:v3.41.3
     container_name: gluetun
     restart: always
-    dns:
-      - $DNS_ADDRESS
-    networks:
-      - media_network
     cap_add:
       - NET_ADMIN
+    networks:
+      - media_network
+    dns:
+      - $DNS_ADDRESS
     devices:
       - /dev/net/tun:/dev/net/tun
     # Ports exposed on HOST (Godoxy will connect here)
@@ -126,10 +126,10 @@ services:
       # - 6881:6881/udp    # Inbound torrent traffic
     environment:
       # ProtonVPN WireGuard
-      - VPN_SERVICE_PROVIDER=protonvpn
-      - VPN_TYPE=wireguard
-      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
-      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+      VPN_SERVICE_PROVIDER: protonvpn
+      VPN_TYPE: wireguard
+      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
+      SERVER_COUNTRIES: ${SERVER_COUNTRIES}
     volumes:
       - ${MOUNT_POINT_DATA}/gluetun/config:/gluetun
     labels:
@@ -144,8 +144,11 @@ services:
     container_name: tailscale
     restart: always
     hostname: nas-tailscale
-    network_mode: host
+    cap_add: # Required for tailscale to work
+      - net_admin
+      - sys_module
     privileged: true
+    network_mode: host
     environment:
       TS_AUTH_KEY: ${TS_AUTH_KEY}
       #TS_ACCEPT_DNS: true
@@ -155,9 +158,6 @@ services:
     volumes:
       - ${MOUNT_POINT_DATA}/tailscale:/var/lib # State data will be stored in this directory
       - /dev/net/tun:/dev/net/tun # Required for tailscale to work
-    cap_add: # Required for tailscale to work
-      - net_admin
-      - sys_module
     labels:
       # KOMODO
       komodo.skip: "" # Prevent Komodo from stopping with StopAllContainers
