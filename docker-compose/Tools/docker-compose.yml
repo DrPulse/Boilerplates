@@ -141,7 +141,7 @@ services:
       retries: 3
 
   reactive-app:
-    image: amruthpillai/reactive-resume:v6.0.5
+    image: amruthpillai/reactive-resume:v6.0.6
     container_name: reactive-resume
     restart: unless-stopped
     user: ${PUID}:${PGID}
