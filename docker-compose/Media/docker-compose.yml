@@ -90,7 +90,7 @@ services:
 
 # Download Client
   deluge:
-    image: lscr.io/linuxserver/deluge:2.2.0-ls384
+    image: lscr.io/linuxserver/deluge:2.2.0-ls385
     container_name: deluge
     restart: always
     network_mode: "container:gluetun"
