@@ -409,7 +409,7 @@ services:
       retries: 3
 
   shelfmark:
-    image: ghcr.io/calibrain/shelfmark:v1.5.0
+    image: ghcr.io/calibrain/shelfmark:v1.6.0
     container_name: shelfmark
     restart: unless-stopped
     networks:
