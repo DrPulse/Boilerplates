@@ -418,6 +418,8 @@ services:
       - media_network
     # ports:
     #   - 8084:8084
+    dns:
+      - $DNS_ADDRESS
     environment:
       PUID: ${PUID}
       PGID: ${PGID}

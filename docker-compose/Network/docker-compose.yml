@@ -122,7 +122,6 @@ services:
       - 8112:8112 # deluge
       - 9696:9696 # prowlarr
       - 8191:8191 # Flaresolverr
-      - 8084:8084 # Shelfmark
       # - 6881:6881        # Inbound torrent traffic
       # - 6881:6881/udp    # Inbound torrent traffic
     environment:
