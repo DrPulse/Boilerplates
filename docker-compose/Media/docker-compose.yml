@@ -415,6 +415,7 @@ services:
     networks:
       # - proxy
       - calibre
+      - media_network
     # ports:
     #   - 8084:8084
     environment:
