@@ -207,7 +207,7 @@ services:
       retries: 3
 
   termix:
-    image: ghcr.io/termix-ssh/termix:26.10.6
+    image: ghcr.io/termix-ssh/termix:26.11.0
     container_name: termix
     restart: always
     #ports:
