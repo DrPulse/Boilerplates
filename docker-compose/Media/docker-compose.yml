@@ -335,7 +335,7 @@ services:
       proxy.sonarr.port: 8989
 
   calibre-web-automated:
-    image: crocodilestick/calibre-web-automated:v4.0.0
+    image: crocodilestick/calibre-web-automated:v4.0.8
     container_name: calibre-web-automated
     restart: unless-stopped
     networks:
