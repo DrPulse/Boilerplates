@@ -90,7 +90,7 @@ services:
 
 # Download Client
   deluge:
-    image: lscr.io/linuxserver/deluge:2.2.0-ls386
+    image: lscr.io/linuxserver/deluge:2.2.0-ls385
     container_name: deluge
     restart: always
     network_mode: "container:gluetun"
@@ -418,8 +418,6 @@ services:
       - media_network
     # ports:
     #   - 8084:8084
-    dns:
-      - $DNS_ADDRESS
     environment:
       PUID: ${PUID}
       PGID: ${PGID}
