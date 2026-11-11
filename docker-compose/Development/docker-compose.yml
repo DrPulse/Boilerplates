@@ -49,7 +49,7 @@ services:
       - ${MOUNT_POINT_DATA}/semaphore/db:/var/lib/mysql
 
   semaphore-server:
-    image: semaphoreui/semaphore:v2.20.23
+    image: semaphoreui/semaphore:v2.20.24
     container_name: semaphore
     restart: unless-stopped
     user: "${PUID}:${PGID}"
