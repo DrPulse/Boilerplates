@@ -34,7 +34,7 @@ services:
       proxy.beszel.port: 8090
 
   beszel-agent:
-    image: henrygd/beszel-agent:0.21.1
+    image: henrygd/beszel-agent:0.21.2
     container_name: beszel-agent
     restart: always
     cap_add:
