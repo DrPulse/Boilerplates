@@ -265,7 +265,7 @@ services:
       autoheal: "true"
 
   radarr:
-    image: linuxserver/radarr:6.4.4
+    image: linuxserver/radarr:7.0.3
     container_name: radarr
     restart: always
     networks:
