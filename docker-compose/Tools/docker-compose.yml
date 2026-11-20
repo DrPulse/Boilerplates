@@ -101,7 +101,7 @@ services:
 
 
   reactive-postgres:
-    image: postgres:18-alpine
+    image: postgres:19-alpine
     container_name: reactive-resume-postgres
     restart: unless-stopped
     networks:
