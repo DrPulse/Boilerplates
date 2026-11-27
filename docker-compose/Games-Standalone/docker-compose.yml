@@ -107,7 +107,7 @@ services:
   #     - homepage.widget.url=udp://${MC_IP}:${PORT_MC_SERV_03}
 
   satisfactory-server-01:
-    image: wolveix/satisfactory-server:v1.9.11
+    image: wolveix/satisfactory-server:v1.10.0
     container_name: satisfactory-server-01
     restart: unless-stopped
     hostname: satisfactory-server
@@ -136,7 +136,7 @@ services:
       homepage.description: Satisfactory Vanilla
 
   satisfactory-server-02:
-    image: wolveix/satisfactory-server:v1.9.11
+    image: wolveix/satisfactory-server:v1.10.0
     container_name: satisfactory-server-02
     restart: unless-stopped
     hostname: satisfactory-server
