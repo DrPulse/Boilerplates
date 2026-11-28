@@ -168,7 +168,7 @@ services:
       proxy.scrutiny.port: 8080
 
   speedtest:
-    image: lscr.io/linuxserver/speedtest-tracker:1.15.1
+    image: lscr.io/linuxserver/speedtest-tracker:1.15.2
     container_name: speedtest
     restart: unless-stopped
     # networks:
